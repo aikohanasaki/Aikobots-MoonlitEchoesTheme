@@ -482,9 +482,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* --- Menu Buttons 選單按鈕 --- */
 
-.menu_button,
-.paginationjs-prev,
-.paginationjs-next {
+.menu_button {
     min-width: 30px;
     min-height: 30px;
 }
@@ -493,8 +491,24 @@ input[type="range"]::-webkit-slider-thumb {
         box-shadow: 0 0 5px color-mix(in srgb, var(--SmartThemeBodyColor) 25%, transparent) !important;
     }
 }
+.paginationjs-nav {
+    letter-spacing: 1px;
+}
+.paginationjs-size-changer select {
+    margin: 0 2.5px;
+}
 .paginationjs-pages li {
     margin: 0;
+}
+.paginationjs-pages ul li a {
+    padding: 3px 10px;
+    background: color-mix(in srgb, var(--SmartThemeBodyColor) 5%, transparent) !important;
+    transition: all 0.5s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--SmartThemeBodyColor) 25%, transparent) !important;
+        opacity: 1 !important;
+    }
 }
 
 /* Base Button 基礎按鈕 */
@@ -1438,6 +1452,7 @@ body.echostyle #chat {
                 .flex-container {
                     flex-direction: row-reverse;
                     margin-right: 5px;
+                    margin-top: -0.5px;
                 }
             }
 
@@ -2295,12 +2310,6 @@ body.tidestyle #chat {
             letter-spacing: 1.5px;
         }
     }
-
-    .lastInContext {
-        margin-top: 15px;
-        border-top: var(--customlastInContext) !important;
-        opacity: 1 !important;
-    }
 }
 
 /* Character Name Field Fix 角色名稱欄位修正 */
@@ -2480,6 +2489,11 @@ body.ripplestyle {
         align-items: center;
         justify-content: center;
     }
+
+    >div:not(#quickPersona) {
+        width: unset;
+        margin-right: 10px;
+    }
 }
 
 /* --- Chat Bar Menu 聊天選單 --- */
@@ -2649,8 +2663,8 @@ body.waifuMode {
     .completion_prompt_manager_prompt.completion_prompt_manager_prompt_disabled {
         border: 0;
         opacity: 0.5;
-        margin-bottom: 0;
         transition: opacity 0.5s ease;
+        margin-bottom: 5px !important;
 
         &:hover {
             opacity: 0.8;
@@ -2661,6 +2675,7 @@ body.waifuMode {
         background: color-mix(in srgb, var(--SmartThemeBodyColor) 5%, transparent);
         border-radius: 10px;
         transition: background 0.5s ease;
+        margin-bottom: 5px !important;
 
         &:hover {
             background: color-mix(in srgb, var(--SmartThemeBodyColor) 10%, transparent);
@@ -2700,17 +2715,19 @@ body.waifuMode {
 #WorldInfo {
     .standoutHeader {
         margin: 5px 0;
-        padding: 10px;
+        padding: 5px 10px;
         border-radius: 10px !important;
         font-weight: 500;
         background: var(--customBgColor1);
         transition: all 0.5s ease;
         border: 0px solid var(--SmartThemeBodyColor);
+        height: 40px;
     }
 
     .select2_multi_sameline+span.select2-container .select2-selection--multiple {
         margin: 5px 0;
         padding: unset;
+        height: 40px;
     }
 }
 
@@ -2783,13 +2800,11 @@ body.waifuMode {
     .select2-selection--single {
         .select2-selection__choice {
             background-color: var(--SmartThemeBlurTintColor);
-            margin: 5px 0;
         }
     }
     &.select2-selection--multiple,
     &.select2-selection--single {
         border-radius: 10px;
-        margin: 5px 0;
     }
 }
 
@@ -3027,7 +3042,6 @@ span.select2.select2-container {
         flex-direction: row;
         align-items: center;
         gap: 10px;
-        margin: 5px 0;
         padding: 10px;
         border-radius: 12px;
         cursor: pointer;
@@ -3126,7 +3140,7 @@ body.charListGrid {
         .bogus_folder_select:hover,
         .character_select:hover,
         .group_select:hover {
-        transition: all 0.5s ease;
+            transition: all 0.5s ease;
         }
     }
 }
@@ -3163,6 +3177,7 @@ body.charListGrid {
 #rm_print_characters_block {
     .flex-container {
         gap: 10px;
+        margin-bottom: 5px;
     }
 
     body.charListGrid & {
@@ -3195,6 +3210,16 @@ body.charListGrid {
         }
     }
 }
+body:not(.charListGrid) {
+    .bogus_folder_select .avatar,
+    .character_select .avatar {
+        margin: 0 5px;
+    }
+
+    .character_name_block {
+        margin-bottom: 0;
+    }
+}
 
 @media screen and (max-width: 1000px) {
     body.charListGrid #rm_print_characters_block {
@@ -3211,9 +3236,8 @@ body.charListGrid {
 }
 @media screen and (max-width: 1000px) {
     #form_create {
-        padding-right: 0 !important;
+        padding-right: 10px !important;
     }
-
 }
 
 #character_popup {
@@ -3483,18 +3507,15 @@ body.tidestyle {
 .lastInContext {
     margin-top: 15px;
     opacity: 1 !important;
-}
-.lastInContext {
-    margin-top: 15px;
-    border-top: var(--customlastInContext);
-    opacity: 1;
+    border-top: var(--customlastInContext) !important;
 
-    .mesAvatarWrapper,
-    .mes_block {
-        margin-top: 10px;
-    }
 }
-
+:not(body.ripplestyle) .lastInContext .mes_block {
+    margin-top: 10px;
+}
+body.bubblechat .lastInContext .mesAvatarWrapper {
+    margin-top: 10px;
+}
 body.flatchat, body.bubblechat {
     #chat .mes_block {
         padding-bottom: 0;
@@ -3529,6 +3550,8 @@ body.whisperstyle #chat {
         max-height: 100dvh !important;
         min-height: 100dvh !important;
         margin: 0;
+        border-radius: 0 !important;
+        border: 0;
     }
 
     .large_dialogue_popup {
@@ -3578,12 +3601,20 @@ body.tidestyle #chat .swipe_left {
 body.flatchat,
 body.bubblechat,
 body.echostyle,
-body.echostyle,
 body.whisperstyle,
 body.hushstyle,
 body.ripplestyle,
 body.tidestyle {
     #chat .mes[mesid="0"] {
         margin-top: 10px !important;
+    }
+}
+
+body.echostyle,
+body.whisperstyle,
+body.hushstyle,
+body.tidestyle {
+    #chat .mes[is_user="true"] .ch_name {
+        margin-top: -0.5px;
     }
 }

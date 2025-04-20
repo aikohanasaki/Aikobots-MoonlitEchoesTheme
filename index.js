@@ -10,7 +10,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme 月下回聲';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.5.3";
+const THEME_VERSION = "2.5.4";
 
 import { t } from '../../../i18n.js';
 
@@ -393,8 +393,8 @@ const themeCustomSettings = [
             /* Mobile Hidden Scrollbar 移動端隱藏捲軸 */
             @media screen and (max-width: 1000px) {
                 * {
-                    scrollbar-width: none;
-                    -ms-overflow-style: none;
+                    scrollbar-width: none !important;
+                    -ms-overflow-style: none !important;
                     &::-webkit-scrollbar {
                         display: none !important;
                     }
@@ -403,6 +403,47 @@ const themeCustomSettings = [
                 .scrollableInner {
                     padding: 0 !important;
                 }
+
+                @media screen and (max-width: 1000px) {
+                    #form_create {
+                        padding-right: 0 !important;
+                    }
+                }
+            }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "enableThemeColorization",
+        "displayText": t`Apply Theme Colors to More UI Elements`,
+        "default": false,
+        "category": "features",
+        "description": t`Applies theme colors to more parts of the UI for a more personalized look`,
+        "cssBlock":  `
+            .drawer-icon,
+            #rightSendForm>div,
+            #leftSendForm>div,
+            .options-content a,
+            .list-group-item,
+            .mes_button {
+                transition: all 0.5s ease !important;
+            }
+            .drawer-icon.openIcon,
+            #rightSendForm>div:hover,
+            #leftSendForm>div:hover,
+            .options-content a:hover,
+            .list-group-item:hover,
+            .mes_button:hover {
+                color: var(--customThemeColor) !important;
+            }
+            #left-nav-panel,
+            #right-nav-panel,
+            .drawer-content,
+            #character_popup,
+            #logprobsViewer,
+            #floatingPrompt,
+            #cfgConfig {
+                border-top: 1px solid color-mix(in srgb, var(--customThemeColor) 50%, transparent) !important;
             }
         `
     },

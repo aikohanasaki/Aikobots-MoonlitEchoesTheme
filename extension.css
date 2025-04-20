@@ -262,15 +262,25 @@ label[for="xdc-char_color_override"] b {
 
 .mes_img_controls {
     .right_menu_button {
-        color: var(--customThemeColor);
-        text-shadow: 0 0 5px #FFF !important;
+        color: var(--SmartThemeBodyColor);
+        text-shadow: 0 0 5px var(--SmartThemeBlurTintColor) !important;
         filter: none;
 
         &:hover {
-        filter: none;
-        color: #FFF;
-        text-shadow: 0 0 5px var(--customThemeColor) !important;
+            filter: none;
+            color: var(--customThemeColor);
+            text-shadow: 0 0 5px var(--SmartThemeBlurTintColor) !important;
         }
+    }
+}
+.mes .mes_img_container.img_extra {
+    border-radius: 10px !important;
+}
+body.flatchat,
+body.bubblechat,
+body.ripplestyle {
+    .mes .mes_img_container {
+        padding-bottom: 15px;
     }
 }
 
@@ -599,8 +609,9 @@ body.bubblechat .qvink_memory_display {
     margin: 5px;
     font-size: small;
     letter-spacing: 0.6px;
-    opacity: 0.9;
-    text-shadow: 0 0 3px var(--SmartThemeBlurTintColor) !important;
+    opacity: 1 !important;
+    text-shadow: 0 0 5px var(--SmartThemeBlurTintColor) !important;
+    width: fit-content;
 }
 
 /* --- Dialogue Colorizer 自定義對話顏色 --- */

@@ -105,5 +105,7 @@
     "Fix Tablet Menu Layout": "修復平板選單佈局",
     "Optimized for tablet users to prevent menu layout issues. Note: Tablet support in SillyTavern is currently limited and may not address all issues": "修復平板橫放時，主要選單出現的問題。請注意：目前 SillyTavern 對平板電腦的支援有限，可能無法解決所有問題",
     "Enable Mobile Hidden Scrollbar": "在行動裝置上隱藏捲軸",
-    "Hides scrollbars for a clean mobile interface": "在行動裝置的螢幕上隱藏捲軸，提供更簡潔流暢的介面。"
+    "Hides scrollbars for a clean mobile interface": "在行動裝置的螢幕上隱藏捲軸，提供更簡潔流暢的介面。",
+    "Apply Theme Colors to More UI Elements": "將主題顏色應用於更多 UI 元素",
+    "Applies theme colors to more parts of the UI for a more personalized look": "將主題顏色應用於 UI 的更多部分，以實現更個性化的外觀"
 }
