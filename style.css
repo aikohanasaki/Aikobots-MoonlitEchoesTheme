@@ -42,7 +42,7 @@ body {
     /* !!! Important: Do Not Modify 不要修改 !!! */
     --topBarBlockSize: calc(var(--topBarIconSize) + var(--topBarBlockPadding) - 1px);
     --bottomInputAreaHeight: 115px;
-    --custom-echo-avatar: calc(var(--custom-ChatAvatar, 40px) + 12px);
+    --custom-echo-avatar: calc(var(--custom-ChatAvatar, 40px) + 10px);
 }
 @media screen and (max-width: 1000px) {
     :root {
@@ -776,8 +776,8 @@ input[type="range"]::-webkit-slider-thumb {
 #left-nav-panel,
 #right-nav-panel  {
     top: calc(var(--topBarBlockSize)) !important;
-    height: calc(100dvh - var(--topBarBlockSize)) !important;
     width: calc((100dvw - var(--sheldWidth)) / 2);
+    max-height: calc(100dvh - var(--topBarBlockSize));
 }
 
 #left-nav-panel,
@@ -947,10 +947,10 @@ input[type="range"]::-webkit-slider-thumb {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: calc(var(--custom-ChatAvatar, 40px) + 12px);
-            height: calc(var(--custom-ChatAvatar, 40px) + 12px);
-            max-width: calc(var(--custom-ChatAvatar, 40px) + 12px);
-            max-height: calc(var(--custom-ChatAvatar, 40px) + 12px);
+            width: calc(var(--custom-ChatAvatar, 40px) + 10px);
+            height: calc(var(--custom-ChatAvatar, 40px) + 10px);
+            max-width: calc(var(--custom-ChatAvatar, 40px) + 10px);
+            max-height: calc(var(--custom-ChatAvatar, 40px) + 10px);
             border: 1px solid var(--SmartThemeBodyColor) !important;
 
             img {
@@ -980,8 +980,7 @@ input[type="range"]::-webkit-slider-thumb {
             }
 
             @media screen and (max-width: 1000px) {
-                font-size: calc(var(--mainFontSize) * 1.05);
-                margin-left: -3px;
+                font-size: calc(var(--mainFontSize) * 1.2);
             }
         }
         .extraMesButtons {
@@ -994,11 +993,6 @@ input[type="range"]::-webkit-slider-thumb {
         .mes_edit_buttons {
             flex-wrap: wrap;
             gap: 5px;
-        }
-        .ch_name .flex-container {
-            @media screen and (max-width: 1000px) {
-                margin-bottom: 0 !important;
-            }
         }
         .timestamp {
             font-size: calc(var(--mainFontSize) * 0.7);
@@ -1024,6 +1018,10 @@ input[type="range"]::-webkit-slider-thumb {
             .edit_textarea {
                 padding: 8px;
                 margin-bottom: 5px;
+
+                @media screen and (max-width: 1000px) {
+                    width: 100% !important;
+                }
             }
         }
 
@@ -1188,34 +1186,6 @@ body.big-avatars #chat .mes[is_user="true"] {
         img {
             width: calc(var(--custom-ChatAvatar) * var(--big-avatar-width-factor));
             height: calc(var(--custom-ChatAvatar) * var(--big-avatar-height-factor));
-        }
-    }
-}
-body.big-avatars {
-    &.echostyle,
-    &.hushstyle,
-    &.whisperstyle {
-        #chat .mes {
-            .ch_name .flex-container {
-                margin-left: 3px !important;
-
-                @media screen and (max-width: 1000px) {
-                    margin-left: 5px !important;
-                }
-            }
-        }
-    }
-    &.echostyle {
-        #chat .mes[is_user="true"] {
-            .ch_name .flex-container {
-                margin-right: 3px !important;
-                margin-left: 0px !important;
-
-                @media screen and (max-width: 1000px) {
-                    margin-right: 5px !important;
-                    margin-left: 0px !important;
-                }
-            }
         }
     }
 }
@@ -1427,19 +1397,19 @@ body.echostyle #chat {
         .mesIDDisplay,
         .tokenCounterDisplay {
             display: inline-block;
-            transform: translateY(calc(var(--custom-ChatAvatar) * -0.375));
+            transform: translateY(calc(var(--custom-ChatAvatar) * -0.35));
         }
 
         /* Echo: User Message 回聲：使用者訊息 */
         &[is_user="true"] {
             .avatar {
                 margin-right: 0;
-                margin-left: 5px;
             }
             .mesAvatarWrapper {
                 flex-direction: row-reverse;
                 padding-right: 0 !important;
-                padding-left: 2%;
+                margin-left: 2%;
+                margin-right: 0;
             }
             .ch_name {
                 flex-direction: row-reverse;
@@ -1451,7 +1421,6 @@ body.echostyle #chat {
 
                 .flex-container {
                     flex-direction: row-reverse;
-                    margin-right: 5px;
                     margin-top: -0.5px;
                 }
             }
@@ -1462,7 +1431,6 @@ body.echostyle #chat {
                 position: relative;
                 right: 0;
                 left: auto;
-                margin-bottom: 10px;
                 border-radius: 10px;
                 overflow: hidden;
                 background-color: var(--SmartThemeUserMesBlurTintColor);
@@ -1565,8 +1533,6 @@ body.echostyle #chat {
     }
 
     .ch_name {
-        margin-left: calc(var(--custom-echo-avatar) + 5px + 8px);
-
         .name_text {
             display: inline-block !important;
             margin-right: 5px;
@@ -1762,7 +1728,6 @@ body.whisperstyle #chat {
     }
 
     .ch_name {
-        margin-left: calc(var(--custom-echo-avatar) + 5px + 8px);
         margin-bottom: 10px;
 
         .name_text {
@@ -1921,8 +1886,6 @@ body.hushstyle #chat {
     }
 
     .ch_name {
-        margin-left: calc(var(--custom-echo-avatar) + 5px + 8px);
-
         .name_text {
             display: inline-block !important;
             margin-right: 5px;
@@ -2242,8 +2205,6 @@ body.tidestyle #chat {
     }
 
     .ch_name {
-        margin-left: calc(var(--custom-echo-avatar) + 5px + 8px);
-
         .name_text {
             display: inline-block !important;
             margin-right: 5px;
@@ -2489,11 +2450,6 @@ body.ripplestyle {
         align-items: center;
         justify-content: center;
     }
-
-    >div:not(#quickPersona) {
-        width: unset;
-        margin-right: 10px;
-    }
 }
 
 /* --- Chat Bar Menu 聊天選單 --- */
@@ -2721,13 +2677,20 @@ body.waifuMode {
         background: var(--customBgColor1);
         transition: all 0.5s ease;
         border: 0px solid var(--SmartThemeBodyColor);
-        height: 40px;
+        min-height: 44px;
+
+        @media screen and (max-width: 1000px) {
+            min-height: 40px;
+        }
     }
 
     .select2_multi_sameline+span.select2-container .select2-selection--multiple {
         margin: 5px 0;
-        padding: unset;
-        height: 40px;
+        padding: 5px;
+
+        li {
+            margin-bottom: unset;
+        }
     }
 }
 
@@ -3081,24 +3044,46 @@ span.select2.select2-container {
 
 /* --- Quick Character Selection 快速角色選擇 --- */
 
-.hotswap.avatars_inline {
+#HotSwapWrapper .hotswap.avatars_inline {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    justify-content: center;
+    scroll-behavior: smooth;
+    max-height: calc(var(--avatar-base-height) + 2 * var(--avatar-base-border-radius));
+    -ms-overflow-style: none;
+    margin: 5px;
+    margin-right: 10px;
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+
     *:focus {
         outline: none;
     }
 
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-right: 30px;
-    scroll-behavior: smooth;
-    max-height: calc(var(--avatar-base-height) + 2 * var(--avatar-base-border-radius));
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
     &::-webkit-scrollbar {
         display: none;
     }
+
+    @media screen and (max-width: 1000px) {
+        margin-right: 0;
+        justify-content: flex-start;
+    }
+}
+body.big-avatars #HotSwapWrapper .hotswap.avatars_inline {
+    max-height: calc(var(--avatar-base-width) * var(--big-avatar-width-factor) + 35px)
+}
+
+#HotSwapWrapper:hover .hotswap.avatars_inline {
+    max-height: 25dvh !important;
+    overflow: auto;
+    transition: all 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+    @media screen and (max-width: 1000px) {
+        max-height: 30dvh !important;
+    }
+}
+#HotSwapWrapper:not(:hover) .hotswap.avatars_inline {
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* --- Character/Group Names 角色／群組名稱 --- */
@@ -3218,6 +3203,12 @@ body:not(.charListGrid) {
 
     .character_name_block {
         margin-bottom: 0;
+    }
+}
+body:not(.charListGrid).big-avatars {
+    .bogus_folder_select .avatar,
+    .character_select .avatar {
+        margin: unset;
     }
 }
 
@@ -3539,8 +3530,6 @@ body.whisperstyle #chat {
     #WorldInfo,
     #logprobsViewer,
     #movingDivs > div {
-        min-height: calc(100dvh - var(--topBarBlockSize) + 5px) !important;
-        height: calc(100dvh - var(--topBarBlockSize) + 5px) !important;
         min-width: 100% !important;
         padding: 15px !important;
         border: 0;
@@ -3609,12 +3598,65 @@ body.tidestyle {
         margin-top: 10px !important;
     }
 }
+body.bubblechat {
+    #chat .mes[mesid="0"] .mes_block {
+        margin-top: 10px;
+    }
+}
 
+/* 角色名稱容器修正 */
 body.echostyle,
 body.whisperstyle,
 body.hushstyle,
 body.tidestyle {
-    #chat .mes[is_user="true"] .ch_name {
-        margin-top: -0.5px;
+    #chat .ch_name {
+        margin-top: 3px;
+        margin-left: calc(var(--custom-echo-avatar) + 10px);
+
+        @media screen and (max-width: 1000px) {
+            margin-left: calc(var(--custom-echo-avatar) + 11px)
+        }
+    }
+}
+body:not(.ripplestyle) .mes .ch_name .flex-container {
+    @media screen and (max-width: 1000px) {
+        margin-bottom: 0 !important;
+    }
+}
+
+body.big-avatars.echostyle #chat {
+    .ch_name {
+        margin-top: -22px !important;
+    }
+    .mesAvatarWrapper {
+        margin-bottom: 20px;
+    }
+    .mes_text {
+        margin-bottom: 15px !important;
+    }
+    .mes_timer, .mesIDDisplay, .tokenCounterDisplay {
+        transform: unset !important;
+        margin-bottom: 8px;
+    }
+
+    @media screen and (max-width: 1000px) {
+        .mes[is_user="false"] .ch_name {
+            padding-left: 6px;
+        }
+        .mes[is_user="true"] .ch_name {
+            padding-right: 6px;
+        }
+    }
+}
+
+body.big-avatars.whisperstyle #chat,
+body.big-avatars.hushstyle #chat,
+body.big-avatars.tidestyle #chat {
+    .mes_timer, .mesIDDisplay, .tokenCounterDisplay {
+        transform: unset !important;
+    }
+    .ch_name {
+        margin-left: calc(var(--custom-echo-avatar) + 18px);
+        margin-bottom: 10px;
     }
 }

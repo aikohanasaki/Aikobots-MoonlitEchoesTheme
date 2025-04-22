@@ -10,7 +10,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme 月下回聲';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.5.4";
+const THEME_VERSION = "2.5.5";
 
 import { t } from '../../../i18n.js';
 
@@ -313,7 +313,6 @@ const themeCustomSettings = [
                     border-top: 1.25px solid color-mix(in srgb, var(--SmartThemeBodyColor) 50%, transparent) !important;
 
                     &:focus-within {
-                        bborder: 0 !important;
                         border-top: 1.25px solid var(--customThemeColor) !important;
                         box-shadow: 0 0 5px var(--customThemeColor);
                     }
