@@ -3067,6 +3067,7 @@ span.select2.select2-container {
     @media screen and (max-width: 1000px) {
         margin-right: 0;
         justify-content: flex-start;
+        transition: all 0.5s ease-in-out;
     }
 }
 body.big-avatars #HotSwapWrapper .hotswap.avatars_inline {
@@ -3080,10 +3081,14 @@ body.big-avatars #HotSwapWrapper .hotswap.avatars_inline {
 
     @media screen and (max-width: 1000px) {
         max-height: 30dvh !important;
+        transition: all 0.5s ease-in-out !important;
     }
 }
 #HotSwapWrapper:not(:hover) .hotswap.avatars_inline {
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    @media screen and (max-width: 1000px) {
+        transition: all 0.5s ease-in-out;
+    }
 }
 
 /* --- Character/Group Names 角色／群組名稱 --- */

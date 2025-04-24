@@ -10,7 +10,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme 月下回聲';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.5.5";
+const THEME_VERSION = "2.5.6";
 
 import { t } from '../../../i18n.js';
 
@@ -406,6 +406,39 @@ const themeCustomSettings = [
                 @media screen and (max-width: 1000px) {
                     #form_create {
                         padding-right: 0 !important;
+                    }
+                }
+            }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "enableMobile-horizontal_hotswap",
+        "displayText": t`Enable Horizontal HotSwap Scroll on Mobile`,
+        "default": false,
+        "category": "features",
+        "description": t`Allows horizontal scrolling for the quick character selection menu (#HotSwapWrapper) on mobile`,
+        "cssBlock":  `
+            @media screen and (max-width: 1000px) {
+                body.big-avatars #HotSwapWrapper .hotswap.avatars_inline {
+                    max-height: unset;
+                }
+                #HotSwapWrapper:hover .hotswap.avatars_inline {
+                    max-height: unset;
+                    overflow: unset;
+                    transition: unset;
+                }
+                #HotSwapWrapper:not(:hover) .hotswap.avatars_inline {
+                    transition: unset;
+                }
+                .hotswap.avatars_inline {
+                    flex-wrap: nowrap !important;
+                    overflow-x: auto !important;
+                    overflow-y: hidden !important;
+                    padding-right: 30px !important;
+
+                    *:focus {
+                        outline: none;
                     }
                 }
             }
