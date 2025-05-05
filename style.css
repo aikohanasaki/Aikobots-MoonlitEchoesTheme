@@ -218,7 +218,6 @@ ol ol ::marker {
 }
 li {
     padding-left: 5px;
-    margin-bottom: 5px;
 }
 
 /* --- Code Tags 程式碼標籤 --- */
@@ -472,7 +471,11 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Expand Content 展開內容 */
 .inline-drawer-content {
-    padding: 5px 10px !important;
+    padding: 5px !important;
+
+        @media screen and (max-width: 1000px) {
+            padding: 10px 0 !important;
+        }
     }
 .standoutHeader {
     ~ .inline-drawer-content {
@@ -798,7 +801,6 @@ input[type="range"]::-webkit-slider-thumb {
 #right-nav-panel {
     background-color: var(--SmartThemeBlurTintColor);
     padding: 1.2%;
-    overflow-y: scroll;
     position: absolute;
     top: calc(var(--topBarBlockSize));
     border-radius: 0;
@@ -951,7 +953,7 @@ input[type="range"]::-webkit-slider-thumb {
             height: calc(var(--custom-ChatAvatar, 40px) + 10px);
             max-width: calc(var(--custom-ChatAvatar, 40px) + 10px);
             max-height: calc(var(--custom-ChatAvatar, 40px) + 10px);
-            border: 1px solid var(--SmartThemeBodyColor) !important;
+            border: 1px solid var(--SmartThemeBodyColor);
 
             img {
                 width: var(--custom-ChatAvatar, 40px);
@@ -962,10 +964,6 @@ input[type="range"]::-webkit-slider-thumb {
             }
         }
         /* User Avatar 使用者頭像 */
-        &[is_user="true"] .avatar {
-            border: 1px solid var(--customThemeColor) !important;
-        }
-
         .mesAvatarWrapper {
             padding-right: 0;
             margin-right: calc(var(--customMesPadding) / 2);
@@ -1035,12 +1033,8 @@ input[type="range"]::-webkit-slider-thumb {
     .mes[is_user="true"] {
         background-color: unset !important;
 
-        .name_text {
-            color: var(--customThemeColor)!important;
-        }
-
         .mes_block {
-            background-color: var(--SmartThemeUserMesBlurTintColor) !important;
+            background-color: var(--SmartThemeUserMesBlurTintColor);
         }
     }
 
@@ -1100,12 +1094,7 @@ input[type="range"]::-webkit-slider-thumb {
 .mes_text {
     /* General Text 一般內文 */
     p {
-        margin: 8px 0;
-
-        strong,
-        strong em {
-            color: var(--customThemeColor);
-        }
+        margin: 5px 0;
     }
     /* Quoted Text 引號文字 */
     q {
@@ -1119,7 +1108,7 @@ input[type="range"]::-webkit-slider-thumb {
     /* Hyperlinks 超連結 */
     a {
         color: var(--customThemeColor);
-        transition: all 0.5s ease;
+        transition: all 0.8s ease;
         font-weight: bold;
         padding-bottom: 1.5px;
         border-bottom: 1px solid var(--customThemeColor);
@@ -1441,7 +1430,7 @@ body.echostyle #chat {
                     top: 0;
                     left: 0;
                     width: var(--custom-EchoAvatarWidth, 25%);
-                    height: var(--custom-EchoAvatarHeight, 350px);
+                    height: var(--custom-EchoAvatarHeight, 30px);
                     background: var(--mes-avatar-url) center no-repeat;
                     background-size: cover;
                     background-attachment: fixed;
@@ -1459,12 +1448,16 @@ body.echostyle #chat {
                     mask-composite: intersect;
                     border-radius: 10px 0 0 10px;
                     z-index: 3;
+
+                    @media screen and (max-width: 1000px) {
+                        width: var(--custom-EchoAvatarMobileWidth, 25%);
+                        height: var(--custom-EchoAvatarMobileHeight, 250px);
+                    }
                 }
             }
             .name_text {
                 margin-right: 0;
                 text-align: right;
-                color: var(--customThemeColor) !important;
             }
 
             .mes_text,
@@ -1473,7 +1466,7 @@ body.echostyle #chat {
                 background-color: var(--SmartThemeUserMesBlurTintColor);
 
                 @media screen and (max-width: 1000px) {
-                    padding: 10px 20px !important;
+                    padding: 10px 20px 10px var(--custom-EchoAvatarMobileWidth, 25%) !important;
                 }
             }
         }
@@ -1489,7 +1482,7 @@ body.echostyle #chat {
                     top: 0;
                     right: 0;
                     width: var(--custom-EchoAvatarWidth, 25%);
-                    height: var(--custom-EchoAvatarHeight, 350px);
+                    height: var(--custom-EchoAvatarHeight, 30px);
                     background: var(--mes-avatar-url) center no-repeat;
                     background-size: cover;
                     background-attachment: fixed;
@@ -1507,6 +1500,11 @@ body.echostyle #chat {
                     mask-composite: intersect;
                     border-radius: 0 10px 10px 0;
                     z-index: 3;
+
+                    @media screen and (max-width: 1000px) {
+                        width: var(--custom-EchoAvatarMobileWidth, 25%);
+                        height: var(--custom-EchoAvatarMobileHeight, 250px);
+                    }
                 }
             }
             .mes_text,
@@ -1515,27 +1513,9 @@ body.echostyle #chat {
                 background-color: var(--SmartThemeBotMesBlurTintColor);
 
                 @media screen and (max-width: 1000px) {
-                    padding: 10px 20px !important;
+                    padding: 10px var(--custom-EchoAvatarMobileWidth, 25%) 10px 20px !important;
                 }
             }
-        }
-    }
-
-    @media screen and (max-width: 1000px) {
-        .mes_text,
-        .last_mes .mes_text {
-            padding: 10px 20px !important;
-            min-height: unset !important;
-        }
-        .mes_text::before {
-            display: none !important;
-        }
-    }
-
-    .ch_name {
-        .name_text {
-            display: inline-block !important;
-            margin-right: 5px;
         }
     }
 
@@ -1795,7 +1775,7 @@ body.whisperstyle #chat {
     }
 
     .menu_button {
-        background: color-mix(in srgb, var(--SmartThemeBlurTintColor) 25%, transparent) !important;
+        background: color-mix(in srgb, var(--SmartThemeBlurTintColor) 25%, transparent);
     }
 }
 
@@ -1980,7 +1960,7 @@ body.ripplestyle #chat {
                 min-height: calc(var(--customRippleAvatarWidth) * var(--customRippleAvatarRatio));
                 aspect-ratio: 2 / 3;
                 border: none !important;
-                margin-right: 5px;
+                margin-right: unset;
                 border-radius: 15px 0 0 0 !important;
                 overflow: hidden;
                 flex: unset !important;
@@ -2194,7 +2174,6 @@ body.tidestyle #chat {
             .name_text {
                 margin-right: 0;
                 text-align: right;
-                color: var(--customThemeColor) !important;
             }
 
             p {
@@ -2808,6 +2787,24 @@ span.select2.select2-container {
         border: 0;
         color: var(--SmartThemeBodyColor);
         border-bottom: 1.25px solid var(--SmartThemeBodyColor);
+    }
+
+    @media screen and (max-width: 1000px) {
+        div[name="userSettingsRowOne"] {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        div[name="userSettingsRowOne"] > div:first-child {
+            flex: 0 0 100%;
+        }
+
+        #ui_language_select {
+            width: 300px;
+        }
+        #version_display {
+            padding: 5px 0;
+            margin-left: 5px;
+        }
     }
 }
 
@@ -3601,11 +3598,19 @@ body.ripplestyle,
 body.tidestyle {
     #chat .mes[mesid="0"] {
         margin-top: 10px !important;
+
+        @media screen and (max-width: 1000px) {
+            margin-top: 5px !important;
+        }
     }
 }
 body.bubblechat {
     #chat .mes[mesid="0"] .mes_block {
         margin-top: 10px;
+
+        @media screen and (max-width: 1000px) {
+            margin-top: 5px !important;
+        }
     }
 }
 
@@ -3628,7 +3633,6 @@ body:not(.ripplestyle) .mes .ch_name .flex-container {
         margin-bottom: 0 !important;
     }
 }
-
 body.big-avatars.echostyle #chat {
     .ch_name {
         margin-top: -22px !important;
@@ -3653,7 +3657,6 @@ body.big-avatars.echostyle #chat {
         }
     }
 }
-
 body.big-avatars.whisperstyle #chat,
 body.big-avatars.hushstyle #chat,
 body.big-avatars.tidestyle #chat {
@@ -3664,4 +3667,46 @@ body.big-avatars.tidestyle #chat {
         margin-left: calc(var(--custom-echo-avatar) + 18px);
         margin-bottom: 10px;
     }
+}
+
+/* 手機端 QR 位置調換 */
+@media screen and (max-width: 1000px) {
+    #send_form.compact {
+        flex-direction: column;
+    }
+
+    #file_form {
+        order: 1 !important;
+    }
+    #nonQRFormItems {
+        order: 2 !important;
+    }
+    #qr--bar {
+        order: 3 !important;
+    }
+
+    #leftSendForm {
+        padding-left: 6px;
+    }
+    #rightSendForm {
+        padding-right: 6px;
+    }
+
+    #nonQRFormItems {
+        #send_textarea {
+            padding: 2px 6px;
+            margin-top: 3px;
+        }
+    }
+}
+
+/* 小系統訊息修正 */
+.mes.smallSysMes {
+    .mesAvatarWrapper {
+        display: none !important;
+    }
+}
+.mes.smallSysMes::before,
+.mes.smallSysMes::after {
+    display: none !important;
 }

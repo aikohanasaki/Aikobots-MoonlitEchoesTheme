@@ -1,14 +1,17 @@
 /* --- Quick Replies 快速回覆 --- */
 #qr--bar {
+    margin-top: 8px !important;
+
+    @media screen and (max-width: 1000px) {
+        max-height: 35px;
+        overflow: auto;
+        margin-top: 3px !important;
+        margin-bottom: 5px !important;
+    }
+
     > .qr--buttons {
         gap: 2px 5px !important;
-        padding: 5px !important;
-
-        @media screen and (max-width: 1000px) {
-            max-height: 60px;
-            overflow: auto;
-            margin-bottom: 5px !important;
-        }
+        padding: 0 5px !important;
 
         &.qr--color {
             background-color: unset;
@@ -16,13 +19,35 @@
         }
 
         .qr--button {
-        font-size: calc(var(--mainFontSize) * 0.9);
+            font-size: calc(var(--mainFontSize) * 0.9);
+            margin: 0 !important;
+
+            @media screen and (max-width: 1000px) {
+                margin: 2.5px 0 !important;
+            }
         }
     }
     > .qr--buttons .qr--button {
         font-size: calc(var(--mainFontSize) * 0.9);
         font-weight: 500;
         border: 1px solid color-mix(in srgb, var(--SmartThemeBodyColor) 50%, transparent);
+
+        @media screen and (max-width: 1000px) {
+            font-size: calc(var(--mainFontSize) * 0.85);
+            padding: 3px;
+        }
+    }
+    .qr--button-expander {
+        margin-left: 3px;
+
+        @media screen and (max-width: 1000px) {
+            width: 20px;
+        }
+
+        .qr--button-expander {
+            border-left: 1px solid;
+            opacity: 0.8;
+        }
     }
 }
 
@@ -45,6 +70,10 @@
     background-color: var(--SmartThemeBlurTintColor) !important;
     backdrop-filter: blur(calc(var(--SmartThemeBlurStrength))) !important;
     -webkit-backdrop-filter: blur(calc(var(--SmartThemeBlurStrength))) !important;
+
+    @media screen and (max-width: 1000px) {
+        margin-left: -50px;
+    }
 }
 .ctx-sub-menu {
     opacity: 1 !important;
@@ -58,7 +87,30 @@
         font-size: var(--mainFontSize);
     }
 }
-
+.ctx-item + .ctx-header {
+    border-top: 1px dashed color-mix(in srgb, var(--SmartThemeBodyColor) 25%, transparent) !important;
+    margin-top: 5px;
+    padding-top: 10px;
+}
+.list-group .list-group-item.ctx-header {
+    opacity: 0.8 !important;
+    letter-spacing: 0.2px;
+}
+.ctx-blocker li:hover {
+    color: var(--SmartThemeBodyColor);
+}
+.list-group .list-group-item.ctx-header,
+.ctx-item .qr--button-label{
+    @media screen and (max-width: 1000px) {
+        font-size: calc(var(--mainFontSize) * 0.95) !important;
+        padding-bottom: 2.5px;
+    }
+}
+.list-group .list-group-item.ctx-item {
+    @media screen and (max-width: 1000px) {
+        padding: 2px 5px !important;
+    }
+}
 
 /* --- Chat Info 聊天資訊 --- */
 
@@ -621,5 +673,43 @@ body.bubblechat .qvink_memory_display {
     label {
         font-weight: 600;
         letter-spacing: 0.8px;
+    }
+}
+
+/* --- SimpleQRBarToggle 快速回覆彈出按鈕 --- */
+
+#qr--bar.sqrbt-toggle_button-collapsed {
+    margin-top: unset !important;
+}
+#qr--bar.sqrbt-toggle_button-expanded .qr--buttons {
+    gap: 8px 0 !important;
+}
+#qr--bar.sqrbt-toggle_button-expanded > .qr--buttons {
+    margin:unset !important;
+}
+#qr--bar.sqrbt-toggle_button-expanded > .qr--buttons.qr--borderColor,
+#qr--bar.sqrbt-toggle_button-collapsed > .qr--buttons.qr--borderColor {
+    margin-top: 2px !important;
+
+    @media screen and (max-width: 1000px) {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+#qr--bar.sqrbt-toggle_button-expanded .qr--buttons .qr--button {
+    @media screen and (max-width: 1000px) {
+        margin: 0px 2px !important;
+    }
+}
+#qr_toggle_button {
+    font-size: calc(var(--mainFontSize) * 0.9);
+    width: calc(var(--mainFontSize) * 0.9) !important;
+    height: calc(var(--mainFontSize) * 0.9) !important;
+    margin-right: calc((var(--mainFontSize) * 0.9) / 2) !important;
+
+    @media screen and (max-width: 1000px) {
+        width: var(--bottomFormBlockSize) !important;
+        height: var(--bottomFormBlockSize) !important;
+        margin-right: unset !important;
     }
 }

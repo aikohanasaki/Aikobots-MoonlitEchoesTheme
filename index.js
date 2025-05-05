@@ -10,7 +10,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme 月下回聲';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.5.6";
+const THEME_VERSION = "2.6.0";
 
 import { t } from '../../../i18n.js';
 
@@ -189,9 +189,25 @@ const themeCustomSettings = [
         "type": "text",
         "varId": "custom-EchoAvatarHeight",
         "displayText": t`[Echo] Message Background Avatar Height`,
-        "default": "350px",
+        "default": "300px",
         "category": "chat",
         "description": t`Height of character avatars in the message background for the Echo style`
+    },
+    {
+        "type": "text",
+        "varId": "custom-EchoAvatarMobileWidth",
+        "displayText": t`[Echo] Mobile Message Background Avatar Width`,
+        "default": "25%",
+        "category": "chat",
+        "description": t`Width of character avatars in the message background for the Echo style on mobile devices`
+    },
+    {
+        "type": "text",
+        "varId": "custom-EchoAvatarMobileHeight",
+        "displayText": t`[Echo] Mobile Message Background Avatar Height`,
+        "default": "250px",
+        "category": "chat",
+        "description": t`Height of character avatars in the message background for the Echo style on mobile devices`
     },
     {
         "type": "text",
@@ -305,11 +321,11 @@ const themeCustomSettings = [
                 #send_form {
                     margin-bottom: 0 !important;
                     min-height: 100% !important;
-                    padding: 5px 20px;
-                    padding-top: 10px;
-                    border-radius: 15px 15px 0 0 !important;
+                    padding: 5px 18px;
+                    padding-top: 8px;
+                    border-radius: 10px 10px 0 0 !important;
                     transition: all 0.5s ease;
-                    border: 0 !important;
+                    border: 1px solid var(--SmartThemeBlurTintColor)  !important;
                     border-top: 1.25px solid color-mix(in srgb, var(--SmartThemeBodyColor) 50%, transparent) !important;
 
                     &:focus-within {
@@ -344,7 +360,8 @@ const themeCustomSettings = [
                         grid-area: textarea;
                         box-sizing: border-box;
                         width: 100%;
-                        padding: 5px 0;
+                        padding: 5px 6px;
+                        margin-top: 3px;
                     }
                 }
 
@@ -481,6 +498,38 @@ const themeCustomSettings = [
     },
     {
         "type": "checkbox",
+        "varId": "hideMobileEchoBackground",
+        "displayText": t`Hide Mobile Echo-Style Message Background`,
+        "default": false,
+        "category": "features",
+        "description": t`Hide the echo-style background illustration for character messages on mobile devices`,
+        "cssBlock": `
+            body.echostyle #chat {
+                @media screen and (max-width: 1000px) {
+                    .mes[is_user="true"],
+                    .mes[is_user="false"] {
+                        .mes_text,
+                        .last_mes .mes_text {
+                            padding: 10px 20px !important;
+                            min-height: unset !important;
+                        }
+                    }
+                    .mes_text::before {
+                        display: none !important;
+                    }
+                }
+
+                .ch_name {
+                    .name_text {
+                        display: inline-block !important;
+                        margin-right: 5px;
+                    }
+                }
+            }
+        `
+    },
+    {
+        "type": "checkbox",
         "varId": "enableMessageDetails",
         "displayText": t`Hide Additional Message Details`,
         "default": false,
@@ -577,22 +626,32 @@ const themeCustomSettings = [
     },
     {
         "type": "checkbox",
-        "varId": "increaseMobileInputPadding",
-        "displayText": t`Increase Chat Input Field Spacing`,
+        "varId": "increaseDesktopInputSpacing",
+        "displayText": t`Increase Chat Input Field Spacing on Desktop & Tablet`,
         "default": false,
         "category": "features",
-        "description": t`Add extra bottom padding to chat input fields, especially suitable for tablets and mobile phones (using PWA, etc.)`,
+        "description": t`Add extra bottom margin to chat input fields on larger screens (tablets and desktops)`,
         "cssBlock": `
             #form_sheld {
-                margin-bottom: 10px;
+                margin-bottom: 5px;
 
                 @media only screen and (min-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (pointer: fine) {
-                    margin-bottom: 20px;
+                    margin-bottom: 22.5px;
                 }
             }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "increaseMobileInputSpacing",
+        "displayText": t`Increase Chat Input Field Spacing on Mobile`,
+        "default": false,
+        "category": "features",
+        "description": t`Add extra bottom padding to chat input fields on mobile devices (screen width ≤ 1000px)`,
+        "cssBlock": `
             @media screen and (max-width: 1000px) {
                 #send_form {
-                    padding-bottom: 20px;
+                    padding-bottom: 22.5px;
                 }
             }
         `
@@ -612,6 +671,55 @@ const themeCustomSettings = [
             .fillRight {
                 width: 100dvw !important;
                 min-width: 100dvw !important;
+            }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "disableAllBorderRadius",
+        "displayText": t`Disable All Border Radius`,
+        "default": false,
+        "category": "features",
+        "description": t`Completely disable all border-radius and outline-radius effects throughout the UI`,
+        "cssBlock": `
+            *, *::before, *::after {
+                border-radius: 0 !important;
+                border-top-left-radius: 0 !important;
+                border-top-right-radius: 0 !important;
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                /* Handle possible outline radius */
+                outline-radius: 0 !important;
+                -moz-outline-radius: 0 !important;
+            }
+            body.whisperstyle #chat .mes::before {
+                border-radius: 0 !important;
+            }
+            body.ripplestyle #chat .mes .mesAvatarWrapper .avatar,
+            body.ripplestyle #chat .mes .mesAvatarWrapper .avatar img {
+                border-radius: 0 !important;
+            }
+            @media screen and (max-width: 1000px) {
+                #send_form {
+                    border-radius: 0 !important;
+                }
+            }
+            svg * {
+                rx: 0 !important;
+                ry: 0 !important;
+            }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "hideAvatarBorder",
+        "displayText": t`Hide Avatar Border`,
+        "default": false,
+        "category": "features",
+        "description": t`Hide the border around character avatars in chat messages`,
+        "cssBlock": `
+            #chat .mes .avatar {
+                border: unset !important;
             }
         `
     }
