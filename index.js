@@ -10,7 +10,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme 月下回聲';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.6.0";
+const THEME_VERSION = "2.6.1";
 
 import { t } from '../../../i18n.js';
 
@@ -652,6 +652,46 @@ const themeCustomSettings = [
             @media screen and (max-width: 1000px) {
                 #send_form {
                     padding-bottom: 22.5px;
+                }
+            }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "moveQRsBelowInputMobile",
+        "displayText": t`Move QRs Bar Below Input on Mobile`,
+        "default": true,
+        "category": "features",
+        "description": t`On mobile devices (screen width ≤ 1000px), move the QRs menu below the chat input to avoid interference from message input`,
+        "cssBlock": `
+            /* 手機端 QR 位置調換 */
+            @media screen and (max-width: 1000px) {
+                #send_form.compact {
+                    flex-direction: column;
+                }
+
+                #file_form {
+                    order: 1 !important;
+                }
+                #nonQRFormItems {
+                    order: 2 !important;
+                }
+                #qr--bar {
+                    order: 3 !important;
+                }
+
+                #leftSendForm {
+                    padding-left: 6px;
+                }
+                #rightSendForm {
+                    padding-right: 6px;
+                }
+
+                #nonQRFormItems {
+                    #send_textarea {
+                        padding: 2px 6px;
+                        margin-top: 3px;
+                    }
                 }
             }
         `

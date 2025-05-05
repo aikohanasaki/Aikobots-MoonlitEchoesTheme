@@ -3669,37 +3669,6 @@ body.big-avatars.tidestyle #chat {
     }
 }
 
-/* 手機端 QR 位置調換 */
-@media screen and (max-width: 1000px) {
-    #send_form.compact {
-        flex-direction: column;
-    }
-
-    #file_form {
-        order: 1 !important;
-    }
-    #nonQRFormItems {
-        order: 2 !important;
-    }
-    #qr--bar {
-        order: 3 !important;
-    }
-
-    #leftSendForm {
-        padding-left: 6px;
-    }
-    #rightSendForm {
-        padding-right: 6px;
-    }
-
-    #nonQRFormItems {
-        #send_textarea {
-            padding: 2px 6px;
-            margin-top: 3px;
-        }
-    }
-}
-
 /* 小系統訊息修正 */
 .mes.smallSysMes {
     .mesAvatarWrapper {
