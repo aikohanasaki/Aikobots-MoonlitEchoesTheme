@@ -323,7 +323,7 @@ const themeCustomSettings = [
                     min-height: 100% !important;
                     padding: 5px 18px;
                     padding-top: 8px;
-                    border-radius: 10px 10px 0 0 !important;
+                    border-radius: 15px 15px 0 0 !important;
                     transition: all 0.5s ease;
                     border: 1px solid var(--SmartThemeBlurTintColor)  !important;
                     border-top: 1.25px solid color-mix(in srgb, var(--SmartThemeBodyColor) 50%, transparent) !important;
