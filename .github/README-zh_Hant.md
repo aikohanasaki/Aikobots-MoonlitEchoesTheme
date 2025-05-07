@@ -51,7 +51,6 @@ https://github.com/RivelleDays/SillyTavern-MoonlitEchoesTheme
 #### 2. 更新 `/SillyTavern/config.yaml` 的縮圖設定
 雖然先前建議直接禁用縮圖功能，但這可能會影響行動裝置的圖片載入速度。以下是目前推薦並經過測試的設定：
 ```
-thumbnails:
  thumbnails:
     enabled: true
     format: png
