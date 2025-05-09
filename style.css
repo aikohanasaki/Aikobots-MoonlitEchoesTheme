@@ -207,7 +207,7 @@ h4 {
 ol, ul {
     margin-block-start: 10px;
     margin-block-end: 10px;
-    margin-inline-start: 0px;
+    margin-inline-start: 3px;
     margin-inline-end: 0px;
     padding-inline-start: 15px;
     unicode-bidi: isolate;
@@ -1034,7 +1034,7 @@ input[type="range"]::-webkit-slider-thumb {
         background-color: unset !important;
 
         .mes_block {
-            background-color: var(--SmartThemeUserMesBlurTintColor);
+            background-color: var(--SmartThemeUserMesBlurTintColor) !important;
         }
     }
 
@@ -1094,7 +1094,7 @@ input[type="range"]::-webkit-slider-thumb {
 .mes_text {
     /* General Text 一般內文 */
     p {
-        margin: 5px 0;
+        margin: var(--mesParagraphSpacing) 0;
     }
     /* Quoted Text 引號文字 */
     q {
@@ -3598,19 +3598,6 @@ body.ripplestyle,
 body.tidestyle {
     #chat .mes[mesid="0"] {
         margin-top: 10px !important;
-
-        @media screen and (max-width: 1000px) {
-            margin-top: 5px !important;
-        }
-    }
-}
-body.bubblechat {
-    #chat .mes[mesid="0"] .mes_block {
-        margin-top: 10px;
-
-        @media screen and (max-width: 1000px) {
-            margin-top: 5px !important;
-        }
     }
 }
 

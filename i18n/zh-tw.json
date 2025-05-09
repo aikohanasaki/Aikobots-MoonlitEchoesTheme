@@ -123,5 +123,12 @@
     "Hide Avatar Border": "隱藏角色頭像邊框",
     "Hide the border around character avatars in chat messages": "隱藏聊天訊息中角色的頭像邊框",
     "Move QRs Bar Below Input on Mobile": "在行動裝置上將 QRs 選單移至輸入欄位下方",
-    "On mobile devices (screen width ≤ 1000px), move the QRs menu below the chat input to avoid interference from message input": "在行動裝置（螢幕寬度 ≤ 1000px）上，將 QRs 選單改到下方。避免受訊息輸入影響。"
+    "On mobile devices (screen width ≤ 1000px), move the QRs menu below the chat input to avoid interference from message input": "在行動裝置（螢幕寬度 ≤ 1000px）上，將 QRs 選單改到下方。避免受訊息輸入影響。",
+    "Mobile QRs Bar Height": "行動裝置 QRs 選單高度",
+    "Sets the maximum number of visible rows in the QRs bar on mobile devices (supports scrolling)": "設定行動裝置上 QRs 選單的最大可見行數（支持捲軸）",
+    "Compact (1 row)": "緊湊（1 行）",
+    "Default (2 rows)": "預設（2 行）",
+    "Extended (3 rows)": "寬鬆（3 行）",
+    "Message Paragraph Spacing": "訊息段落間距",
+    "Sets the spacing between paragraphs in chat messages (e.g. 0.5em, 1em)": "設定聊天訊息的段落間距（如：0.5em、1em）"
 }

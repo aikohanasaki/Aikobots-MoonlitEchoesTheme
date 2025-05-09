@@ -10,7 +10,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme 月下回聲';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.6.1";
+const THEME_VERSION = "2.6.2";
 
 import { t } from '../../../i18n.js';
 
@@ -171,11 +171,41 @@ const themeCustomSettings = [
     },
     {
         "type": "text",
+        "varId": "mesParagraphSpacing",
+        "displayText": t`Message Paragraph Spacing`,
+        "default": "0.5em",
+        "category": "chat",
+        "description": t`Sets the spacing between paragraphs in chat messages (e.g. 0.5em, 1em)`
+    },
+    {
+        "type": "text",
         "varId": "customlastInContext",
         "displayText": t`Maximum Context Marker Style`,
         "default": "4px solid var(--customThemeColor)",
         "category": "chat",
         "description": t`Line style for the maximum context marker`
+    },
+    {
+        "type": "select",
+        "varId": "mobileQRsBarHeight",
+        "displayText": t`Mobile QRs Bar Height`,
+        "default": "2",
+        "options": [
+            {
+                "label": t`Compact (1 row)`,
+                "value": "1"
+            },
+            {
+                "label": t`Default (2 rows)`,
+                "value": "2"
+            },
+            {
+                "label": t`Extended (3 rows)`,
+                "value": "3"
+            }
+        ],
+        "category": "chat",
+        "description": t`Sets the maximum number of visible rows in the QRs bar on mobile devices (supports scrolling)`
     },
     {
         "type": "text",
@@ -651,7 +681,7 @@ const themeCustomSettings = [
         "cssBlock": `
             @media screen and (max-width: 1000px) {
                 #send_form {
-                    padding-bottom: 22.5px;
+                    padding-bottom: 23px;
                 }
             }
         `

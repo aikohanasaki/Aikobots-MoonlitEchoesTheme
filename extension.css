@@ -3,7 +3,7 @@
     margin-top: 8px !important;
 
     @media screen and (max-width: 1000px) {
-        max-height: 35px;
+        max-height: calc(36px * var(--mobileQRsBarHeight));
         overflow: auto;
         margin-top: 3px !important;
         margin-bottom: 5px !important;
@@ -108,7 +108,7 @@
 }
 .list-group .list-group-item.ctx-item {
     @media screen and (max-width: 1000px) {
-        padding: 2px 5px !important;
+        padding: 1px 5px !important;
     }
 }
 
@@ -685,11 +685,11 @@ body.bubblechat .qvink_memory_display {
     gap: 8px 0 !important;
 }
 #qr--bar.sqrbt-toggle_button-expanded > .qr--buttons {
-    margin:unset !important;
+    margin: unset !important;
 }
 #qr--bar.sqrbt-toggle_button-expanded > .qr--buttons.qr--borderColor,
 #qr--bar.sqrbt-toggle_button-collapsed > .qr--buttons.qr--borderColor {
-    margin-top: 2px !important;
+    margin-top: 3px !important;
 
     @media screen and (max-width: 1000px) {
         margin-left: 0 !important;
