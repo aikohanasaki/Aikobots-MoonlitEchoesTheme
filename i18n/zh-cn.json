@@ -82,7 +82,7 @@
     "Hide Additional Message Details": "隐藏信息额外资料详情",
     "Message additional details (name, ID, time, token counter, etc.) show only on hover or click": "仅在光标悬停或点选时显示信息额外详情（角色名称、ID、时间、符元计数器⋯等）",
     "Preset \"${0}\" deleted successfully": "已成功删除「${0}」月下回声主题默认设定档",
-    "[Advanced] Message Details Animation Duration": "[进阶设定] 信息详情动画时长",
+    "Message Details Animation Duration": "信息详情动画时长",
     "Controls the animation speed for message details appearing/disappearing (e.g. 0.5s, 1.2s)": "控制信息额外详细资讯出现／消失的动画速度（如：0.5 秒、1.2 秒）",
     "Scrollbar Color": "卷轴颜色",
     "The scrollbar color on SillyTavern": "SillyTavern 上的卷轴颜色",
@@ -130,5 +130,17 @@
     "Default (2 rows)": "默认（2 行）",
     "Extended (3 rows)": "宽松（3 行）",
     "Message Paragraph Spacing": "信息段落间距",
-    "Sets the spacing between paragraphs in chat messages (e.g. 0.5em, 1em)": "设定聊天信息的段落间距（如：0.5em、1em）"
+    "Sets the spacing between paragraphs in chat messages (e.g. 0.5em, 1em)": "设定聊天信息的段落间距（如：0.5em、1em）",
+    "Core Settings": "核心设定",
+    "Background Effects": "背景效果",
+    "Theme Extras": "主题额外功能",
+    "General Chat Settings": "一般聊天设定",
+    "Echo Style Settings": "Echo 风格设定",
+    "Whisper Style Settings": "Whisper 风格设定",
+    "Ripple Style Settings": "Ripple 风格设定",
+    "[Echo] Hide Message Background on Mobile": "[Echo] 在移动设备上隐藏信息背景",
+    "Hide message background illustrations on mobile for the Echo style": "隐藏移动设备上 Echo 信息风格中的背景插图",
+    "Mobile Devices": "移动设备",
+    "Mobile Global Settings": "移动设备全局设定",
+    "Mobile Detailed Settings": "移动设备细部设定"
 }

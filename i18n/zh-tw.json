@@ -82,7 +82,7 @@
     "Hide Additional Message Details": "隱藏訊息額外資料詳情",
     "Message additional details (name, ID, time, token counter, etc.) show only on hover or click": "僅在游標懸停或點選時顯示訊息額外詳情（角色名稱、ID、時間、符元計數器⋯等）",
     "Preset \"${0}\" deleted successfully": "已成功刪除「${0}」月下回聲主題預設設定檔",
-    "[Advanced] Message Details Animation Duration": "[進階設定] 訊息詳情動畫時長",
+    "Message Details Animation Duration": "訊息詳情動畫時長",
     "Controls the animation speed for message details appearing/disappearing (e.g. 0.5s, 1.2s)": "控制訊息額外詳細資訊出現／消失的動畫速度（如：0.5 秒、1.2 秒）",
     "Scrollbar Color": "捲軸顏色",
     "The scrollbar color on SillyTavern": "SillyTavern 上的捲軸顏色",
@@ -130,5 +130,17 @@
     "Default (2 rows)": "預設（2 行）",
     "Extended (3 rows)": "寬鬆（3 行）",
     "Message Paragraph Spacing": "訊息段落間距",
-    "Sets the spacing between paragraphs in chat messages (e.g. 0.5em, 1em)": "設定聊天訊息的段落間距（如：0.5em、1em）"
+    "Sets the spacing between paragraphs in chat messages (e.g. 0.5em, 1em)": "設定聊天訊息的段落間距（如：0.5em、1em）",
+    "Core Settings": "核心設定",
+    "Background Effects": "背景效果",
+    "Theme Extras": "主題額外功能",
+    "General Chat Settings": "一般聊天設定",
+    "Echo Style Settings": "Echo 風格設定",
+    "Whisper Style Settings": "Whisper 風格設定",
+    "Ripple Style Settings": "Ripple 風格設定",
+    "[Echo] Hide Message Background on Mobile": "[Echo] 在行動裝置上隱藏訊息背景",
+    "Hide message background illustrations on mobile for the Echo style": "隱藏行動裝置上 Echo 訊息風格中的背景插圖",
+    "Mobile Devices": "行動裝置",
+    "Mobile Global Settings": "行動裝置全局設定",
+    "Mobile Detailed Settings": "行動裝置細部設定"
 }

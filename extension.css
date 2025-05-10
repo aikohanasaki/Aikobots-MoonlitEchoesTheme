@@ -713,3 +713,26 @@ body.bubblechat .qvink_memory_display {
         margin-right: unset !important;
     }
 }
+
+/* --- Quick Context Buttons 快速上下文按鈕 --- */
+
+.quick_context_size_container {
+    flex-wrap: wrap !important;
+    width: fit-content !important;
+    gap: 2px 8px !important;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.quick_context_size {
+    flex: 1;
+    font-size: 0.8em;
+    padding: 5px 8px !important;
+    align-items: baseline;
+    min-width: unset;
+    min-height: unset;
+    margin: 0;
+    margin-bottom: 5px;
+}
+.quick_context_size small {
+    margin-left: 2px;
+}
