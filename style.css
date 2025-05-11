@@ -3682,3 +3682,8 @@ body.big-avatars.tidestyle #chat {
     display: none !important;
 }
 
+/* 漣漪訊息修正 */
+body.hideChatAvatars.ripplestyle #chat .mes .mesAvatarWrapper {
+    margin-top: 35px;
+    top: 35px;
+}

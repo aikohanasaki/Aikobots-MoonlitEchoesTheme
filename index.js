@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme 月下回聲';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.7.0";
+const THEME_VERSION = "2.7.1";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -270,6 +270,14 @@ const themeCustomSettings = [
                 border: unset !important;
             }
         `
+    },
+    {
+        "type": "text",
+        "varId": "mesParagraphSpacing",
+        "displayText": t`Message Paragraph Spacing`,
+        "default": "0.5em",
+        "category": "chat-general",
+        "description": t`Sets the spacing between paragraphs in chat messages (e.g. 0.5em, 1em)`
     },
     {
         "type": "text",
@@ -915,6 +923,7 @@ function initialize_sidebar_button() {
 
         #moonlit_echoes_popout .dragClose {
             cursor: pointer;
+            margin-bottom: 5px;
         }
     `;
 
