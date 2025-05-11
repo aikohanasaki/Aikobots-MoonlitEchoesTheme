@@ -920,6 +920,7 @@ input[type="range"]::-webkit-slider-thumb {
         padding-right: calc(0.7em + 18px);
         background: color-mix(in srgb, var(--SmartThemeBodyColor) 10%, transparent);
         transition: all 0.5s ease;
+        margin-bottom: 0;
 
         &:hover {
             background: color-mix(in srgb, var(--SmartThemeBodyColor) 20%, transparent);
@@ -1094,7 +1095,7 @@ input[type="range"]::-webkit-slider-thumb {
 .mes_text {
     /* General Text 一般內文 */
     p {
-        margin: var(--mesParagraphSpacing) 0;
+        margin: var(--mesParagraphSpacing) 0 !important;
     }
     /* Quoted Text 引號文字 */
     q {
@@ -2261,42 +2262,6 @@ body:not(.echostyle):not(.whisperstyle):not(.ripplestyle) .name_text {
         display: block !important;
         width: 100% !important;
         margin-bottom: 0px !important;
-    }
-}
-
-/* System Message Display Fix 系統訊息顯示修正 */
-body.echostyle,
-body.whisperstyle,
-body.ripplestyle,
-body.tidestyle {
-    #chat .mes[mesid="1"][ch_name="SillyTavern System"] {
-        &::before {
-            display: none;
-        }
-        &::after {
-            display: none;
-        }
-        .mesAvatarWrapper {
-            display: none;
-        }
-    }
-}
-#chat:has(.mes[ch_name="SillyTavern System"]) {
-    .lacommon--quickActions[data-lacommon--anchor="bottom"] {
-        display: none;
-    }
-}
-body.echostyle {
-    #chat .mes[is_system="true"] {
-        .mes_text {
-            padding: 10px !important;
-            min-height: unset;
-        }
-    }
-}
-body.hushstyle #chat .mes[mesid="1"][ch_name="SillyTavern System"] {
-    .mesAvatarWrapper {
-        visibility: hidden;
     }
 }
 
@@ -3671,10 +3636,30 @@ body.big-avatars.tidestyle #chat {
     }
 }
 
-/* 小系統訊息修正 */
+/* System Message Display Fix 系統訊息顯示修正 */
+#chat:has(.mes[ch_name="SillyTavern System"]) {
+    .lacommon--quickActions[data-lacommon--anchor="bottom"] {
+        display: none;
+    }
+}
+body.echostyle {
+    #chat .mes[is_system="true"] {
+        .mes_text {
+            min-height: unset;
+        }
+    }
+}
 .mes.smallSysMes {
     .mesAvatarWrapper {
         display: none !important;
+    }
+}
+body.hushstyle {
+    .mes.smallSysMes {
+        .mesAvatarWrapper {
+            display: unset !important;
+            visibility: hidden !important;
+        }
     }
 }
 .mes.smallSysMes::before,
@@ -3683,7 +3668,17 @@ body.big-avatars.tidestyle #chat {
 }
 
 /* 漣漪訊息修正 */
-body.hideChatAvatars.ripplestyle #chat .mes .mesAvatarWrapper {
-    margin-top: 35px;
-    top: 35px;
+body.hideChatAvatars.ripplestyle #chat {
+    .ch_name {
+        margin-left: unset;
+    }
+
+    .mes .mesAvatarWrapper {
+        margin-top: 35px;
+        top: 35px;
+    }
+    .mes_text {
+        margin-top: unset;
+    }
 }
+

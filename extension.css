@@ -1,6 +1,7 @@
 /* --- Quick Replies 快速回覆 --- */
 #qr--bar {
     margin-top: 8px !important;
+    gap: 8px 0;
 
     @media screen and (max-width: 1000px) {
         max-height: calc(36px * var(--mobileQRsBarHeight));
@@ -20,7 +21,7 @@
 
         .qr--button {
             font-size: calc(var(--mainFontSize) * 0.9);
-            margin: 0 !important;
+            margin: 0 2px !important;
 
             @media screen and (max-width: 1000px) {
                 margin: 2.5px 0 !important;
@@ -680,6 +681,10 @@ body.bubblechat .qvink_memory_display {
 
 #qr--bar.sqrbt-toggle_button-collapsed {
     margin-top: unset !important;
+    opacity: 0;
+}
+#qr--bar.sqrbt-toggle_button-expanded {
+    opacity: 1;
 }
 #qr--bar.sqrbt-toggle_button-expanded .qr--buttons {
     gap: 8px 0 !important;
