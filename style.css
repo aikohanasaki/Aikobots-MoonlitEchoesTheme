@@ -2835,6 +2835,9 @@ span.select2.select2-container {
         }
     }
 }
+#ChatMessageHandlingToggles .checkbox-container.flex-container {
+    justify-self: center;
+}
 
 /* Field Spacing 欄位間距 */
 #user-settings-block-content.flex-container.spaceEvenly {

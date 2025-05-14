@@ -744,7 +744,7 @@ body.bubblechat .qvink_memory_display {
         transition: all 0.5s ease;
     }
 }
-body:has(#right-nav-panel[data-menu-type="character_edit"]):not(:has(.mes[mesid="0"][is_system="true"])) #unimportantYes::before {
+body:has(#right-nav-panel[data-menu-type="character_edit"]):not(:has(.mes[mesid="0"][is_system="true"])) #unimportantYes:has(::after)::before {
     content: "";
     position: absolute;
     top: 50%;
