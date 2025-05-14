@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.8.0";
+const THEME_VERSION = "2.8.1";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
