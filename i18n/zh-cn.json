@@ -157,6 +157,10 @@
     "Switch to Flat style": "切换至 Flat（扁平）风格",
     "Switch to Bubble style": "切换至 Bubble（气泡）风格",
     "Switch to Document style": "切换至 Document（文件）风格",
-    "For more commands, see": "有关更多指令，请参阅：",
-    "STscript Language Reference": "STscript 语言参考"
+    "For more commands, see": "想了解更多指令，请参阅：",
+    "STscript Reference": "STscript 语言参考",
+    "Use Theme Color for Message Avatar Border": "信息头像边框使用主题颜色",
+    "Apply the primary theme color to message avatar borders (requires Character Style Customizer extension)": "将主要主题颜色套用于信息头像边框（需安装「Character Style Customizer」扩充）",
+    "Mobile Chat Field Background Blur Intensity": "移动设备聊天栏位背景模糊强度",
+    "Blur level of the chat field background on mobile devices (#sheld)": "移动设备上聊天栏位（#sheld）背景的模糊程度"
 }

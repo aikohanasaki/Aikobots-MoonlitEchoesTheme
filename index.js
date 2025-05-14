@@ -4,11 +4,11 @@
  */
 
 // Global settings and constants
-const EXTENSION_NAME = 'Moonlit Echoes Theme 月下回聲';
+const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.7.2";
+const THEME_VERSION = "2.8.0";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -153,6 +153,17 @@ const themeCustomSettings = [
         "category": "background-effects",
         "description": t`Blur level of the chat field background (#sheld)`
     },
+    {
+        "type": "slider",
+        "varId": "mobileSheldBlurStrength",
+        "displayText": t`Mobile Chat Field Background Blur Intensity`,
+        "default": "0",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "category": "background-effects",
+        "description": t`Blur level of the chat field background on mobile devices (#sheld)`
+    },
 
     // 主題附加功能 (theme-extras)
     {
@@ -226,6 +237,22 @@ const themeCustomSettings = [
             }
         `
     },
+    {
+        "type": "checkbox",
+        "varId": "useAvatarBorderThemeColor",
+        "displayText": t`Use Theme Color for Message Avatar Border`,
+        "default": false,
+        "category": "theme-extras",
+        "description": t`Apply the primary theme color to message avatar borders (requires Character Style Customizer extension)`,
+        "cssBlock": `
+            #chat .mes .avatar {
+                border: 1px solid var(--csc-char-primary, var(--csc-primary)) !important;
+            }
+            #chat .mes[is_user="true"] .avatar {
+                border: 1px solid var(--csc-char-primary, var(--csc-user-primary)) !important;
+            }
+        `
+    },
 
     // - - - - - - - - - - - - - - - - - - -
     // 聊天介面 (Chat Interface) 標籤
@@ -295,7 +322,7 @@ const themeCustomSettings = [
         "category": "chat-general",
         "description": t`Aligns paragraph text for Chinese, Japanese, and Korean for better readability; not suitable for English layout`,
         "cssBlock": `
-            p {
+            .mes_text p {
                 text-align: justify;
                 text-justify: inter-ideograph;
                 }
@@ -573,15 +600,11 @@ const themeCustomSettings = [
                     }
                 }
 
-                .scrollableInner {
+                .scrollableInner,
+                #form_create,
+                #rm_print_characters_block,
+                #extensionSideBar #extensionSideBarContainer {
                     padding: 0 !important;
-                }
-
-                #form_create {
-                    padding-right: 0 !important;
-                }
-                #rm_print_characters_block {
-                    padding-right: 0 !important;
                 }
             }
         `
@@ -596,16 +619,18 @@ const themeCustomSettings = [
         "cssBlock":  `
             /* Mobile Input Field */
             @media screen and (max-width: 1000px) {
+                body:has([data-slide-toggle="shown"]) #send_form  {
+                    border-radius: 0 !important;
+                }
+
                 /* Mobile Chat Input Overall */
                 #send_form {
                     margin-bottom: 0 !important;
                     min-height: 100% !important;
-                    padding: 5px 18px;
+                    padding: 5px 15px;
                     padding-top: 8px;
                     border-radius: 15px 15px 0 0 !important;
                     transition: all 0.5s ease;
-                    border: 1px solid var(--SmartThemeBlurTintColor)  !important;
-                    border-top: 1.25px solid color-mix(in srgb, var(--SmartThemeBodyColor) 50%, transparent) !important;
 
                     &:focus-within {
                         border-top: 1.25px solid var(--customThemeColor) !important;
@@ -671,8 +696,8 @@ const themeCustomSettings = [
                     margin-right: 10px;
                 }
 
-                #qr--bar > .qr--buttons {
-                    padding: 0px !important;
+                #leftSendForm>div {
+                    width: var(--bottomFormBlockSize) !important;
                 }
             }
     `
@@ -781,13 +806,6 @@ const themeCustomSettings = [
                 #rightSendForm {
                     padding-right: 6px;
                 }
-
-                #nonQRFormItems {
-                    #send_textarea {
-                        padding: 2px 6px;
-                        margin-top: 3px;
-                    }
-                }
             }
         `
     },
@@ -833,7 +851,7 @@ const themeCustomSettings = [
 function initialize_sidebar_button() {
     // Create the sidebar button element
     const $button = $(`
-        <div id="moonlit_sidebar_button" class="fa-solid fa-moon" title="Moonlit Echoes 月下回聲"></div>
+        <div id="moonlit_sidebar_button" class="fa-solid fa-moon" title="Moonlit Echoes"></div>
     `);
 
     // Add the button to the sidebar
@@ -887,6 +905,7 @@ function initialize_sidebar_button() {
         }
 
         #moonlit_echoes_popout {
+            top: var(--topBarBlockSize);
             max-width: 100dvw;
             max-height: calc(100dvh - var(--topBarBlockSize));
             overflow: hidden;
@@ -896,12 +915,16 @@ function initialize_sidebar_button() {
             padding-bottom: 15px;
             border: 0;
             border-top: 1px solid color-mix(in srgb, var(--SmartThemeBodyColor) 25%, transparent) !important;
+
+            @media screen and (max-width: 1000px) {
+                max-height: calc(100dvh - var(--topBarBlockSize)) !important;
+            }
         }
 
         #moonlit_echoes_content_container {
             padding: 0 15px;
             overflow: auto;
-            max-height: calc(100dvh - var(--topBarBlockSize) - 50px);
+            max-height: calc(100dvh - var(--topBarBlockSize) - 65px);
 
             .moonlit-tab-buttons {
                 position: sticky;
@@ -909,6 +932,12 @@ function initialize_sidebar_button() {
                 backdrop-filter: blur(var(--SmartThemeBlurStrength));
                 background-color: var(--SmartThemeBlurTintColor);
                 z-index: 100;
+            }
+
+            .inline-drawer-content {
+                @media screen and (max-width: 1000px) {
+                    padding: 0px !important;
+                }
             }
         }
 
@@ -1905,7 +1934,7 @@ function addSlashCommandsTip(container) {
             <span data-i18n="For more commands, see">For more commands, see</span>
             <button class="menu_button menu_button_icon inline-flex interactable" onclick="window.open('https://docs.sillytavern.app/usage/st-script/', '_blank')" tabindex="0" style="margin-left: 5px; font-size: 0.9em;">
                 <i class="fa-solid fa-terminal"></i>
-                <span data-i18n="STscript Language Reference">STscript Language Reference</span>
+                <span data-i18n="STscript Reference">STscript Reference</span>
             </button>
         </div>
     </div>
@@ -2101,49 +2130,97 @@ return new Promise((resolve) => {
 }
 
 /**
-* Automatically load or remove CSS based on enabled status in settings
-* @param {boolean} shouldLoad - If true, load CSS, otherwise remove
-*/
+ * Automatically load or remove CSS based on enabled status in settings
+ * @param {boolean} shouldLoad - If true, load CSS, otherwise remove
+ */
 function toggleCss(shouldLoad) {
-// Get existing <link> elements
-const existingLinkStyle = document.getElementById('MoonlitEchosTheme-style');
-const existingLinkExt = document.getElementById('MoonlitEchosTheme-extension');
+    // Get existing <link> elements
+    const existingLinkStyle = document.getElementById('MoonlitEchosTheme-style');
+    const existingLinkExt = document.getElementById('MoonlitEchosTheme-extension');
 
-if (shouldLoad) {
-    // Determine base URL path
-    const baseUrl = getBaseUrl();
+    if (shouldLoad) {
+        // Determine base URL path
+        const baseUrl = getBaseUrl();
 
-    // Load theme style
-    if (!existingLinkStyle) {
-        const cssUrl = baseUrl + '/style.css';
-        const linkStyle = document.createElement('link');
-        linkStyle.id = 'MoonlitEchosTheme-style';
-        linkStyle.rel = 'stylesheet';
-        linkStyle.href = cssUrl;
-        document.head.append(linkStyle);
+        // Load theme style
+        if (!existingLinkStyle) {
+            const cssUrl = baseUrl + '/style.css';
+            const linkStyle = document.createElement('link');
+            linkStyle.id = 'MoonlitEchosTheme-style';
+            linkStyle.rel = 'stylesheet';
+            linkStyle.href = cssUrl;
+            document.head.append(linkStyle);
+        }
+
+        // Load extension style
+        if (!existingLinkExt) {
+            const extUrl = baseUrl + '/extension.css';
+            const linkExt = document.createElement('link');
+            linkExt.id = 'MoonlitEchosTheme-extension';
+            linkExt.rel = 'stylesheet';
+            linkExt.href = extUrl;
+            document.head.append(linkExt);
+        }
+
+        // Ensure hint is visible
+        addThemeButtonsHint();
+
+        // Re-apply all checkbox styles if they were enabled
+        updateAllCheckboxStyles(true);
+    } else {
+        // Remove CSS
+        if (existingLinkStyle) existingLinkStyle.remove();
+        if (existingLinkExt) existingLinkExt.remove();
+
+        // Remove hint
+        const existingHint = document.getElementById('moonlit-theme-buttons-hint');
+        if (existingHint) existingHint.remove();
+
+        // Clear all checkbox styles
+        clearAllCheckboxStyles();
     }
-
-    // Load extension style
-    if (!existingLinkExt) {
-        const extUrl = baseUrl + '/extension.css';
-        const linkExt = document.createElement('link');
-        linkExt.id = 'MoonlitEchosTheme-extension';
-        linkExt.rel = 'stylesheet';
-        linkExt.href = extUrl;
-        document.head.append(linkExt);
-    }
-
-    // Ensure hint is visible
-    addThemeButtonsHint();
-} else {
-    // Remove CSS
-    if (existingLinkStyle) existingLinkStyle.remove();
-    if (existingLinkExt) existingLinkExt.remove();
-
-    // Remove hint
-    const existingHint = document.getElementById('moonlit-theme-buttons-hint');
-    if (existingHint) existingHint.remove();
 }
+
+/**
+ * Clear all CSS styles added by checkboxes
+ */
+function clearAllCheckboxStyles() {
+    // Find all style elements created by checkboxes
+    document.querySelectorAll('style[id^="css-block-"]').forEach(element => {
+        element.textContent = '';
+    });
+}
+
+/**
+ * Update all checkbox styles based on their current settings and extension state
+ * @param {boolean} extensionEnabled - Whether the extension is enabled
+ */
+function updateAllCheckboxStyles(extensionEnabled) {
+    if (!extensionEnabled) {
+        clearAllCheckboxStyles();
+        return;
+    }
+
+    // Get settings
+    const context = SillyTavern.getContext();
+    const settings = context.extensionSettings[settingsKey];
+
+    // Go through all checkbox settings and update their styles
+    themeCustomSettings.forEach(setting => {
+        if (setting.type === 'checkbox' && (setting.cssBlock || setting.cssFile)) {
+            const varId = setting.varId;
+            const enabled = settings[varId] === true;
+            const styleElement = document.getElementById(`css-block-${varId}`);
+
+            if (styleElement) {
+                if (setting.cssBlock && enabled) {
+                    styleElement.textContent = setting.cssBlock;
+                } else {
+                    styleElement.textContent = '';
+                }
+            }
+        }
+    });
 }
 
 /**
@@ -3683,12 +3760,38 @@ styleElement.textContent = `
 
     /* Preset manager style */
     .moonlit-preset-manager {
-        background-color: var(--black30a);
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 5px !important;
-        border: 1px solid
-        color-mix(in srgb, var(--SmartThemeBodyColor) 10%, transparent);
+    position: relative;
+    background-color: var(--black30a);
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px !important;
+    border: 1.2px solid color-mix(in srgb, var(--customThemeColor) 50%, transparent);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--customThemeColor) 25%, transparent);
+    overflow: hidden;
+    }
+
+    .moonlit-preset-manager::before {
+        content: "";
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 80px;
+        height: 80px;
+        opacity: 0.15;
+        z-index: 0;
+        background-color: var(--SmartThemeBodyColor);
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-dasharray='4' stroke-dashoffset='4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'%3E%3Cpath d='M13 4h1.5M13 4h-1.5M13 4v1.5M13 4v-1.5'%3E%3Canimate id='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0' fill='freeze' attributeName='stroke-dashoffset' begin='0.6s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+6s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+4s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+1.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+3.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+5.2s' dur='0.4s' values='0;4'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+1.8s' to='M12 5h1.5M12 5h-1.5M12 5v1.5M12 5v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+3.8s' to='M12 4h1.5M12 4h-1.5M12 4v1.5M12 4v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+5.8s' to='M13 4h1.5M13 4h-1.5M13 4v1.5M13 4v-1.5'/%3E%3C/path%3E%3Cpath d='M19 11h1.5M19 11h-1.5M19 11v1.5M19 11v-1.5'%3E%3Canimate id='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1' fill='freeze' attributeName='stroke-dashoffset' begin='1s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+6s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+4s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+1.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+3.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+5.2s' dur='0.4s' values='0;4'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+1.8s' to='M17 11h1.5M17 11h-1.5M17 11v1.5M17 11v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+3.8s' to='M18 12h1.5M18 12h-1.5M18 12v1.5M18 12v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+5.8s' to='M19 11h1.5M19 11h-1.5M19 11v1.5M19 11v-1.5'/%3E%3C/path%3E%3Cpath d='M19 4h1.5M19 4h-1.5M19 4v1.5M19 4v-1.5'%3E%3Canimate id='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2' fill='freeze' attributeName='stroke-dashoffset' begin='2.8s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+6s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+2s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+1.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+3.2s' dur='0.4s' values='0;4'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+1.8s' to='M20 5h1.5M20 5h-1.5M20 5v1.5M20 5v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+5.8s' to='M19 4h1.5M19 4h-1.5M19 4v1.5M19 4v-1.5'/%3E%3C/path%3E%3C/g%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cg%3E%3Cpath stroke-dasharray='2' stroke-dashoffset='4' d='M12 21v1M21 12h1M12 3v-1M3 12h-1'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='0.2s' values='4;2'/%3E%3C/path%3E%3Cpath stroke-dasharray='2' stroke-dashoffset='4' d='M18.5 18.5l0.5 0.5M18.5 5.5l0.5 -0.5M5.5 5.5l-0.5 -0.5M5.5 18.5l-0.5 0.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='0.2s' dur='0.2s' values='4;2'/%3E%3C/path%3E%3Cset fill='freeze' attributeName='opacity' begin='0.5s' to='0'/%3E%3C/g%3E%3Cpath fill='%23000' d='M7 6 C7 12.08 11.92 17 18 17 C18.53 17 19.05 16.96 19.56 16.89 C17.95 19.36 15.17 21 12 21 C7.03 21 3 16.97 3 12 C3 8.83 4.64 6.05 7.11 4.44 C7.04 4.95 7 5.47 7 6 Z' opacity='0'%3E%3Cset fill='freeze' attributeName='opacity' begin='0.5s' to='1'/%3E%3C/path%3E%3C/g%3E%3Cmask id='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition3'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23fff'/%3E%3Ccircle cx='22' cy='2' r='3' fill='%23fff'%3E%3Canimate fill='freeze' attributeName='cx' begin='0.1s' dur='0.4s' values='22;18'/%3E%3Canimate fill='freeze' attributeName='cy' begin='0.1s' dur='0.4s' values='2;6'/%3E%3Canimate fill='freeze' attributeName='r' begin='0.1s' dur='0.4s' values='3;12'/%3E%3C/circle%3E%3Ccircle cx='22' cy='2' r='1'%3E%3Canimate fill='freeze' attributeName='cx' begin='0.1s' dur='0.4s' values='22;18'/%3E%3Canimate fill='freeze' attributeName='cy' begin='0.1s' dur='0.4s' values='2;6'/%3E%3Canimate fill='freeze' attributeName='r' begin='0.1s' dur='0.4s' values='1;10'/%3E%3C/circle%3E%3C/mask%3E%3Ccircle cx='12' cy='12' r='6' mask='url(%23lineMdSunnyFilledLoopToMoonFilledAltLoopTransition3)' fill='%23000'%3E%3Canimate fill='freeze' attributeName='r' begin='0.1s' dur='0.4s' values='6;10'/%3E%3Cset fill='freeze' attributeName='opacity' begin='0.5s' to='0'/%3E%3C/circle%3E%3C/svg%3E");
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-dasharray='4' stroke-dashoffset='4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'%3E%3Cpath d='M13 4h1.5M13 4h-1.5M13 4v1.5M13 4v-1.5'%3E%3Canimate id='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0' fill='freeze' attributeName='stroke-dashoffset' begin='0.6s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+6s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+4s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+1.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+3.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+5.2s' dur='0.4s' values='0;4'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+1.8s' to='M12 5h1.5M12 5h-1.5M12 5v1.5M12 5v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+3.8s' to='M12 4h1.5M12 4h-1.5M12 4v1.5M12 4v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition0.begin+5.8s' to='M13 4h1.5M13 4h-1.5M13 4v1.5M13 4v-1.5'/%3E%3C/path%3E%3Cpath d='M19 11h1.5M19 11h-1.5M19 11v1.5M19 11v-1.5'%3E%3Canimate id='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1' fill='freeze' attributeName='stroke-dashoffset' begin='1s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+6s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+4s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+1.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+3.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+5.2s' dur='0.4s' values='0;4'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+1.8s' to='M17 11h1.5M17 11h-1.5M17 11v1.5M17 11v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+3.8s' to='M18 12h1.5M18 12h-1.5M18 12v1.5M18 12v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition1.begin+5.8s' to='M19 11h1.5M19 11h-1.5M19 11v1.5M19 11v-1.5'/%3E%3C/path%3E%3Cpath d='M19 4h1.5M19 4h-1.5M19 4v1.5M19 4v-1.5'%3E%3Canimate id='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2' fill='freeze' attributeName='stroke-dashoffset' begin='2.8s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+6s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+2s' dur='0.4s' values='4;0'/%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+1.2s;lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+3.2s' dur='0.4s' values='0;4'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+1.8s' to='M20 5h1.5M20 5h-1.5M20 5v1.5M20 5v-1.5'/%3E%3Cset fill='freeze' attributeName='d' begin='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition2.begin+5.8s' to='M19 4h1.5M19 4h-1.5M19 4v1.5M19 4v-1.5'/%3E%3C/path%3E%3C/g%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cg%3E%3Cpath stroke-dasharray='2' stroke-dashoffset='4' d='M12 21v1M21 12h1M12 3v-1M3 12h-1'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='0.2s' values='4;2'/%3E%3C/path%3E%3Cpath stroke-dasharray='2' stroke-dashoffset='4' d='M18.5 18.5l0.5 0.5M18.5 5.5l0.5 -0.5M5.5 5.5l-0.5 -0.5M5.5 18.5l-0.5 0.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='0.2s' dur='0.2s' values='4;2'/%3E%3C/path%3E%3Cset fill='freeze' attributeName='opacity' begin='0.5s' to='0'/%3E%3C/g%3E%3Cpath fill='%23000' d='M7 6 C7 12.08 11.92 17 18 17 C18.53 17 19.05 16.96 19.56 16.89 C17.95 19.36 15.17 21 12 21 C7.03 21 3 16.97 3 12 C3 8.83 4.64 6.05 7.11 4.44 C7.04 4.95 7 5.47 7 6 Z' opacity='0'%3E%3Cset fill='freeze' attributeName='opacity' begin='0.5s' to='1'/%3E%3C/path%3E%3C/g%3E%3Cmask id='lineMdSunnyFilledLoopToMoonFilledAltLoopTransition3'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23fff'/%3E%3Ccircle cx='22' cy='2' r='3' fill='%23fff'%3E%3Canimate fill='freeze' attributeName='cx' begin='0.1s' dur='0.4s' values='22;18'/%3E%3Canimate fill='freeze' attributeName='cy' begin='0.1s' dur='0.4s' values='2;6'/%3E%3Canimate fill='freeze' attributeName='r' begin='0.1s' dur='0.4s' values='3;12'/%3E%3C/circle%3E%3Ccircle cx='22' cy='2' r='1'%3E%3Canimate fill='freeze' attributeName='cx' begin='0.1s' dur='0.4s' values='22;18'/%3E%3Canimate fill='freeze' attributeName='cy' begin='0.1s' dur='0.4s' values='2;6'/%3E%3Canimate fill='freeze' attributeName='r' begin='0.1s' dur='0.4s' values='1;10'/%3E%3C/circle%3E%3C/mask%3E%3Ccircle cx='12' cy='12' r='6' mask='url(%23lineMdSunnyFilledLoopToMoonFilledAltLoopTransition3)' fill='%23000'%3E%3Canimate fill='freeze' attributeName='r' begin='0.1s' dur='0.4s' values='6;10'/%3E%3Cset fill='freeze' attributeName='opacity' begin='0.5s' to='0'/%3E%3C/circle%3E%3C/svg%3E");
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        transform: rotate(-10deg);
+    }
+
+    .moonlit-preset-manager > * {
+        position: relative;
+        z-index: 1;
     }
 
     .moonlit-preset-manager h4 {
@@ -4396,7 +4499,7 @@ function createTextInput(container, setting, settings) {
 }
 
 /**
- * Create checkbox setting item - Updated to put checkbox after label
+ * Create checkbox setting item - Updated to check if extension is enabled
  * @param {HTMLElement} container - Setting container element
  * @param {Object} setting - Setting configuration object
  * @param {Object} settings - Current settings object
@@ -4441,6 +4544,12 @@ function createCheckbox(container, setting, settings) {
 
     // Function to update CSS stylesheet - inline CSS
     function updateInlineCssBlock(enabled) {
+        // First check if extension is enabled
+        if (!settings.enabled) {
+            styleElement.textContent = ''; // Clear CSS if extension is disabled
+            return;
+        }
+
         if (styleElement && cssBlock) {
             styleElement.textContent = enabled ? cssBlock : '';
         }
@@ -4448,8 +4557,9 @@ function createCheckbox(container, setting, settings) {
 
     // Function to load CSS from external file
     async function loadExternalCss(enabled) {
-        if (!enabled || !cssFile) {
-            // If disabled or no file specified, clear styles
+        // First check if extension is enabled
+        if (!settings.enabled || !enabled || !cssFile) {
+            // If extension disabled, checkbox disabled, or no file specified, clear styles
             if (styleElement) {
                 styleElement.textContent = '';
             }
@@ -4486,7 +4596,7 @@ function createCheckbox(container, setting, settings) {
         }
     }
 
-    // Initial CSS application
+    // Initial CSS application - now checks if extension is enabled
     applyCss(checkbox.checked);
 
     // Checkbox change event
@@ -5274,3 +5384,252 @@ document.addEventListener('colorChanged', function(event) {
     // Update corresponding color slider
     updateColorSliderThumb(varId, hexColor);
 });
+
+/**
+ * Form Shield Height Monitor
+ * Accurately tracks the height of #form_sheld and makes it available as a CSS variable
+ */
+
+// Initialize form shield height monitor
+function initFormSheldHeightMonitor() {
+    // Track if we've initialized
+    let isInitialized = false;
+
+    // Helper function to get the exact height including all box model properties
+    function getAccurateHeight(element) {
+        if (!element) return 0;
+
+        // Use getBoundingClientRect for most accurate height
+        const rect = element.getBoundingClientRect();
+        return rect.height;
+    }
+
+    // Update the CSS variable with current height
+    function updateFormSheldHeight() {
+        // Target the form_sheld element specifically
+        const formSheld = document.getElementById('form_sheld');
+
+        if (formSheld) {
+            // Get accurate height
+            const height = getAccurateHeight(formSheld);
+
+            // Only update if we have a valid height
+            if (height > 0) {
+                document.documentElement.style.setProperty('--formSheldHeight', `${height}px`);
+                isInitialized = true;
+
+                // Optional: log for debugging
+                // console.log('Form sheld height updated:', height);
+            }
+        }
+    }
+
+    // Create MutationObserver to detect layout and content changes
+    const mutationObserver = new MutationObserver((mutations) => {
+        let shouldUpdate = false;
+
+        // Check if any mutations affect the form shield
+        for (const mutation of mutations) {
+            // If target is form_sheld or any of its children
+            if (mutation.target.id === 'form_sheld' ||
+                mutation.target.closest('#form_sheld')) {
+                shouldUpdate = true;
+                break;
+            }
+
+            // Check added nodes
+            if (mutation.addedNodes.length) {
+                for (const node of mutation.addedNodes) {
+                    if (node.id === 'form_sheld' ||
+                        (node.nodeType === 1 && node.querySelector('#form_sheld'))) {
+                        shouldUpdate = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (shouldUpdate) {
+            // Use setTimeout to ensure DOM is updated before measuring
+            setTimeout(updateFormSheldHeight, 0);
+        }
+    });
+
+    // Create ResizeObserver for more accurate size tracking
+    const resizeObserver = new ResizeObserver(entries => {
+        for (const entry of entries) {
+            // Only process form_sheld
+            if (entry.target.id === 'form_sheld') {
+                // Get height from ResizeObserver entry
+                const height = entry.contentRect.height;
+
+                // Update CSS variable if height is valid
+                if (height > 0) {
+                    document.documentElement.style.setProperty('--formSheldHeight', `${height}px`);
+                    isInitialized = true;
+                }
+            }
+        }
+    });
+
+    // Function to start all observers
+    function startObservers() {
+        // Stop existing observers first
+        stopObservers();
+
+        // Get the form_sheld element
+        const formSheld = document.getElementById('form_sheld');
+
+        if (formSheld) {
+            // Start resize observer
+            resizeObserver.observe(formSheld);
+
+            // Start mutation observer for form_sheld and its children
+            mutationObserver.observe(formSheld, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                characterData: true
+            });
+
+            // Also observe form_sheld's parent to detect style changes
+            const parent = formSheld.parentElement;
+            if (parent) {
+                mutationObserver.observe(parent, {
+                    attributes: true,
+                    attributeFilter: ['style', 'class']
+                });
+            }
+
+            // Do initial height update
+            updateFormSheldHeight();
+        }
+    }
+
+    // Function to stop all observers
+    function stopObservers() {
+        resizeObserver.disconnect();
+        mutationObserver.disconnect();
+    }
+
+    // Watch for DOM changes to find form_sheld if it's added later
+    const bodyObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+            // Check if form_sheld was added
+            if (mutation.addedNodes.length) {
+                for (const node of mutation.addedNodes) {
+                    if (node.id === 'form_sheld' ||
+                        (node.nodeType === 1 && node.querySelector('#form_sheld'))) {
+                        // Wait for it to be fully rendered
+                        setTimeout(startObservers, 50);
+                        return;
+                    }
+                }
+            }
+        }
+
+        // Always check if form_sheld exists but isn't being observed
+        const formSheld = document.getElementById('form_sheld');
+        if (formSheld && !isInitialized) {
+            setTimeout(startObservers, 50);
+        }
+    });
+
+    // Observe the entire document for changes
+    bodyObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // Monitor textarea changes as they often affect form_sheld height
+    function setupTextAreaListener() {
+        const textArea = document.getElementById('send_textarea');
+        if (textArea) {
+            // Remove existing listeners to avoid duplicates
+            textArea.removeEventListener('input', onTextAreaInput);
+            // Add input listener
+            textArea.addEventListener('input', onTextAreaInput);
+        }
+    }
+
+    // Handle textarea input
+    function onTextAreaInput() {
+        // Update multiple times to catch all changes
+        updateFormSheldHeight();
+        setTimeout(updateFormSheldHeight, 10);
+        setTimeout(updateFormSheldHeight, 100);
+    }
+
+    // Monitor window and document events
+    window.addEventListener('resize', updateFormSheldHeight);
+    window.addEventListener('orientationchange', () => {
+        // Update multiple times after orientation change
+        updateFormSheldHeight();
+        setTimeout(updateFormSheldHeight, 100);
+        setTimeout(updateFormSheldHeight, 500);
+    });
+
+    // Setup listeners when DOM content changes
+    document.addEventListener('DOMContentLoaded', () => {
+        startObservers();
+        setupTextAreaListener();
+
+        // Initial update with multiple attempts
+        updateFormSheldHeight();
+        setTimeout(updateFormSheldHeight, 100);
+        setTimeout(updateFormSheldHeight, 500);
+        setTimeout(updateFormSheldHeight, 1000);
+    });
+
+    // Also run on full load
+    window.addEventListener('load', () => {
+        startObservers();
+        setupTextAreaListener();
+        updateFormSheldHeight();
+        setTimeout(updateFormSheldHeight, 500);
+    });
+
+    // Check for changes when user toggles menus or QR bar
+    function setupUIListeners() {
+        // Listen for QR bar changes
+        document.querySelectorAll('#qr--bar .qr--option').forEach(button => {
+            button.addEventListener('click', () => {
+                setTimeout(updateFormSheldHeight, 10);
+                setTimeout(updateFormSheldHeight, 100);
+            });
+        });
+
+        // Listen for options menu toggle
+        const optionsButton = document.getElementById('options_button');
+        if (optionsButton) {
+            optionsButton.addEventListener('click', () => {
+                setTimeout(updateFormSheldHeight, 10);
+                setTimeout(updateFormSheldHeight, 100);
+            });
+        }
+    }
+
+    // Setup UI listeners after a delay
+    setTimeout(setupUIListeners, 1000);
+
+    // Expose the update function globally
+    window.updateFormSheldHeight = updateFormSheldHeight;
+
+    // Do initial setup
+    startObservers();
+    setupTextAreaListener();
+    updateFormSheldHeight();
+
+    // Log initialization
+    console.log('Form shield height monitor initialized');
+
+    // Return control functions for advanced usage
+    return {
+        update: updateFormSheldHeight,
+        start: startObservers,
+        stop: stopObservers
+    };
+}
+
+// Initialize immediately and store controller
+window.formSheldHeightController = initFormSheldHeightMonitor();
