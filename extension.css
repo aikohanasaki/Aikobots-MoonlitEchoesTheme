@@ -742,27 +742,19 @@ body.bubblechat .qvink_memory_display {
         width: calc(var(--mainFontSize) * 1.45);
         position: relative;
         transition: all 0.5s ease;
-
-        &::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: calc(var(--mainFontSize) * 1.45 + 2px);
-            height: calc(var(--mainFontSize) * 1.45 + 2px);
-            border: 1px solid var(--SmartThemeBodyColor);
-            border-radius: 50%;
-            opacity: 0;
-            transition: all 0.5s ease;
-        }
-
-        body:has(#right-nav-panel[data-menu-type="character_edit"]) & {
-            &::before {
-                opacity: 0.5;
-            }
-        }
     }
+}
+body:has(#right-nav-panel[data-menu-type="character_edit"]):not(:has(.mes[mesid="0"][is_system="true"])) #unimportantYes::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(var(--mainFontSize) * 1.45 + 2px);
+    height: calc(var(--mainFontSize) * 1.45 + 2px);
+    border: 1px solid var(--SmartThemeBodyColor);
+    border-radius: 50%;
+    opacity: 0.5;
 }
 
 body.stcs--nonDiscord .stcs--ctxBlocker > .stcs--ctxMenu {
