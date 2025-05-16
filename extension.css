@@ -740,23 +740,9 @@ body.bubblechat .qvink_memory_display {
     #unimportantYes {
         height: calc(var(--mainFontSize) * 1.45);
         width: calc(var(--mainFontSize) * 1.45);
-        position: relative;
         transition: all 0.5s ease;
     }
 }
-body:has(#right-nav-panel[data-menu-type="character_edit"]):not(:has(.mes[mesid="0"][is_system="true"])) #unimportantYes:has(::after)::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(var(--mainFontSize) * 1.45 + 2px);
-    height: calc(var(--mainFontSize) * 1.45 + 2px);
-    border: 1px solid var(--SmartThemeBodyColor);
-    border-radius: 50%;
-    opacity: 0.5;
-}
-
 body.stcs--nonDiscord .stcs--ctxBlocker > .stcs--ctxMenu {
     padding: 5px 8px;
     font-size: calc(var(--mainFontSize));
@@ -819,5 +805,7 @@ body.stcs--nonDiscord .stcs--ctxBlocker > .stcs--ctxMenu {
     box-shadow: 0 0 25px color-mix(in srgb, var(--SmartThemeBlurTintColor) 80%, transparent);
     border: 1px solid var(--SmartThemeBorderColor);
     margin-bottom: -10px !important;
-    max-width: unset !important;
+    max-width: 80dvw !important;
+    max-height: 70dvh !important;
+    backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
 }

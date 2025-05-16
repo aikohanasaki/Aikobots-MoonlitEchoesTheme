@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.8.2";
+const THEME_VERSION = "2.8.3";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -173,7 +173,8 @@ const themeCustomSettings = [
         "default": false,
         "category": "theme-extras",
         "description": t`Applies theme colors to more parts of the UI for a more personalized look`,
-        "cssBlock":  `
+        "cssBlock": `
+            /* 主題顏色化 */
             .drawer-icon,
             #rightSendForm>div,
             #leftSendForm>div,
@@ -199,6 +200,44 @@ const themeCustomSettings = [
             #cfgConfig {
                 border-top: 1px solid color-mix(in srgb, var(--customThemeColor) 50%, transparent) !important;
             }
+            #left-nav-panel,
+            #right-nav-panel,
+            .drawer-content,
+            #WorldInfo {
+                @media screen and (max-width: 1000px) {
+                    border-bottom: 1px solid color-mix(in srgb, var(--customThemeColor) 50%, transparent);
+                }
+            }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "newMenuMaxHeight",
+        "displayText": t`Dynamically Adjust Menu Max Height`,
+        "default": false,
+        "category": "theme-extras",
+        "description": t`Dynamically adjust the menu’s maximum height based on the message input field. May not work on all devices—disable this option if the menu doesn’t close properly`,
+        "cssBlock": `
+            /* 動態選單高度 */
+            .drawer-content {
+                max-height: calc(100dvh - var(--topBarBlockSize) - var(--formSheldHeight) - 5px) !important;
+            }
+            @media screen and (max-width: 1000px) {
+                .drawer-content,
+                .fillLeft, .fillRight,
+                #left-nav-panel, #right-nav-panel {
+                    max-height: calc(100dvh - var(--topBarBlockSize) - var(--formSheldHeight) + 4px) !important;
+                }
+
+                #floatingPrompt,
+                #cfgConfig,
+                #logprobsViewer,
+                #movingDivs > div,
+                #character_popup {
+                    max-height: calc(100dvh - var(--topBarBlockSize)) !important;
+                    padding-bottom: 15px !important;
+                }
+            }
         `
     },
     {
@@ -209,13 +248,13 @@ const themeCustomSettings = [
         "category": "theme-extras",
         "description": t`Completely disable all border-radius and outline-radius effects throughout the UI`,
         "cssBlock": `
+            /* 禁用圓角 */
             *, *::before, *::after {
                 border-radius: 0 !important;
                 border-top-left-radius: 0 !important;
                 border-top-right-radius: 0 !important;
                 border-bottom-left-radius: 0 !important;
                 border-bottom-right-radius: 0 !important;
-                /* Handle possible outline radius */
                 outline-radius: 0 !important;
                 -moz-outline-radius: 0 !important;
             }
@@ -223,7 +262,10 @@ const themeCustomSettings = [
                 border-radius: 0 !important;
             }
             body.ripplestyle #chat .mes .mesAvatarWrapper .avatar,
-            body.ripplestyle #chat .mes .mesAvatarWrapper .avatar img {
+            body.ripplestyle #chat .mes .mesAvatarWrapper .avatar img,
+            #extensionTopBar,
+            body:has(#extensionConnectionProfiles.visible) #extensionTopBar,
+            #rm_ch_create_block .avatar img {
                 border-radius: 0 !important;
             }
             @media screen and (max-width: 1000px) {
@@ -240,16 +282,42 @@ const themeCustomSettings = [
     {
         "type": "checkbox",
         "varId": "useAvatarBorderThemeColor",
-        "displayText": t`Use Theme Color for Message Avatar Border`,
+        "displayText": t`Apply Theme Color to Message Avatar Border`,
         "default": false,
         "category": "theme-extras",
-        "description": t`Apply the primary theme color to message avatar borders (requires Character Style Customizer extension)`,
+        "description": t`Applies each character’s theme color to message avatar borders. Requires the Character Style Customizer; per-character colors override global settings`,
         "cssBlock": `
             #chat .mes .avatar {
                 border: 1px solid var(--csc-char-primary, var(--csc-primary)) !important;
             }
             #chat .mes[is_user="true"] .avatar {
                 border: 1px solid var(--csc-char-primary, var(--csc-user-primary)) !important;
+            }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "applyCharThemeToMsgBg",
+        "displayText": t`Apply Theme Color to Message Background (Experimental)`,
+        "default": false,
+        "category": "theme-extras",
+        "description": t`Applies each character’s theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings`,
+        "cssBlock": `
+            #chat .mes[is_user="false"] .mes_block,
+            body.echostyle #chat .mes[is_user="false"] .mes_text,
+            body.whisperstyle #chat .mes[is_user="false"],
+            body.hushstyle #chat .mes[is_user="false"],
+            body.ripplestyle #chat .mes[is_user="false"],
+            body.tidestyle #chat .mes[is_user="false"] .mes_text p {
+                background-color: var(--csc-char-bg-primary, var(--csc-bg-primary)) !important;
+            }
+            #chat .mes[is_user="true"] .mes_block,
+            body.echostyle #chat .mes[is_user="true"] .mes_text,
+            body.whisperstyle #chat .mes[is_user="true"],
+            body.hushstyle #chat .mes[is_user="true"],
+            body.ripplestyle #chat .mes[is_user="true"],
+            body.tidestyle #chat .mes[is_user="true"] .mes_text p {
+                background-color: var(--csc-char-bg-primary, var(--csc-user-bg-primary)) !important;
             }
         `
     },
@@ -313,6 +381,20 @@ const themeCustomSettings = [
         "default": "4px solid var(--customThemeColor)",
         "category": "chat-general",
         "description": t`Line style for the maximum context marker`
+    },
+    {
+    "type": "checkbox",
+    "varId": "showLLMReasoningIcon",
+    "displayText": t`Display LLM Icon in Reasoning Block`,
+    "default": false,
+    "category": "chat-general",
+    "description": t`Shows the LLM icon in the reasoning block header for clearer identification`,
+    "cssBlock": `
+            .mes_reasoning_header > .icon-svg {
+                display: block;
+                opacity: 1 !important;
+            }
+        `
     },
     {
         "type": "checkbox",

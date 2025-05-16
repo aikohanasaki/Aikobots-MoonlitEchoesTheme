@@ -141,7 +141,7 @@
     "[Echo] Hide Message Background on Mobile": "[Echo] 在移动设备上隐藏信息背景",
     "Hide message background illustrations on mobile for the Echo style": "隐藏移动设备上 Echo 信息风格中的背景插图",
     "Mobile Devices": "移动设备",
-    "Mobile Global Settings": "移动设备全局设定",
+    "Mobile Global Settings": "移动设备全域设定",
     "Mobile Detailed Settings": "移动设备细部设定",
     "Open Moonlit Echoes Theme Settings": "开启 Moonlit Echoes 主题设定选单",
     "Chat Style Slash Commands": "聊天风格斜线指令",
@@ -159,8 +159,14 @@
     "Switch to Document style": "切换至 Document（文件）风格",
     "For more commands, see": "想了解更多指令，请参阅：",
     "STscript Reference": "STscript 语言参考",
-    "Use Theme Color for Message Avatar Border": "信息头像边框使用主题颜色",
-    "Apply the primary theme color to message avatar borders (requires Character Style Customizer extension)": "将主要主题颜色套用于信息头像边框（需安装「Character Style Customizer」扩充）",
+    "Apply Theme Color to Message Avatar Border": "将角色主题颜色套用至信息头像边框",
+    "Applies each character’s theme color to message avatar borders. Requires the Character Style Customizer; per-character colors override global settings": "将个别角色主题颜色套用至信息头像边框。需使用「Character Style Customizer」扩充，个别角色颜色优先于全域设定",
     "Mobile Chat Field Background Blur Intensity": "移动设备聊天栏位背景模糊强度",
-    "Blur level of the chat field background on mobile devices (#sheld)": "移动设备上聊天栏位（#sheld）背景的模糊程度"
+    "Blur level of the chat field background on mobile devices (#sheld)": "移动设备上聊天栏位（#sheld）背景的模糊程度",
+    "Dynamically Adjust Menu Max Height": "动态调整选单最大高度",
+    "Dynamically adjust the menu’s maximum height based on the message input field. May not work on all devices—disable this option if the menu doesn’t close properly": "按信息输入栏位高度动态调整选单最大高度。可能不适用所有设备；若无法正常关闭选单，请停用此选项",
+    "Apply Theme Color to Message Background (Experimental)": "将角色主题颜色套用至信息背景（实验性）",
+    "Applies each character’s theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings": "将个别角色主题颜色套用至信息背景。需使用「Character Style Customizer」扩充，个别角色颜色优先于全域设定",
+    "Display LLM Icon in Reasoning Block": "在推理区块显示 LLM 图示",
+    "Shows the LLM icon in the reasoning block header for clearer identification": "在推理区块标题中显示 LLM 图示，以便更清晰地识别"
 }
