@@ -775,6 +775,7 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 0;
     background-color: var(--SmartThemeBlurTintColor);
     box-shadow: none;
+    z-index: 1000 !important;
 
     @media screen and (max-width: 1000px) {
         top: calc(var(--topBarBlockSize));
@@ -843,6 +844,7 @@ input[type="range"]::-webkit-slider-thumb {
     @media screen and (max-width: 1000px) {
         padding: 0;
         padding-bottom: 0 !important;
+        margin: 0 !important;
     }
 
     &::before {
@@ -2335,14 +2337,14 @@ body.ripplestyle {
         margin-bottom: 0 !important;
         border-radius: 10px 10px 0 0;
         box-shadow: 0 0 10px color-mix(in srgb, var(--SmartThemeBlurTintColor) 50%, transparent);
-        border: unset !important;
+        border: 0 !important;
         border-top: 1px solid color-mix(in srgb, var(--SmartThemeBodyColor) 50%, transparent) !important;
 
         &:visited,
         &:focus,
         &:focus-within,
         &:focus-visible {
-            border: unset !important;
+            border: 0 !important;
             border-top: 1.25px solid var(--customThemeColor) !important;
             opacity: 1;
         }
@@ -2535,6 +2537,7 @@ body.waifuMode {
 
     .title_restorable {
         margin: 15px 0;
+        margin-top: 0;
         padding: 0;
         min-height: 33px;
         padding-bottom: 8px;
@@ -3256,8 +3259,7 @@ body.charListGrid #rm_print_characters_block .group_select {
     }
 
     .avatar img {
-        border: 0 !important;
-        outline: 1px solid var(--SmartThemeBodyColor);
+        border: 1px solid var(--SmartThemeBodyColor);
     }
 
     .text_block {
@@ -3387,8 +3389,9 @@ body:not(.charListGrid).big-avatars {
 .group_select.is_fav,
 .group_member.is_fav {
     .avatar {
-        outline: 1px solid var(--customThemeColor);
+        border: 1px solid var(--customThemeColor);
         filter: drop-shadow(0 0 1px var(--customThemeColor));
+        outline: none !important;
     }
     .ch_name {
         color: var(--customThemeColor);
@@ -3414,8 +3417,8 @@ body:not(.charListGrid).big-avatars {
 }
 
 .avatar.is_fav {
-    outline: 1px solid var(--customThemeColor);
     filter: drop-shadow(0px 0px 2px var(--customThemeColor));
+    outline: none !important;
 }
 
 .avatars_inline_small {
@@ -3818,4 +3821,8 @@ body.hideChatAvatars.ripplestyle #chat {
         max-height: calc(100dvh - var(--topBarBlockSize) - var(--bottomFormBlockSize)) !important;
         border-bottom: 1px solid color-mix(in srgb, var(--SmartThemeBodyColor) 50%, transparent);
     }
+}
+
+#right-nav-panel  {
+    height: calc(100dvh - var(--topBarBlockSize));
 }

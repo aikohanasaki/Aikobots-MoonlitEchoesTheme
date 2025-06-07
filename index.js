@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.8.3";
+const THEME_VERSION = "2.8.4";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -701,6 +701,8 @@ const themeCustomSettings = [
         "cssBlock":  `
             /* Mobile Input Field */
             @media screen and (max-width: 1000px) {
+                #form_sheld {}
+
                 body:has([data-slide-toggle="shown"]) #send_form  {
                     border-radius: 0 !important;
                 }

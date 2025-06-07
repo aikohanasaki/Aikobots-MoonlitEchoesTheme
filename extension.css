@@ -35,15 +35,12 @@
         }
     }
     .qr--button-expander {
-        margin-left: 3px;
+        border-left: 0 !important;
+        width: 1em !important;
+        margin-left: 2px !important;
 
         @media screen and (max-width: 1000px) {
             width: 20px;
-        }
-
-        .qr--button-expander {
-            border-left: 1px solid;
-            opacity: 0.8;
         }
     }
 }
@@ -238,6 +235,7 @@ body.waifuMode:has(#extensionConnectionProfiles.visible) #extensionTopBar {
     transition: all 0.8s ease;
     margin-left: -2.5px;
     margin-top: 5px !important;
+    z-index: 350;
 
     @media (max-width: 1000px) {
         width: 100% !important;
@@ -772,6 +770,7 @@ body.stcs--nonDiscord .stcs--ctxBlocker > .stcs--ctxMenu {
     left: 20px !important;
     bottom: unset !important;
     font-size: calc(var(--mainFontSize) * 1.45) !important;
+    color: var(--Drawer-iconColor) !important;
 
     @media screen and (max-width: 1000px) {
         bottom: calc(var(--formSheldHeight)) !important;
@@ -808,4 +807,28 @@ body.stcs--nonDiscord .stcs--ctxBlocker > .stcs--ctxMenu {
     max-width: 80dvw !important;
     max-height: 70dvh !important;
     backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
+
+    @media screen and (max-width: 1000px) {
+        top: var(--topBarBlockSize) !important;
+        margin-top: 10px !important;
+    }
+}
+
+/* 提示歷史 */
+
+@media screen and (max-width: 1000px) {
+    .stth--trigger {
+        margin: unset !important;
+        opacity: 0.8 !important;
+        position: absolute;
+        top: 80px;
+        left: 10px;
+    }
+    body:has(#extensionSideBar.visible, #extensionConnectionProfiles.visible) {
+        .stth--trigger {
+            top: 110px;
+            right: 10px;
+            left: auto;
+        }
+    }
 }
