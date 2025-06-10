@@ -3287,14 +3287,6 @@ body:not(.charListGrid).big-avatars {
     font-size: calc(var(--mainFontSize) * 0.8) !important;
 }
 
-@media screen and (max-width: 1000px) {
-    body.charListGrid #rm_print_characters_block {
-        height: auto !important;
-        overflow: visible;
-        transition: all 0.5s ease;
-    }
-}
-
 /* --- Character Preview 個別角色編輯區 --- */
 
 #form_create {
