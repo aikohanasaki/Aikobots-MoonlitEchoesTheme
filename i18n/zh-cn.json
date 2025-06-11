@@ -168,5 +168,9 @@
     "Apply Theme Color to Message Background (Experimental)": "将角色主题颜色套用至信息背景（实验性）",
     "Applies each character’s theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings": "将个别角色主题颜色套用至信息背景。需使用「Character Style Customizer」扩充，个别角色颜色优先于全域设定",
     "Display LLM Icon in Reasoning Block": "在推理区块显示 LLM 图示",
-    "Shows the LLM icon in the reasoning block header for clearer identification": "在推理区块标题中显示 LLM 图示，以便更清晰地识别"
+    "Shows the LLM icon in the reasoning block header for clearer identification": "在推理区块标题中显示 LLM 图示，以便更清晰地识别",
+    "Lock AI Response & Character Menu Height": "锁定 AI 回应与角色选单高度",
+    "Fix AI config & character menus’ height to avoid display issues. Disable if using MovingUI": "固定 AI 回应设定与角色选单高度以避免显示异常；使用 MovingUI 时请停用此选项",
+    "Inline Character, Timestamp & Icons on Mobile": "角色名称、时间戳记与图示并列显示于移动设备",
+    "Show character names, timestamps, and model icons in one line on mobile": "在移动设备上将角色名称、时间戳记与模型图示显示于同一行"
 }

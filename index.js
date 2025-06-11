@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.8.5";
+const THEME_VERSION = "2.8.6";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -209,6 +209,25 @@ const themeCustomSettings = [
                 }
             }
         `
+    },
+    {
+    "type": "checkbox",
+    "varId": "forceFixedMenuHeight",
+    "displayText": t`Lock AI Response & Character Menu Height`,
+    "default": true,
+    "category": "theme-extras",
+    "description": t`Fix AI config & character menus’ height to avoid display issues. Disable if using MovingUI`,
+    "cssBlock": `
+            /* 強制固定選單高度 */
+            .fillLeft,
+            .fillRight,
+            #left-nav-panel,
+            #right-nav-panel  {
+                height: calc(100dvh - var(--topBarBlockSize)) !important;
+                height: calc(100dvh - var(--topBarBlockSize)) !important;
+                max-height: calc(100dvh - var(--topBarBlockSize)) !important;
+            }
+    `
     },
     {
         "type": "checkbox",
@@ -503,24 +522,10 @@ const themeCustomSettings = [
 
     // 視覺小說模式 (visual-novel)
     {
-        "type": "select",
+        "type": "text",
         "varId": "VN-sheld-height",
         "displayText": t`Visual Novel Mode Chat Field Height`,
         "default": "40dvh",
-        "options": [
-            {
-                "label": "40dvh",
-                "value": "40dvh"
-            },
-            {
-                "label": "50dvh",
-                "value": "50dvh"
-            },
-            {
-                "label": "60dvh",
-                "value": "60dvh"
-            }
-        ],
         "category": "visual-novel",
         "description": t`Maximum height of the chat field (#sheld) in Visual Novel mode`
     },
@@ -784,6 +789,21 @@ const themeCustomSettings = [
                     width: var(--bottomFormBlockSize) !important;
                 }
             }
+    `
+    },
+    {
+    "type": "checkbox",
+    "varId": "inlineMobileMeta",
+    "displayText": t`Inline Character, Timestamp & Icons on Mobile`,
+    "default": false,
+    "category": "mobile-global-settings",
+    "description": t`Show character names, timestamps, and model icons in one line on mobile`,
+    "cssBlock": `
+        @media (max-width: 1000px) {
+            body:not(.echostyle) .name_text {
+                width: unset !important;
+            }
+        }
     `
     },
     {
