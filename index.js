@@ -222,8 +222,8 @@ const themeCustomSettings = [
             .fillLeft,
             .fillRight,
             #left-nav-panel,
-            #right-nav-panel  {
-                height: calc(100dvh - var(--topBarBlockSize)) !important;
+            #right-nav-panel {
+                min-height: calc(100dvh - var(--topBarBlockSize)) !important;
                 height: calc(100dvh - var(--topBarBlockSize)) !important;
                 max-height: calc(100dvh - var(--topBarBlockSize)) !important;
             }
