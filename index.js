@@ -8,18 +8,15 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.8.6";
+const THEME_VERSION = "2.8.7";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
 import { loadMovingUIState } from '../../../power-user.js';
 import { t } from '../../../i18n.js';
 
-// Global variables for popout functionality
-let $themePopout = null;  // The popout element
-let $settingsContent = null;  // Theme settings content
-let $originalParent = null;  // Original location of the settings content
-let THEME_POPOUT_VISIBLE = false;  // Tracks whether the popout is currently visible
+// Track if custom chat styles have been added
+let customChatStylesAdded = false;
 
 /**
  * Define which categories go into which tab
@@ -27,20 +24,20 @@ let THEME_POPOUT_VISIBLE = false;  // Tracks whether the popout is currently vis
  */
 const tabMappings = {
     'core-settings': [
-        'theme-colors',        // 主題顏色
-        'background-effects',  // 背景效果
-        'theme-extras'         // 主題附加功能
+        'theme-colors',        // Theme Colors
+        'background-effects',  // Background Effects
+        'theme-extras'         // Theme Extras
     ],
     'chat-interface': [
-        'chat-general',        // 聊天一般設定
-        'visual-novel',         // 視覺小說模式
-        'chat-echo',           // Echo風格設定
-        'chat-whisper',        // Whisper風格設定
-        'chat-ripple'         // Ripple風格設定
+        'chat-general',        // General Chat Settings
+        'visual-novel',         // Visual Novel Mode
+        'chat-echo',           // Echo Style Settings
+        'chat-whisper',        // Whisper Style Settings
+        'chat-ripple'         // Ripple Style Settings
     ],
     'mobile-devices': [
-        'mobile-global-settings',    // 行動裝置全局設定
-        'mobile-detailed-settings'    // 行動裝置詳細設定
+        'mobile-global-settings',    // Mobile Global Settings
+        'mobile-detailed-settings'    // Mobile Detailed Settings
     ]
 };
 
@@ -50,10 +47,10 @@ const tabMappings = {
  */
 const themeCustomSettings = [
     // - - - - - - - - - - - - - - - - - - -
-    // 主題顏色 (Theme Colors) 標籤
+    // Theme Colors Tab 主題顏色分頁
     // - - - - - - - - - - - - - - - - - - -
 
-    // 主題顏色 (theme-colors)
+    // Theme Colors (theme-colors) 主題顏色
     {
         "type": "color",
         "varId": "customThemeColor",
@@ -119,7 +116,7 @@ const themeCustomSettings = [
         "description": t`The scrollbar color on SillyTavern`
     },
 
-    // 背景效果 (background-effects)
+    // Background Effects (background-effects) 背景效果
     {
         "type": "slider",
         "varId": "customCSS-bg-blur",
@@ -165,7 +162,7 @@ const themeCustomSettings = [
         "description": t`Blur level of the chat field background on mobile devices (#sheld)`
     },
 
-    // 主題附加功能 (theme-extras)
+    // Theme Extras (theme-extras) 額外主題自定義選項
     {
         "type": "checkbox",
         "varId": "enableThemeColorization",
@@ -174,7 +171,7 @@ const themeCustomSettings = [
         "category": "theme-extras",
         "description": t`Applies theme colors to more parts of the UI for a more personalized look`,
         "cssBlock": `
-            /* 主題顏色化 */
+            /* Theme Colorization */
             .drawer-icon,
             #rightSendForm>div,
             #leftSendForm>div,
@@ -212,13 +209,31 @@ const themeCustomSettings = [
     },
     {
     "type": "checkbox",
+    "varId": "disableTopMenuAnimation",
+    "displayText": t`Disable Top Menu Animations`,
+    "default": false,
+    "category": "theme-extras",
+    "description": t`Disable top menu animation effects for a smoother experience on mobile devices`,
+    "cssBlock": `
+        .drawer-content,
+        .fillLeft,
+        .fillRight {
+            transition-property: unset;
+            transition-duration: unset;
+            transition-timing-function: unset;
+            transition-behavior: unset;
+        }
+    `
+    },
+    {
+    "type": "checkbox",
     "varId": "forceFixedMenuHeight",
     "displayText": t`Lock AI Response & Character Menu Height`,
     "default": true,
     "category": "theme-extras",
-    "description": t`Fix AI config & character menus’ height to avoid display issues. Disable if using MovingUI`,
+    "description": t`Fix AI config & character menus' height to avoid display issues. Disable if using MovingUI`,
     "cssBlock": `
-            /* 強制固定選單高度 */
+            /* Force Fixed Menu Height */
             .fillLeft,
             .fillRight,
             #left-nav-panel,
@@ -235,9 +250,9 @@ const themeCustomSettings = [
         "displayText": t`Dynamically Adjust Menu Max Height`,
         "default": false,
         "category": "theme-extras",
-        "description": t`Dynamically adjust the menu’s maximum height based on the message input field. May not work on all devices—disable this option if the menu doesn’t close properly`,
+        "description": t`Dynamically adjust the menu's maximum height based on the message input field. May not work on all devices—disable this option if the menu doesn't close properly`,
         "cssBlock": `
-            /* 動態選單高度 */
+            /* Dynamic Menu Height */
             .drawer-content {
                 max-height: calc(100dvh - var(--topBarBlockSize) - var(--formSheldHeight) - 5px) !important;
             }
@@ -267,7 +282,7 @@ const themeCustomSettings = [
         "category": "theme-extras",
         "description": t`Completely disable all border-radius and outline-radius effects throughout the UI`,
         "cssBlock": `
-            /* 禁用圓角 */
+            /* Disable Border Radius */
             *, *::before, *::after {
                 border-radius: 0 !important;
                 border-top-left-radius: 0 !important;
@@ -304,7 +319,7 @@ const themeCustomSettings = [
         "displayText": t`Apply Theme Color to Message Avatar Border`,
         "default": false,
         "category": "theme-extras",
-        "description": t`Applies each character’s theme color to message avatar borders. Requires the Character Style Customizer; per-character colors override global settings`,
+        "description": t`Applies each character's theme color to message avatar borders. Requires the Character Style Customizer; per-character colors override global settings`,
         "cssBlock": `
             #chat .mes .avatar {
                 border: 1px solid var(--csc-char-primary, var(--csc-primary)) !important;
@@ -320,7 +335,7 @@ const themeCustomSettings = [
         "displayText": t`Apply Theme Color to Message Background (Experimental)`,
         "default": false,
         "category": "theme-extras",
-        "description": t`Applies each character’s theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings`,
+        "description": t`Applies each character's theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings`,
         "cssBlock": `
             #chat .mes[is_user="false"] .mes_block,
             body.echostyle #chat .mes[is_user="false"] .mes_text,
@@ -342,10 +357,10 @@ const themeCustomSettings = [
     },
 
     // - - - - - - - - - - - - - - - - - - -
-    // 聊天介面 (Chat Interface) 標籤
+    // Chat Interface Tab 聊天樣式分頁
     // - - - - - - - - - - - - - - - - - - -
 
-    // 聊天一般設定 (chat-general)
+    // General Chat Settings (chat-general) 一般聊天設定
     {
         "type": "select",
         "varId": "customCSS-ChatGradientBlur",
@@ -520,7 +535,7 @@ const themeCustomSettings = [
         "description": t`Controls the animation speed for message details appearing/disappearing (e.g. 0.5s, 1.2s)`
     },
 
-    // 視覺小說模式 (visual-novel)
+    // Visual Novel Mode (visual-novel) 視覺小說模式
     {
         "type": "text",
         "varId": "VN-sheld-height",
@@ -548,7 +563,7 @@ const themeCustomSettings = [
         "description": t`Bottom transparency effect for character portraits in Visual Novel mode`
     },
 
-    // Echo風格設定 (chat-echo)
+    // Echo Style Settings (chat-echo)
     {
         "type": "text",
         "varId": "custom-EchoAvatarWidth",
@@ -614,7 +629,7 @@ const themeCustomSettings = [
         `
     },
 
-    // Whisper風格設定 (chat-whisper)
+    // Whisper Style Settings (chat-whisper) 低語聊天風格
     {
         "type": "text",
         "varId": "customWhisperAvatarWidth",
@@ -646,7 +661,7 @@ const themeCustomSettings = [
         "description": t`Vertical alignment of character avatars in the message background for the Whisper style`
     },
 
-    // Ripple風格設定 (chat-ripple)
+    // Ripple Style Settings (chat-ripple) 漣漪聊天風格
     {
         "type": "text",
         "varId": "customRippleAvatarWidth",
@@ -665,10 +680,10 @@ const themeCustomSettings = [
     },
 
     // - - - - - - - - - - - - - - - - - - -
-    // 行動裝置 (Mobile Devices) 標籤
+    // Mobile Devices Tab 行動裝置設定分頁
     // - - - - - - - - - - - - - - - - - - -
 
-    // 行動裝置全局 (mobile-global-settings)
+    // Mobile Global Settings (mobile-global-settings) 一般行動樣式
     {
         "type": "checkbox",
         "varId": "enableMobile-hidden_scrollbar",
@@ -682,9 +697,9 @@ const themeCustomSettings = [
                 * {
                     scrollbar-width: none !important;
                     -ms-overflow-style: none !important;
-                    &::-webkit-scrollbar {
-                        display: none !important;
-                    }
+                }
+                *::-webkit-scrollbar {
+                    display: none !important;
                 }
 
                 .scrollableInner,
@@ -803,6 +818,11 @@ const themeCustomSettings = [
             body:not(.echostyle) .name_text {
                 width: unset !important;
             }
+            body.whisperstyle:not(.big-avatars) #chat {
+                .mes {
+                    padding-top: 75px !important;
+                }
+            }
         }
     `
     },
@@ -857,7 +877,7 @@ const themeCustomSettings = [
         `
     },
 
-    // 行動裝置詳細設定 (mobile-detailed-settings)
+    // Mobile Detailed Settings (mobile-detailed-settings) 進階行動樣式
     {
         "type": "select",
         "varId": "mobileQRsBarHeight",
@@ -1206,7 +1226,7 @@ function open_popout() {
     // Create the popout
     $popout = $(`
     <div id="moonlit_echoes_popout" class="draggable" style="display: none;">
-        <div class="panelControlBar flex-container">
+        <div class="panelControlBar flex-container" id="moonlitEchoesPopoutHeader">
             <div class="fa-solid fa-moon" style="margin-right: 10px;"></div>
             <div class="title">Moonlit Echoes Theme</div>
             <div class="flex1"></div>
@@ -1227,9 +1247,10 @@ function open_popout() {
 
     // Setup dragging
     try {
-        dragElement($popout[0]);
+        loadMovingUIState();
+        dragElement($popout);
     } catch (error) {
-        console.error("[Moonlit Echoes] Error setting up draggable:", error);
+        // Silent error handling
     }
 
     // Add close button handler
@@ -1465,12 +1486,19 @@ function ensureSettingsStructure(settings) {
 }
 
 /**
- * Initialize slash commands
+ * Initialize slash commands - only when theme is enabled
  * Register various chat style slash commands for Moonlit Echoes Theme
  */
 function initializeSlashCommands() {
-    // Get SillyTavern context and slash command related classes
+    // Get SillyTavern context and check if theme is enabled
     const context = SillyTavern.getContext();
+    const settings = context.extensionSettings[settingsKey];
+
+    // Only initialize slash commands when theme is enabled
+    if (!settings.enabled) {
+        return;
+    }
+
     const SlashCommandParser = context.SlashCommandParser;
     const SlashCommand = context.SlashCommand;
 
@@ -1506,7 +1534,6 @@ function initializeSlashCommands() {
 
             return t`Chat style switched to ${styleName}`;
         } catch (error) {
-            console.error(`Error switching chat style: ${error.message}`);
             return t`Error switching chat style: ${error.message}`;
         }
     }
@@ -1598,21 +1625,6 @@ function initializeSlashCommands() {
  * Includes settings panel, chat style, color picker, and sidebar button
  */
 function initExtensionUI() {
-    function loadMessageDetailsModule() {
-        const scriptElement = document.createElement('script');
-        scriptElement.src = `${extensionFolderPath}/message-details.js`;
-        scriptElement.id = 'moonlit-message-details-script';
-        document.head.appendChild(scriptElement);
-    }
-
-    // Load Echo style avatar background injector
-    function loadEchoAvatarInjector() {
-        const scriptElement = document.createElement('script');
-        scriptElement.src = `${extensionFolderPath}/echo-avatar-injector.js`;
-        scriptElement.id = 'moonlit-echo-avatar-script';
-        document.head.appendChild(scriptElement);
-    }
-
     // Load settings HTML and initialize settings panel
     loadSettingsHTML().then(() => {
         renderExtensionSettings();
@@ -1642,15 +1654,11 @@ function initExtensionUI() {
 
         // Initialize sidebar button and popout functionality
         initialize_sidebar_button();
-        loadMessageDetailsModule();
 
         // Adds a button to the extensions dropdown menu
         addExtensionMenuButton();
 
-        // Load Echo avatar background injector
-        loadEchoAvatarInjector();
-
-        // Initialize slash commands
+        // Initialize slash commands (only when enabled)
         initializeSlashCommands();
     });
 
@@ -1714,7 +1722,6 @@ function addExtensionMenuButton() {
     // Select the Extensions dropdown menu
     let $extensions_menu = $('#extensionsMenu');
     if (!$extensions_menu.length) {
-        console.error('[Moonlit Echoes] Could not find the extensions menu');
         return;
     }
 
@@ -2282,6 +2289,9 @@ function toggleCss(shouldLoad) {
 
         // Clear all checkbox styles
         clearAllCheckboxStyles();
+
+        // Remove custom chat styles when theme is disabled
+        removeCustomChatStyles();
     }
 }
 
@@ -2415,6 +2425,14 @@ function renderExtensionSettings() {
         // Update hint display when enable status changes
         addThemeButtonsHint();
 
+        // Update custom chat styles when enabled status changes
+        updateCustomChatStyles();
+
+        // Re-initialize slash commands based on enabled status
+        if (settings.enabled) {
+            initializeSlashCommands();
+        }
+
         context.saveSettingsDebounced();
     });
 
@@ -2454,6 +2472,54 @@ function renderExtensionSettings() {
         inlineDrawerIcon.classList.toggle('up');
         inlineDrawerContent.classList.toggle('open');
     });
+}
+
+/**
+ * Update custom chat styles based on extension enabled status
+ */
+function updateCustomChatStyles() {
+    const context = SillyTavern.getContext();
+    const settings = context.extensionSettings[settingsKey];
+
+    if (settings.enabled) {
+        addCustomStyleOptions();
+    } else {
+        removeCustomChatStyles();
+    }
+}
+
+/**
+ * Remove custom chat styles when theme is disabled
+ */
+function removeCustomChatStyles() {
+    const chatDisplaySelect = document.getElementById("chat_display");
+    if (!chatDisplaySelect) return;
+
+    // Find and remove custom options
+    const customOptions = [
+        chatDisplaySelect.querySelector('option[value="3"]'), // Echo
+        chatDisplaySelect.querySelector('option[value="4"]'), // Whisper
+        chatDisplaySelect.querySelector('option[value="5"]'), // Hush
+        chatDisplaySelect.querySelector('option[value="6"]'), // Ripple
+        chatDisplaySelect.querySelector('option[value="7"]')  // Tide
+    ];
+
+    customOptions.forEach(option => {
+        if (option) {
+            option.remove();
+        }
+    });
+
+    // Reset customChatStylesAdded flag
+    customChatStylesAdded = false;
+
+    // If current style is a custom one, reset to flat chat
+    const currentValue = chatDisplaySelect.value;
+    if (['3', '4', '5', '6', '7'].includes(currentValue)) {
+        chatDisplaySelect.value = '0'; // Flat chat
+        applyChatDisplayStyle();
+        localStorage.setItem("savedChatStyle", '0');
+    }
 }
 
 /**
@@ -2717,7 +2783,6 @@ function saveSectionExpandState(category, isExpanded) {
         localStorage.setItem(stateKey, JSON.stringify(sectionStates));
     } catch (error) {
         // Silent error handling in case localStorage is not available
-        console.error('Error saving section state:', error);
     }
 }
 
@@ -2736,7 +2801,6 @@ function getSectionExpandState(category) {
         return sectionStates[category] !== undefined ? sectionStates[category] : true;
     } catch (error) {
         // Silent error handling in case localStorage is not available
-        console.error('Error getting section state:', error);
         return true; // Default to expanded
     }
 }
@@ -2750,7 +2814,6 @@ function saveActiveTab(tabId) {
         localStorage.setItem('moonlit_active_tab', tabId);
     } catch (error) {
         // Silent error handling
-        console.error('Error saving tab state:', error);
     }
 }
 
@@ -2763,7 +2826,6 @@ function getActiveTab() {
         return localStorage.getItem('moonlit_active_tab') || 'core-settings'; // Default to first tab
     } catch (error) {
         // Silent error handling
-        console.error('Error getting tab state:', error);
         return 'core-settings'; // Default to first tab
     }
 }
@@ -4741,10 +4803,14 @@ function createCheckbox(container, setting, settings) {
 }
 
 /**
- * Initialize chat appearance switcher
+ * Initialize chat appearance switcher - only when theme is enabled
  * Handle switching between different chat styles
  */
 function initChatDisplaySwitcher() {
+    // Get settings to check if theme is enabled
+    const context = SillyTavern.getContext();
+    const settings = context.extensionSettings[settingsKey];
+
     // Get selector elements
     const themeSelect = document.getElementById("themes");
     const chatDisplaySelect = document.getElementById("chat_display");
@@ -4753,49 +4819,54 @@ function initChatDisplaySwitcher() {
         return;
     }
 
-    let newEchoOption, newWhisperOption, newHushOption, newRippleOption, newTideOption, newVeilOption;
-
-    // Add custom style options
+    // Add custom style options only when theme is enabled
     function addCustomStyleOptions() {
+        // Only add custom options when theme is enabled
+        if (!settings.enabled || customChatStylesAdded) {
+            return;
+        }
+
         // Check and add Echo option
-        if (!newEchoOption) {
-            newEchoOption = document.createElement("option");
+        if (!chatDisplaySelect.querySelector('option[value="3"]')) {
+            const newEchoOption = document.createElement("option");
             newEchoOption.value = "3";
             newEchoOption.text = t`Echo`;
             chatDisplaySelect.appendChild(newEchoOption);
         }
 
         // Check and add Whisper option
-        if (!newWhisperOption) {
-            newWhisperOption = document.createElement("option");
+        if (!chatDisplaySelect.querySelector('option[value="4"]')) {
+            const newWhisperOption = document.createElement("option");
             newWhisperOption.value = "4";
             newWhisperOption.text = t`Whisper`;
             chatDisplaySelect.appendChild(newWhisperOption);
         }
 
         // Check and add Hush option
-        if (!newHushOption) {
-            newHushOption = document.createElement("option");
+        if (!chatDisplaySelect.querySelector('option[value="5"]')) {
+            const newHushOption = document.createElement("option");
             newHushOption.value = "5";
             newHushOption.text = t`Hush`;
             chatDisplaySelect.appendChild(newHushOption);
         }
 
         // Check and add Ripple option
-        if (!newRippleOption) {
-            newRippleOption = document.createElement("option");
+        if (!chatDisplaySelect.querySelector('option[value="6"]')) {
+            const newRippleOption = document.createElement("option");
             newRippleOption.value = "6";
             newRippleOption.text = t`Ripple`;
             chatDisplaySelect.appendChild(newRippleOption);
         }
 
         // Check and add Tide option
-        if (!newTideOption) {
-            newTideOption = document.createElement("option");
+        if (!chatDisplaySelect.querySelector('option[value="7"]')) {
+            const newTideOption = document.createElement("option");
             newTideOption.value = "7";
             newTideOption.text = t`Tide`;
             chatDisplaySelect.appendChild(newTideOption);
         }
+
+        customChatStylesAdded = true;
     }
 
     // Apply chat style
@@ -4827,7 +4898,9 @@ function initChatDisplaySwitcher() {
 
     // Theme change event handling
     themeSelect.addEventListener("change", function() {
-        addCustomStyleOptions();
+        if (settings.enabled) {
+            addCustomStyleOptions();
+        }
         localStorage.setItem("savedTheme", themeSelect.value);
         applyChatDisplayStyle();
     });
@@ -4847,7 +4920,10 @@ function initChatDisplaySwitcher() {
         themeSelect.value = savedTheme;
     }
 
-    addCustomStyleOptions();
+    // Only add custom options if theme is enabled
+    if (settings.enabled) {
+        addCustomStyleOptions();
+    }
 
     if (savedChatStyle) {
         chatDisplaySelect.value = savedChatStyle;
@@ -5521,9 +5597,6 @@ function initFormSheldHeightMonitor() {
             if (height > 0) {
                 document.documentElement.style.setProperty('--formSheldHeight', `${height}px`);
                 isInitialized = true;
-
-                // Optional: log for debugging
-                // console.log('Form sheld height updated:', height);
             }
         }
     }
@@ -5723,9 +5796,6 @@ function initFormSheldHeightMonitor() {
     startObservers();
     setupTextAreaListener();
     updateFormSheldHeight();
-
-    // Log initialization
-    console.log('Form shield height monitor initialized');
 
     // Return control functions for advanced usage
     return {

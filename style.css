@@ -42,7 +42,7 @@ body {
     /* !!! Important: Do Not Modify 不要修改 !!! */
     --topBarBlockSize: calc(var(--topBarIconSize) + var(--topBarBlockPadding) - 1px);
     --bottomInputAreaHeight: 115px;
-    --custom-echo-avatar: calc(var(--custom-ChatAvatar, 40px) + 10px);
+    --custom-echo-avatar: calc(var(--custom-ChatAvatar, 40px) + 8px);
 }
 @media screen and (max-width: 1000px) {
     :root {
@@ -618,82 +618,52 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* General Scrollbar 通用捲軸 */
 ::-webkit-scrollbar {
-    width: 5px;
-    max-width: 5px;
-    height: 10px;
-
-    /* Scrollbar Track 捲軸軌道 */
-    &-track {
-        background: transparent;
-    }
-    /* Scrollbar Thumb 捲軸拇指 */
-    &-thumb {
-        background-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
-        border-radius: 5px !important;
-        transition: background-color 0.5s ease, opacity 0.5s ease;
-
-    &:hover {
-        background-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
-    }
-    &:active {
-        background-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
-        }
-    }
+    width: 0.5rem;
+    scrollbar-gutter: stable;
 }
-
-/* Firefox Scrollbar Firefox 捲軸樣式 */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5)) transparent;
-
-    &::-webkit-scrollbar {
-        scrollbar-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5)) transparent;
-    }
+::-webkit-scrollbar-track {
+    cursor: default;
+    background-color: transparent;
 }
-
-/* General Scrollbar 通用捲軸 */
-::-webkit-scrollbar {
-    width: 5px;
-    max-width: 5px;
-    height: 10px;
-
-    /* Scrollbar Track 捲軸軌道 */
-    &-track {
-        background: transparent;
-    }
-    /* Scrollbar Thumb 捲軸拇指 */
-    &-thumb {
-        background-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
-        border-radius: 5px !important;
-        transition: background-color 0.5s ease, opacity 0.5s ease;
-
-    &:hover {
-        background-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
-    }
-    &:active {
-        background-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
-        }
-    }
+::-webkit-scrollbar-track:hover {
+    background-color: transparent;
 }
-@media screen and (max-width: 1000px) {
-    ::-webkit-scrollbar-thumb {
-        background-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
-    }
-
-    * {
-        scrollbar-width: thin !important;
-        scrollbar-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
-    }
+::-webkit-scrollbar-thumb {
+    cursor: grab;
 }
-
-/* Firefox Scrollbar Firefox 捲軸樣式 */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5)) transparent;
-
-    &::-webkit-scrollbar {
-        scrollbar-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5)) transparent;
-    }
+::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
+}
+.scrollY {
+    overflow-y: auto !important;
+}
+::-webkit-scrollbar-thumb:vertical {
+    background-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
+    background-clip: content-box;
+    border: 2px solid transparent;
+    min-height: 40px;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+::-webkit-scrollbar-thumb:vertical:hover {
+    opacity: 0.8;
+}
+body.movingUI ::-webkit-scrollbar-thumb:vertical {
+    border-top: 20px solid transparent;
+}
+::-webkit-scrollbar-thumb:horizontal {
+    background-color: var(--customScrollbarColor, rgba(255, 255, 255, 0.5));
+    background-clip: content-box;
+    border: 2px solid transparent;
+    min-width: 40px;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+::-webkit-scrollbar-thumb:horizontal:hover {
+    opacity: 0.8;
+}
+::-webkit-scrollbar-corner {
+    background-color: transparent;
 }
 
 
@@ -887,7 +857,7 @@ input[type="range"]::-webkit-slider-thumb {
     overflow-y: scroll;
     padding: 0;
     padding-left: 2px;
-    padding-right: 15px;
+    padding-right: 2px;
     padding-bottom: 5px;
     display: flex;
     flex-direction: column;
@@ -962,10 +932,10 @@ input[type="range"]::-webkit-slider-thumb {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: calc(var(--custom-ChatAvatar, 40px) + 10px);
-            height: calc(var(--custom-ChatAvatar, 40px) + 10px);
-            max-width: calc(var(--custom-ChatAvatar, 40px) + 10px);
-            max-height: calc(var(--custom-ChatAvatar, 40px) + 10px);
+            width: calc(var(--custom-ChatAvatar, 40px) + 8px);
+            height: calc(var(--custom-ChatAvatar, 40px) + 8px);
+            max-width: calc(var(--custom-ChatAvatar, 40px) + 8px);
+            max-height: calc(var(--custom-ChatAvatar, 40px) + 8px);
             border: 1px solid var(--SmartThemeBodyColor);
 
             img {
@@ -1167,10 +1137,10 @@ body.big-avatars #chat .mes {
         border-radius: 10px;
     }
     .avatar {
-        width: calc((var(--custom-ChatAvatar) * var(--big-avatar-width-factor)) + 10px);
-        height: calc((var(--custom-ChatAvatar) * var(--big-avatar-height-factor)) + 10px);
-        min-width: calc((var(--custom-ChatAvatar) * var(--big-avatar-width-factor)) + 10px) !important;
-        min-height: calc((var(--custom-ChatAvatar) * var(--big-avatar-height-factor)) + 10px) !important;
+        width: calc((var(--custom-ChatAvatar) * var(--big-avatar-width-factor)) + 8px);
+        height: calc((var(--custom-ChatAvatar) * var(--big-avatar-height-factor)) + 8px);
+        min-width: calc((var(--custom-ChatAvatar) * var(--big-avatar-width-factor)) + 8px) !important;
+        min-height: calc((var(--custom-ChatAvatar) * var(--big-avatar-height-factor)) + 8px) !important;
 
         img {
             width: calc(var(--custom-ChatAvatar) * var(--big-avatar-width-factor));
@@ -1182,8 +1152,8 @@ body.big-avatars #chat .mes {
 }
 body.big-avatars #chat .mes[is_user="true"] {
     .avatar {
-        width: calc((var(--custom-ChatAvatar) * var(--big-avatar-width-factor)) + 10px);
-        height: calc((var(--custom-ChatAvatar) * var(--big-avatar-height-factor)) + 10px);
+        width: calc((var(--custom-ChatAvatar) * var(--big-avatar-width-factor)) + 8px);
+        height: calc((var(--custom-ChatAvatar) * var(--big-avatar-height-factor)) + 8px);
 
         img {
             width: calc(var(--custom-ChatAvatar) * var(--big-avatar-width-factor));
@@ -3344,7 +3314,11 @@ body:not(.charListGrid).big-avatars {
 
 #right-nav-panel:not([data-menu-type="character_edit"]) #right-nav-panel-tabs,
 #right-nav-panel:not([data-menu-type="character_edit"]) .right-nav-panel-tabs {
-    display: none !important;
+    #rm_button_selected_ch {
+        margin-bottom: 0 !important;
+        padding-left: 0 !important;
+        border-left: 0 !important;
+    }
 }
 
 #export_format_popup {
@@ -3687,7 +3661,7 @@ body.hushstyle,
 body.tidestyle {
     #chat .ch_name {
         margin-top: 3px;
-        margin-left: calc(var(--custom-echo-avatar) + 10px);
+        margin-left: calc(var(--custom-echo-avatar) + 8px);
 
         @media screen and (max-width: 1000px) {
             margin-left: calc(var(--custom-echo-avatar) + 11px)
