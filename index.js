@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.8.8";
+const THEME_VERSION = "2.8.9";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -602,7 +602,7 @@ const themeCustomSettings = [
         "displayText": t`[Echo] Minimize User Messages`,
         "default": false,
         "category": "chat-echo",
-        "description": t`Hide user avatars and minimizes the height of user messages in the Echo style.`,
+        "description": t`Hide user avatars and minimizes the height of user messages in the Echo style`,
         "cssBlock": `
             body.echostyle #chat div.mes[is_user="true"] div.mes_text::before {
                 content: unset;

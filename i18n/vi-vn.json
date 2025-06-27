@@ -178,5 +178,7 @@
     "Applies each character's theme color to message avatar borders. Requires the Character Style Customizer; per-character colors override global settings": "Áp dụng màu chủ đề của mỗi nhân vật vào viền ảnh đại diện tin nhắn. Yêu cầu Tiện ích tùy chỉnh kiểu nhân vật; màu sắc của từng nhân vật sẽ ghi đè cài đặt chung",
     "Applies each character's theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings": "Áp dụng màu chủ đề của mỗi nhân vật vào nền tin nhắn của họ. Yêu cầu Tiện ích tùy chỉnh kiểu nhân vật; màu sắc của từng nhân vật sẽ ghi đè cài đặt chung",
     "Disable Top Menu Animations": "Tắt hoạt ảnh menu trên cùng",
-    "Disable top menu animation effects for a smoother experience on mobile devices": "Tắt các hiệu ứng hoạt ảnh của menu trên cùng để có trải nghiệm mượt mà hơn trên thiết bị di động"
+    "Disable top menu animation effects for a smoother experience on mobile devices": "Tắt các hiệu ứng hoạt ảnh của menu trên cùng để có trải nghiệm mượt mà hơn trên thiết bị di động",
+    "[Echo] Minimize User Messages": "[Echo] Thu gọn tin nhắn của người dùng",
+    "Hide user avatars and minimizes the height of user messages in the Echo style": "Ẩn ảnh đại diện người dùng và thu gọn chiều cao tin nhắn trong kiểu Echo"
 }

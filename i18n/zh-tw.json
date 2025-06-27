@@ -178,5 +178,7 @@
     "Applies each character's theme color to message avatar borders. Requires the Character Style Customizer; per-character colors override global settings": "將個別角色主題顏色套用至訊息頭像邊框。需使用「Character Style Customizer」擴充，個別角色顏色優先於全域設定",
     "Applies each character's theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings": "將個別角色主題顏色套用至訊息背景。需使用「Character Style Customizer」擴充，個別角色顏色優先於全域設定",
     "Disable Top Menu Animations": "停用頂部選單動畫",
-    "Disable top menu animation effects for a smoother experience on mobile devices": "停用頂部選單的動畫效果，以在行動裝置上獲得更順暢的體驗"
+    "Disable top menu animation effects for a smoother experience on mobile devices": "停用頂部選單的動畫效果，以在行動裝置上獲得更順暢的體驗",
+    "[Echo] Minimize User Messages": "[Echo] 最小化使用者訊息",
+    "Hide user avatars and minimizes the height of user messages in the Echo style": "隱藏使用者角色頭像，並在 Echo 風格中最小化使用者訊息的高度"
 }

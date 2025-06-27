@@ -178,5 +178,7 @@
     "Applies each character's theme color to message avatar borders. Requires the Character Style Customizer; per-character colors override global settings": "각 캐릭터의 테마 색상을 메시지 아바타 테두리에 적용합니다. 'Character Style Customizer' 확장이 필요하며, 캐릭터별 색상이 전역 설정을 재정의합니다.",
     "Applies each character's theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings": "각 캐릭터의 테마 색상을 메시지 배경에 적용합니다. 'Character Style Customizer' 확장이 필요하며, 캐릭터별 색상이 전역 설정을 재정의합니다.",
     "Disable Top Menu Animations": "상단 메뉴 애니메이션 비활성화",
-    "Disable top menu animation effects for a smoother experience on mobile devices": "모바일 기기에서 더 부드러운 경험을 위해 상단 메뉴 애니메이션 효과를 비활성화합니다."
+    "Disable top menu animation effects for a smoother experience on mobile devices": "모바일 기기에서 더 부드러운 경험을 위해 상단 메뉴 애니메이션 효과 비활성화.",
+    "[Echo] Minimize User Messages": "[Echo] 사용자 메시지 최소화",
+    "Hide user avatars and minimizes the height of user messages in the Echo style": "Echo 스타일에서 사용자 아바타를 숨기고 메시지 높이를 최소화합니다."
 }

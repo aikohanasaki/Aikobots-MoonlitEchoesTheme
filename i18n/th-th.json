@@ -178,5 +178,7 @@
     "Applies each character's theme color to message avatar borders. Requires the Character Style Customizer; per-character colors override global settings": "ใช้สีธีมของแต่ละตัวละครกับเส้นขอบอวตารของข้อความ ต้องใช้ส่วนขยาย Character Style Customizer; สีของแต่ละตัวละครจะแทนที่การตั้งค่าส่วนกลาง",
     "Applies each character's theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings": "ใช้สีธีมของแต่ละตัวละครกับพื้นหลังข้อความของพวกเขา ต้องใช้ส่วนขยาย Character Style Customizer; สีของแต่ละตัวละครจะแทนที่การตั้งค่าส่วนกลาง",
     "Disable Top Menu Animations": "ปิดใช้งานแอนิเมชันเมนูด้านบน",
-    "Disable top menu animation effects for a smoother experience on mobile devices": "ปิดใช้งานเอฟเฟกต์แอนิเมชันของเมนูด้านบนเพื่อประสบการณ์ที่ราบรื่นขึ้นบนอุปกรณ์มือถือ"
+    "Disable top menu animation effects for a smoother experience on mobile devices": "ปิดเอฟเฟกต์แอนิเมชันของเมนูด้านบนเพื่อประสบการณ์ที่ลื่นไหลยิ่งขึ้นบนอุปกรณ์พกพา",
+    "[Echo] Minimize User Messages": "[Echo] ย่อข้อความของผู้ใช้ให้เล็กลง",
+    "Hide user avatars and minimizes the height of user messages in the Echo style": "ซ่อนอวาตาร์ของผู้ใช้และย่อความสูงของข้อความในสไตล์ Echo"
 }
