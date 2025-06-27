@@ -204,7 +204,7 @@ h4 {
 }
 
 /* --- Lists 列表樣式 --- */
-ol, ul {
+ol, ul:has(li) {
     margin-block-start: 10px;
     margin-block-end: 10px;
     margin-inline-start: 3px;
