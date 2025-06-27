@@ -598,6 +598,24 @@ const themeCustomSettings = [
     },
     {
         "type": "checkbox",
+        "varId": "hideUserAvatar",
+        "displayText": t`[Echo] Minimize User Messages`,
+        "default": false,
+        "category": "chat-echo",
+        "description": t`Hide user avatars and minimizes the height of user messages in the Echo style.`,
+        "cssBlock": `
+            body.echostyle #chat div.mes[is_user="true"] div.mes_text::before {
+                content: unset;
+            }
+
+            body.echostyle #chat div.mes[is_user="true"] div.mes_text {
+                padding-left: 20px !important;
+                min-height: unset;
+            }
+        `
+    },
+    {
+        "type": "checkbox",
         "varId": "hideMobileEchoBackground",
         "displayText": t`[Echo] Hide Message Background on Mobile`,
         "default": false,
