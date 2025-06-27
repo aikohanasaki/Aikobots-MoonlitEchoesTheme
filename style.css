@@ -1164,9 +1164,6 @@ body.big-avatars #chat .mes[is_user="true"] {
 
 /* Avatar: Hidden 頭像：「隱藏角色頭像」 */
 body.hideChatAvatars #chat {
-    .ch_name {
-        margin-left: 10px;
-    }
     .mes {
         .mes_timer,
         .mesIDDisplay,
@@ -1183,6 +1180,36 @@ body.hideChatAvatars {
     .swipe_left,
     .swipeRightBlock {
         bottom: 30px !important;
+    }
+}
+
+/* These styles require 10px margin-left for the name */
+body.hideChatAvatars.echostyle #chat,
+body.hideChatAvatars.whisperstyle #chat,
+body.hideChatAvatars.hushstyle #chat,
+body.hideChatAvatars.tidestyle #chat {
+  .ch_name {
+    margin-left: 10px;
+  }
+}
+
+/* These need 0 margin-left for the name */
+body.hideChatAvatars.flatchat #chat,
+body.hideChatAvatars.bubblechat #chat,
+body.hideChatAvatars.ripplestyle #chat {
+  .ch_name {
+    margin-left: unset;
+  }
+}
+
+/* 漣漪訊息修正 */
+body.hideChatAvatars.ripplestyle #chat {
+    .mes .mesAvatarWrapper {
+        margin-top: 35px;
+        top: 35px;
+    }
+    .mes_text {
+        margin-top: unset;
     }
 }
 
@@ -1570,6 +1597,10 @@ body.echostyle #chat {
         opacity: 1 !important;
         border-radius: 0;
     }
+}
+
+body.echostyle.big-avatars #chat .mes .avatar {
+  min-width: unset !important;  /* Fix alignment issue in echo style with big avatars */
 }
 
 /* --- Chat Style: Whisper 聊天風格：「低語」 --- */
@@ -3683,10 +3714,6 @@ body.big-avatars.echostyle #chat {
     .mes_text {
         margin-bottom: 15px !important;
     }
-    .mes_timer, .mesIDDisplay, .tokenCounterDisplay {
-        transform: unset !important;
-        margin-bottom: 8px;
-    }
 
     @media screen and (max-width: 1000px) {
         .mes[is_user="false"] .ch_name {
@@ -3697,9 +3724,17 @@ body.big-avatars.echostyle #chat {
         }
     }
 }
-body.big-avatars.whisperstyle #chat,
-body.big-avatars.hushstyle #chat,
-body.big-avatars.tidestyle #chat {
+/* in echo style + big-avatar + hide avatars, -22 is too squished (see above) */
+body.big-avatars.echostyle.hideChatAvatars #chat {
+    .ch_name {
+        margin-top: -15px !important;
+    }
+}
+
+/* Shift these downward if using big avatars, but only if we aren't hiding them */
+body.big-avatars.whisperstyle:not(.hideChatAvatars) #chat,
+body.big-avatars.hushstyle:not(.hideChatAvatars) #chat,
+body.big-avatars.tidestyle:not(.hideChatAvatars) #chat {
     .mes_timer, .mesIDDisplay, .tokenCounterDisplay {
         transform: unset !important;
     }
@@ -3738,21 +3773,6 @@ body.hushstyle {
 .mes.smallSysMes::before,
 .mes.smallSysMes::after {
     display: none !important;
-}
-
-/* 漣漪訊息修正 */
-body.hideChatAvatars.ripplestyle #chat {
-    .ch_name {
-        margin-left: unset;
-    }
-
-    .mes .mesAvatarWrapper {
-        margin-top: 35px;
-        top: 35px;
-    }
-    .mes_text {
-        margin-top: unset;
-    }
 }
 
 /* 標題間距修正 */
