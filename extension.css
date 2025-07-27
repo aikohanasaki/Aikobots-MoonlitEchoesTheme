@@ -832,3 +832,74 @@ body.stcs--nonDiscord .stcs--ctxBlocker > .stcs--ctxMenu {
         }
     }
 }
+
+/* ChatsPlus 聊天+ */
+
+body:has(#chatsplus-tab-row) {
+    #CharListButtonAndHotSwaps {
+        margin-bottom: 0 !important;
+    }
+}
+
+/* Input History 輸入歷史 */
+
+.stih--history {
+    font-size: 1em !important;
+}
+.stih--history.stih--active {
+    padding: 5px 10px;
+    background: var(--SmartThemeBlurTintColor) !important;
+    backdrop-filter: blur(calc(var(--SmartThemeBlurStrength))) !important;
+    -webkit-backdrop-filter: blur(calc(var(--SmartThemeBlurStrength))) !important;
+    box-shadow: 0 0 25px color-mix(in srgb, var(--SmartThemeBlurTintColor) 80%, transparent);
+}
+.stih--history .stih--item {
+    padding: 5px !important;
+    margin-bottom: 2px !important;
+    border-radius: 10px !important;
+    transition: all 0.5s ease !important;
+
+    &:hover {
+        opacity: 1;
+        background-color: color-mix(in srgb, var(--SmartThemeBodyColor) 5%, transparent);
+    }
+}
+.stih--buttons .stih--button {
+    flex: unset !important;
+    font-size: calc(var(--mainFontSize) * 0.9) !important;
+}
+
+#nonQRFormItems {
+    .stih--buttons .stih--arrows {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .menu_button {
+        background: transparent !important;
+        border: none !important;
+        font-size: calc(var(--mainFontSize) * 0.9) !important;
+        padding: 0 !important;
+        opacity: 0.7;
+        transition: opacity var(--animation-duration-2x);
+        padding-left: 10px !important;
+        min-width: unset !important;
+
+        @media screen and (max-width: 1000px) {
+            padding-left: 12px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .stih--buttons {
+        position: absolute;
+        bottom: 3px;
+        right: 50px;
+    }
+    .stih--buttons,
+    .stih--buttons > * {
+        gap: 5px !important;
+    }
+}

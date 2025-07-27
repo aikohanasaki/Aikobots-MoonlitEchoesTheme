@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.8.9";
+const THEME_VERSION = "2.9.0";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -283,6 +283,9 @@ const themeCustomSettings = [
         "description": t`Completely disable all border-radius and outline-radius effects throughout the UI`,
         "cssBlock": `
             /* Disable Border Radius */
+            :root {
+                --avatar-base-border-radius: 0 !important;
+            }
             *, *::before, *::after {
                 border-radius: 0 !important;
                 border-top-left-radius: 0 !important;

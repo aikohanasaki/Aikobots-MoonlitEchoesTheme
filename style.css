@@ -14,6 +14,10 @@ body {
     --interactable-outline-color-faint: transparent;
 }
 
+.welcomePanel {
+    padding-top: 15px;
+}
+
 
 /* CUSTOM STYLES 自定義樣式
 - - - - - - - - - - - - - - - - - */
@@ -38,6 +42,8 @@ body {
     --okGreen70a: rgb(156, 204, 101, 0.8);
     --warning: var(--customThemeColor);
     --golden: var(--customThemeColor);
+
+    --customThemeColor-25: color-mix(in srgb, var(--customThemeColor) 25%, transparent);
 
     /* !!! Important: Do Not Modify 不要修改 !!! */
     --topBarBlockSize: calc(var(--topBarIconSize) + var(--topBarBlockPadding) - 1px);
@@ -340,31 +346,31 @@ input[type='checkbox'] {
 
 /* --- Sliders 滑桿 --- */
 
-/* Base Slider 基本滑桿樣式 */
 input[type="range"] {
-    background: var(--customThemeColor);
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    margin-top: 4px;
+    padding: 0;
+    width: 100%;
+    background: var(--customThemeColor) !important;
+    cursor: pointer;
+    outline: none;
+    filter: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     box-shadow: inset 0 0 2px var(--customThemeColor);
 
-    &:hover {
-        filter: brightness(1);
+    &::-webkit-slider-thumb {
+        border: 2px solid var(--customThemeColor);
+        box-shadow: 0 0 0 3px var(--customThemeColor-25), 0 2px 2px var(--customThemeColor-25) !important;
+        transition: all 0.3s ease;
     }
-}
-/* Slider Circle 滑桿圓圈 */
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    background: var(--customThemeColor);
-    border-radius: 50%;
-    cursor: pointer;
-    border: 1px solid var(--customThemeColor);
-    box-shadow: none;
-}
-/* NEO Slider NEO 滑桿 */
-.neo-range-slider {
-    background: var(--customThemeColor) !important;
-    box-shadow: inset 0 0 2px var(--black50a) !important;
 
-    &:hover {
-    filter: brightness(1);
+    &:hover::-webkit-slider-thumb,
+    &:focus::-webkit-slider-thumb,
+    &:active::-webkit-slider-thumb {
+        box-shadow: 0 0 0 4px var(--customThemeColor-25), 0 2px 6px var(--customThemeColor-25) !important;
     }
 }
 
@@ -3221,6 +3227,10 @@ body.charListGrid #rm_print_characters_block .group_select {
     max-width: 110px;
 }
 
+body.big-avatars #rm_print_characters_block .flex-container {
+    width: 100%;
+}
+
 #rm_print_characters_block {
     .flex-container {
         gap: 10px;
@@ -3374,6 +3384,40 @@ body:not(.charListGrid).big-avatars {
 
 #rm_print_characters_block {
     padding-right: 10px;
+}
+
+#spoiler_free_desc,
+#descriptionWrapper,
+#firstMessageWrapper,
+#tagList.tags,
+#CharListButtonAndHotSwaps {
+    margin-bottom: 12px !important;
+}
+
+#spoiler_free_desc {
+    .inline-drawer-header {
+        border-radius: 10px !important;
+        padding: 5px 10px !important;
+    }
+    .standoutHeader {
+        gap: 10px !important;
+    }
+}
+
+#right-nav-panel {
+    padding-top: 0 !important;
+}
+#CharListButtonAndHotSwaps {
+    margin: 10px 0;
+}
+
+#rm_print_characters_block {
+    margin: 8px 0 !important;
+
+    .avatar,
+    .avatar_collage {
+        margin: 0 4px !important;
+    }
 }
 
 /* --- Favorite Name Effects 最愛角色名稱特效 --- */
