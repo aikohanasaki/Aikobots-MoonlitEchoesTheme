@@ -3227,10 +3227,6 @@ body.charListGrid #rm_print_characters_block .group_select {
     max-width: 110px;
 }
 
-body.big-avatars #rm_print_characters_block .flex-container {
-    width: 100%;
-}
-
 #rm_print_characters_block {
     .flex-container {
         gap: 10px;
@@ -3413,11 +3409,6 @@ body:not(.charListGrid).big-avatars {
 
 #rm_print_characters_block {
     margin: 8px 0 !important;
-
-    .avatar,
-    .avatar_collage {
-        margin: 0 4px !important;
-    }
 }
 
 /* --- Favorite Name Effects 最愛角色名稱特效 --- */
