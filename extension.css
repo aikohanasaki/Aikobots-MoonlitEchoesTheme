@@ -903,3 +903,14 @@ body:has(#chatsplus-tab-row) {
         gap: 5px !important;
     }
 }
+
+/* Character Creator */
+
+dialog.popup.wide_dialogue_popup.large_dialogue_popup.popup--animation-fast {
+    padding-top: 25px;
+}
+
+.popup-button-close.right_menu_button.fa-solid.fa-circle-xmark.interactable.sttt--enabled {
+    padding-top: 15px;
+    padding-right: 40px;
+}

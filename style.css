@@ -430,7 +430,9 @@ input[type="range"] {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 0;
+        padding: 1.5em 0.5em !important;
+        border: 0 !important;
+        border-radius: 0 !important;
     }
 
     body.safari .popup .popup-body {
@@ -1081,10 +1083,6 @@ body.movingUI ::-webkit-scrollbar-thumb:vertical {
 
 /* --- Chat Message Text Styles 聊天訊息文字樣式 --- */
 .mes_text {
-    /* General Text 一般內文 */
-    p {
-        margin: var(--mesParagraphSpacing) 0 !important;
-    }
     /* Quoted Text 引號文字 */
     q {
         strong,
@@ -1194,18 +1192,18 @@ body.hideChatAvatars.echostyle #chat,
 body.hideChatAvatars.whisperstyle #chat,
 body.hideChatAvatars.hushstyle #chat,
 body.hideChatAvatars.tidestyle #chat {
-  .ch_name {
-    margin-left: 10px;
-  }
+    .ch_name {
+        margin-left: 10px;
+    }
 }
 
 /* These need 0 margin-left for the name */
 body.hideChatAvatars.flatchat #chat,
 body.hideChatAvatars.bubblechat #chat,
 body.hideChatAvatars.ripplestyle #chat {
-  .ch_name {
-    margin-left: unset;
-  }
+    .ch_name {
+        margin-left: unset;
+    }
 }
 
 /* 漣漪訊息修正 */
@@ -1603,10 +1601,6 @@ body.echostyle #chat {
         opacity: 1 !important;
         border-radius: 0;
     }
-}
-
-body.echostyle.big-avatars #chat .mes .avatar {
-  min-width: unset !important;  /* Fix alignment issue in echo style with big avatars */
 }
 
 /* --- Chat Style: Whisper 聊天風格：「低語」 --- */
@@ -3427,23 +3421,11 @@ body:not(.charListGrid).big-avatars {
     .ch_name {
         color: var(--customThemeColor);
 
-        /* 特殊符號與閃爍特效 */
         &::before {
-            content: "♥︎";
+            content: var(--favoriteSymbol);
             color: var(--customThemeColor);
             margin-right: 5px;
-            animation: pulse 1s infinite;
         }
-    }
-}
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(0.8);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(0.5);
-        opacity: 0.5;
     }
 }
 
@@ -3663,10 +3645,6 @@ body.whisperstyle #chat {
         border-radius: 0 !important;
         border: 0;
     }
-
-    .large_dialogue_popup {
-        border: 0;
-    }
 }
 
 /* 滑動訊息左側按鈕修正 */
@@ -3743,20 +3721,17 @@ body.big-avatars.echostyle #chat {
     .ch_name {
         margin-top: -22px !important;
     }
+    .mes[is_user="false"] .ch_name {
+        padding-left: 8px;
+    }
+    .mes[is_user="true"] .ch_name {
+        padding-right: 5px;
+    }
     .mesAvatarWrapper {
         margin-bottom: 20px;
     }
     .mes_text {
         margin-bottom: 15px !important;
-    }
-
-    @media screen and (max-width: 1000px) {
-        .mes[is_user="false"] .ch_name {
-            padding-left: 6px;
-        }
-        .mes[is_user="true"] .ch_name {
-            padding-right: 6px;
-        }
     }
 }
 /* in echo style + big-avatar + hide avatars, -22 is too squished (see above) */
@@ -3845,4 +3820,21 @@ body.hushstyle {
 
 #right-nav-panel  {
     height: calc(100dvh - var(--topBarBlockSize));
+}
+
+/* 自定義聊天區塊設置
+- - - - - - - - - - - - - - - - - */
+
+#chat .mes[is_user="false"] .name_text {
+    font-size: var(--charNameFontSize, 0.95rem) !important;
+}
+#chat .mes[is_user="true"] .name_text {
+    font-size: var(--userNameFontSize, 0.95rem) !important;
+}
+
+#chat .mes_text p {
+    letter-spacing: var(--messageTextLetterSpacing, 0em) !important;
+    font-size: var(--messageTextFontSize, var(--mainFontSize)) !important;
+    margin-top: var(--mesParagraphSpacingTop, 0.5em) !important;
+    margin-bottom: var(--mesParagraphSpacingBottom, 0.5em) !important;
 }

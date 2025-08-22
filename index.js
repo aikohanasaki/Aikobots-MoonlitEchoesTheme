@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.9.1";
+const THEME_VERSION = "2.9.2";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -25,8 +25,10 @@ let customChatStylesAdded = false;
 const tabMappings = {
     'core-settings': [
         'theme-colors',        // Theme Colors
+        'chat-style',         // Global Message Style
         'background-effects',  // Background Effects
-        'theme-extras'         // Theme Extras
+        'theme-extras',         // Theme Extras
+        'raw-css',              // Raw CSS
     ],
     'chat-interface': [
         'chat-general',        // General Chat Settings
@@ -114,6 +116,85 @@ const themeCustomSettings = [
         "default": "rgba(255, 255, 255, 0.5)",
         "category": "theme-colors",
         "description": t`The scrollbar color on SillyTavern`
+    },
+
+    // Global Chat Style 全局聊天樣式
+    {
+        "type": "checkbox",
+        "varId": "hideAvatarBorder",
+        "displayText": t`Hide Avatar Border`,
+        "default": false,
+        "category": "chat-style",
+        "description": t`Hide the border around character avatars in chat messages`,
+        "cssBlock": `
+            #chat .mes .avatar {
+                border: unset !important;
+            }
+        `
+    },
+    {
+        "type": "text",
+        "varId": "custom-ChatAvatar",
+        "displayText": t`Chat Field Avatar Size`,
+        "default": "40px",
+        "category": "chat-style",
+        "description": t`Width and height of character avatars in the chat field`
+    },
+    {
+        "type": "text",
+        "varId": "mesParagraphSpacingTop",
+        "displayText": t`Message Paragraph Spacing (Top)`,
+        "default": "0.4em",
+        "category": "chat-style",
+        "description": t`Sets the spacing above each paragraph in chat messages (e.g. 0.5em, 1em)`
+    },
+    {
+        "type": "text",
+        "varId": "mesParagraphSpacingBottom",
+        "displayText": t`Message Paragraph Spacing (Bottom)`,
+        "default": "0.6em",
+        "category": "chat-style",
+        "description": t`Sets the spacing below each paragraph in chat messages (e.g. 0.5em, 1em)`
+    },
+    {
+        "type": "text",
+        "varId": "charNameFontSize",
+        "displayText": "Character Name Font Size",
+        "default": "inherit",
+        "category": "chat-style",
+        "description": t`Font size for character (non-user) name text (e.g. 0.9rem, 1rem)`
+    },
+    {
+        "type": "text",
+        "varId": "userNameFontSize",
+        "displayText": "User Name Font Size",
+        "default": "inherit",
+        "category": "chat-style",
+        "description": t`Font size for user name text (e.g. 0.9rem, 1rem)`
+    },
+    {
+        "type": "text",
+        "varId": "messageTextFontSize",
+        "displayText": "Message Text Font Size",
+        "default": "15px",
+        "category": "chat-style",
+        "description": t`Font size for message body text (e.g. 0.95rem, 1rem, 1.05rem)`
+    },
+    {
+        "type": "text",
+        "varId": "messageTextLetterSpacing",
+        "displayText": "Message Text Letter Spacing",
+        "default": "inherit",
+        "category": "chat-style",
+        "description": t`Letter spacing for message body text (e.g. 0em, 0.02em)`
+    },
+    {
+        "type": "text",
+        "varId": "customlastInContext",
+        "displayText": t`Maximum Context Marker Style`,
+        "default": "1px solid var(--customThemeColor)",
+        "category": "chat-style",
+        "description": t`Line style for the maximum context marker`
     },
 
     // Background Effects (background-effects) 背景效果
@@ -318,45 +399,26 @@ const themeCustomSettings = [
     },
     {
         "type": "checkbox",
-        "varId": "useAvatarBorderThemeColor",
-        "displayText": t`Apply Theme Color to Message Avatar Border`,
-        "default": false,
+        "varId": "expandWorldEntryInputWidth",
+        "displayText": t`Expand Lorebook Entry Input Width`,
+        "default": true,
         "category": "theme-extras",
-        "description": t`Applies each character's theme color to message avatar borders. Requires the Character Style Customizer; per-character colors override global settings`,
+        "description": t`Increase the width of numeric input fields in Worlds/Lorebooks for better visibility. May cause slight misalignment`,
         "cssBlock": `
-            #chat .mes .avatar {
-                border: 1px solid var(--csc-char-primary, var(--csc-primary)) !important;
-            }
-            #chat .mes[is_user="true"] .avatar {
-                border: 1px solid var(--csc-char-primary, var(--csc-user-primary)) !important;
-            }
+                .world_entry input.text_pole.wideMax100px.margin0.sttt--enabled {
+                    min-width: calc(3em + 24px);
+                }
         `
     },
+
+    // Advanced Custom CSS (raw-css) 無過濾額外自定義 CSS
     {
-        "type": "checkbox",
-        "varId": "applyCharThemeToMsgBg",
-        "displayText": t`Apply Theme Color to Message Background (Experimental)`,
-        "default": false,
-        "category": "theme-extras",
-        "description": t`Applies each character's theme color to their message background. Requires the Character Style Customizer; per-character colors override global settings`,
-        "cssBlock": `
-            #chat .mes[is_user="false"] .mes_block,
-            body.echostyle #chat .mes[is_user="false"] .mes_text,
-            body.whisperstyle #chat .mes[is_user="false"],
-            body.hushstyle #chat .mes[is_user="false"],
-            body.ripplestyle #chat .mes[is_user="false"],
-            body.tidestyle #chat .mes[is_user="false"] .mes_text p {
-                background-color: var(--csc-char-bg-primary, var(--csc-bg-primary)) !important;
-            }
-            #chat .mes[is_user="true"] .mes_block,
-            body.echostyle #chat .mes[is_user="true"] .mes_text,
-            body.whisperstyle #chat .mes[is_user="true"],
-            body.hushstyle #chat .mes[is_user="true"],
-            body.ripplestyle #chat .mes[is_user="true"],
-            body.tidestyle #chat .mes[is_user="true"] .mes_text p {
-                background-color: var(--csc-char-bg-primary, var(--csc-user-bg-primary)) !important;
-            }
-        `
+        "type": "textarea",
+        "varId": "rawCustomCss",
+        "displayText": t`Raw Custom CSS`,
+        "default": "",
+        "category": "raw-css",
+        "description": t`Note: This is raw, unfiltered CSS with full support (including @import for custom fonts). Use with caution. Please use the Custom CSS option in User Settings first!!!`
     },
 
     // - - - - - - - - - - - - - - - - - - -
@@ -381,43 +443,6 @@ const themeCustomSettings = [
         ],
         "category": "chat-general",
         "description": t`Applies a transparent gradient effect to the top and bottom of the chat field (#chat)`
-    },
-    {
-        "type": "text",
-        "varId": "custom-ChatAvatar",
-        "displayText": t`Chat Field Avatar Size`,
-        "default": "40px",
-        "category": "chat-general",
-        "description": t`Width and height of character avatars in the chat field`
-    },
-    {
-        "type": "checkbox",
-        "varId": "hideAvatarBorder",
-        "displayText": t`Hide Avatar Border`,
-        "default": false,
-        "category": "chat-general",
-        "description": t`Hide the border around character avatars in chat messages`,
-        "cssBlock": `
-            #chat .mes .avatar {
-                border: unset !important;
-            }
-        `
-    },
-    {
-        "type": "text",
-        "varId": "mesParagraphSpacing",
-        "displayText": t`Message Paragraph Spacing`,
-        "default": "0.5em",
-        "category": "chat-general",
-        "description": t`Sets the spacing between paragraphs in chat messages (e.g. 0.5em, 1em)`
-    },
-    {
-        "type": "text",
-        "varId": "customlastInContext",
-        "displayText": t`Maximum Context Marker Style`,
-        "default": "4px solid var(--customThemeColor)",
-        "category": "chat-general",
-        "description": t`Line style for the maximum context marker`
     },
     {
     "type": "checkbox",
@@ -537,6 +562,33 @@ const themeCustomSettings = [
         "category": "chat-general",
         "description": t`Controls the animation speed for message details appearing/disappearing (e.g. 0.5s, 1.2s)`
     },
+    {
+    "type": "text",
+    "varId": "favoriteSymbol",
+    "displayText": t`Favorite Symbol`,
+    "default": "\"♥︎\"",
+    "category": "chat-general",
+    "description": t`Sets the symbol displayed before a favorite character in the character management menu`
+    },
+    {
+    "type": "checkbox",
+    "varId": "favoriteSymbolAnimation",
+    "displayText": t`Favorite Symbol Animation`,
+    "default": true,
+    "category": "chat-general",
+    "description": t`Enables the pulsing animation effect for the favorite symbol before character names`,
+    "cssBlock": `
+        .character_select.is_fav .ch_name::before,
+        .group_select.is_fav .ch_name::before,
+        .group_member.is_fav .ch_name::before {
+            animation: fadePulse 1s ease-in-out infinite;
+        }
+        @keyframes fadePulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+    `
+    },
 
     // Visual Novel Mode (visual-novel) 視覺小說模式
     {
@@ -614,6 +666,32 @@ const themeCustomSettings = [
             body.echostyle #chat div.mes[is_user="true"] div.mes_text {
                 padding-left: 20px !important;
                 min-height: unset;
+            }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "hideEchoUserIllustration",
+        "displayText": t`[Echo] Hide User Message Illustration`,
+        "default": false,
+        "category": "chat-echo",
+        "description": t`Hide user message illustrations in Echo style`,
+        "cssBlock": `
+            body.echostyle #chat {
+                .mes[is_user="true"] {
+                    .name_text {
+                            display: inline-block !important;
+                            margin-right: 5px;
+                        }
+                    .mes_text,
+                        .last_mes .mes_text {
+                            padding: 10px 20px !important;
+                            min-height: unset !important;
+                        }
+                    .mes_text::before {
+                        display: none !important;
+                    }
+                }
             }
         `
     },
@@ -698,6 +776,30 @@ const themeCustomSettings = [
         "default": "100px",
         "category": "chat-ripple",
         "description": t`Width of character avatars in the message for the mobile Ripple style`
+    },
+    {
+        "type": "checkbox",
+        "varId": "hideRippleUserAvatar",
+        "displayText": t`[Ripple] Hide User Avatar`,
+        "default": false,
+        "category": "chat-ripple",
+        "description": t`Hide user avatars in the message for the Ripple style`,
+        "cssBlock": `
+            body.ripplestyle #chat .mes[is_user="true"] {
+                .mesAvatarWrapper {
+                    margin-top: 35px;
+                    top: 35px;
+                }
+                .avatar {
+                    display: none !important;
+                }
+                .mes_timer,
+                .mesIDDisplay,
+                .tokenCounterDisplay {
+                    margin-left: 10px;
+                }
+            }
+        `
     },
 
     // - - - - - - - - - - - - - - - - - - -
@@ -1646,7 +1748,6 @@ function initializeSlashCommands() {
  * Includes settings panel, chat style, color picker, and sidebar button
  */
 function initExtensionUI() {
-    // Load settings HTML and initialize settings panel
     loadSettingsHTML().then(() => {
         renderExtensionSettings();
         initChatDisplaySwitcher();
@@ -1681,6 +1782,10 @@ function initExtensionUI() {
 
         // Initialize slash commands (only when enabled)
         initializeSlashCommands();
+
+        const context = SillyTavern.getContext();
+        const settings = context.extensionSettings[settingsKey] || {};
+        applyRawCustomCss(settings.rawCustomCss || '');
     });
 
     function initMessageClickHandlers() {
@@ -2310,9 +2415,6 @@ function toggleCss(shouldLoad) {
 
         // Clear all checkbox styles
         clearAllCheckboxStyles();
-
-        // Remove custom chat styles when theme is disabled
-        removeCustomChatStyles();
     }
 }
 
@@ -2499,48 +2601,14 @@ function renderExtensionSettings() {
  * Update custom chat styles based on extension enabled status
  */
 function updateCustomChatStyles() {
-    const context = SillyTavern.getContext();
-    const settings = context.extensionSettings[settingsKey];
-
-    if (settings.enabled) {
-        addCustomStyleOptions();
-    } else {
-        removeCustomChatStyles();
-    }
+    // No-op: options are now permanent; nothing to add/remove on enable toggle
 }
 
 /**
  * Remove custom chat styles when theme is disabled
  */
 function removeCustomChatStyles() {
-    const chatDisplaySelect = document.getElementById("chat_display");
-    if (!chatDisplaySelect) return;
-
-    // Find and remove custom options
-    const customOptions = [
-        chatDisplaySelect.querySelector('option[value="3"]'), // Echo
-        chatDisplaySelect.querySelector('option[value="4"]'), // Whisper
-        chatDisplaySelect.querySelector('option[value="5"]'), // Hush
-        chatDisplaySelect.querySelector('option[value="6"]'), // Ripple
-        chatDisplaySelect.querySelector('option[value="7"]')  // Tide
-    ];
-
-    customOptions.forEach(option => {
-        if (option) {
-            option.remove();
-        }
-    });
-
-    // Reset customChatStylesAdded flag
-    customChatStylesAdded = false;
-
-    // If current style is a custom one, reset to flat chat
-    const currentValue = chatDisplaySelect.value;
-    if (['3', '4', '5', '6', '7'].includes(currentValue)) {
-        chatDisplaySelect.value = '0'; // Flat chat
-        applyChatDisplayStyle();
-        localStorage.setItem("savedChatStyle", '0');
-    }
+    // Intentionally empty: we no longer remove options when the theme is disabled
 }
 
 /**
@@ -2860,8 +2928,10 @@ function getCategoryDisplayName(category) {
     const categoryNames = {
         // Theme Colors
         'theme-colors': t`Theme Colors`,
+        'chat-style': t`Global Message Style`,
         'background-effects': t`Background Effects`,
         'theme-extras': t`Theme Extras`,
+        'raw-css': t`Advanced Custom CSS`,
 
         // Chat Interface
         'chat-general': t`General Chat Settings`,
@@ -4146,21 +4216,12 @@ if (setting.type !== 'checkbox') {
 
 // Create different UI elements based on setting type
 switch (setting.type) {
-    case 'color':
-        createColorPicker(settingContainer, setting, settings);
-        break;
-    case 'slider':
-        createSlider(settingContainer, setting, settings);
-        break;
-    case 'select':
-        createSelect(settingContainer, setting, settings);
-        break;
-    case 'text':
-        createTextInput(settingContainer, setting, settings);
-        break;
-    case 'checkbox':
-        createCheckbox(settingContainer, setting, settings);
-        break;
+    case 'color':    createColorPicker(settingContainer, setting, settings); break;
+    case 'slider':   createSlider(settingContainer, setting, settings); break;
+    case 'select':   createSelect(settingContainer, setting, settings); break;
+    case 'text':     createTextInput(settingContainer, setting, settings); break;
+    case 'checkbox': createCheckbox(settingContainer, setting, settings); break;
+    case 'textarea': createTextareaInput(settingContainer, setting, settings); break; // <-- new
     default:
         // Unrecognized setting type
 }
@@ -4684,6 +4745,34 @@ function createTextInput(container, setting, settings) {
 
     container.appendChild(input);
 }
+// Create textarea setting item (for raw CSS injection)
+function createTextareaInput(container, setting, settings) {
+    const context = SillyTavern.getContext();
+    const { varId, default: defaultValue } = setting;
+
+    const textarea = document.createElement('textarea');
+    textarea.id = `cts-${varId}`;
+    textarea.classList.add('text_pole', 'margin0', 'margin-r5', 'textarea_compact', 'monospace');
+    textarea.rows = 10; // sensible default
+    textarea.spellcheck = false;
+    textarea.value = (settings[varId] ?? defaultValue) || '';
+
+    const apply = () => {
+        settings[varId] = textarea.value;
+        // Apply immediately (always active, regardless of theme enabled)
+        if (varId === 'rawCustomCss') {
+            applyRawCustomCss(settings[varId]);
+        }
+        context.saveSettingsDebounced();
+    };
+
+    // Apply on change & input (input gives instant feedback)
+    textarea.addEventListener('change', apply);
+    textarea.addEventListener('input', apply);
+
+    container.appendChild(textarea);
+}
+
 
 /**
  * Create checkbox setting item - Updated to check if extension is enabled
@@ -4828,83 +4917,44 @@ function createCheckbox(container, setting, settings) {
  * Handle switching between different chat styles
  */
 function initChatDisplaySwitcher() {
-    // Get settings to check if theme is enabled
     const context = SillyTavern.getContext();
     const settings = context.extensionSettings[settingsKey];
 
-    // Get selector elements
     const themeSelect = document.getElementById("themes");
     const chatDisplaySelect = document.getElementById("chat_display");
+    if (!themeSelect || !chatDisplaySelect) return;
 
-    if (!themeSelect || !chatDisplaySelect) {
-        return;
-    }
-
-    // Add custom style options only when theme is enabled
+    // Add our custom options exactly once (regardless of theme enabled)
     function addCustomStyleOptions() {
-        // Only add custom options when theme is enabled
-        if (!settings.enabled || customChatStylesAdded) {
-            return;
-        }
+        if (customChatStylesAdded) return;
 
-        // Check and add Echo option
-        if (!chatDisplaySelect.querySelector('option[value="3"]')) {
-            const newEchoOption = document.createElement("option");
-            newEchoOption.value = "3";
-            newEchoOption.text = t`Echo`;
-            chatDisplaySelect.appendChild(newEchoOption);
-        }
+        const ensureOption = (value, label) => {
+            if (!chatDisplaySelect.querySelector(`option[value="${value}"]`)) {
+                const opt = document.createElement("option");
+                opt.value = value;
+                opt.text = label;
+                chatDisplaySelect.appendChild(opt);
+            }
+        };
 
-        // Check and add Whisper option
-        if (!chatDisplaySelect.querySelector('option[value="4"]')) {
-            const newWhisperOption = document.createElement("option");
-            newWhisperOption.value = "4";
-            newWhisperOption.text = t`Whisper`;
-            chatDisplaySelect.appendChild(newWhisperOption);
-        }
-
-        // Check and add Hush option
-        if (!chatDisplaySelect.querySelector('option[value="5"]')) {
-            const newHushOption = document.createElement("option");
-            newHushOption.value = "5";
-            newHushOption.text = t`Hush`;
-            chatDisplaySelect.appendChild(newHushOption);
-        }
-
-        // Check and add Ripple option
-        if (!chatDisplaySelect.querySelector('option[value="6"]')) {
-            const newRippleOption = document.createElement("option");
-            newRippleOption.value = "6";
-            newRippleOption.text = t`Ripple`;
-            chatDisplaySelect.appendChild(newRippleOption);
-        }
-
-        // Check and add Tide option
-        if (!chatDisplaySelect.querySelector('option[value="7"]')) {
-            const newTideOption = document.createElement("option");
-            newTideOption.value = "7";
-            newTideOption.text = t`Tide`;
-            chatDisplaySelect.appendChild(newTideOption);
-        }
+        // Ensure all custom styles exist
+        ensureOption("3", t`Echo`);
+        ensureOption("4", t`Whisper`);
+        ensureOption("5", t`Hush`);
+        ensureOption("6", t`Ripple`);
+        ensureOption("7", t`Tide`);
 
         customChatStylesAdded = true;
     }
 
-    // Apply chat style
+    // Apply the selected chat style by toggling body classes
     function applyChatDisplayStyle() {
-        // Remove all possible style classes
         document.body.classList.remove(
-            "flatchat",
-            "bubblechat",
-            "documentstyle",
-            "echostyle",
-            "whisperstyle",
-            "hushstyle",
-            "ripplestyle",
-            "tidestyle",
+            "flatchat","bubblechat","documentstyle",
+            "echostyle","whisperstyle","hushstyle",
+            "ripplestyle","tidestyle"
         );
 
-        // Apply style based on selection
         switch (chatDisplaySelect.value) {
             case "0": document.body.classList.add("flatchat"); break;
             case "1": document.body.classList.add("bubblechat"); break;
@@ -4917,41 +4967,29 @@ function initChatDisplaySwitcher() {
         }
     }
 
-    // Theme change event handling
+    // Always add our options
+    addCustomStyleOptions();
+
+    // Restore saved selections
+    const savedTheme = localStorage.getItem("savedTheme");
+    const savedChatStyle = localStorage.getItem("savedChatStyle");
+    if (savedTheme) themeSelect.value = savedTheme;
+    if (savedChatStyle) chatDisplaySelect.value = savedChatStyle;
+
+    // Events
     themeSelect.addEventListener("change", function() {
-        if (settings.enabled) {
-            addCustomStyleOptions();
-        }
         localStorage.setItem("savedTheme", themeSelect.value);
         applyChatDisplayStyle();
     });
 
-    // Chat style change event handling
     chatDisplaySelect.addEventListener("change", function() {
-        applyChatDisplayStyle();
         localStorage.setItem("savedChatStyle", chatDisplaySelect.value);
+        applyChatDisplayStyle();
     });
-
-    // Restore settings from localStorage
-    const savedTheme = localStorage.getItem("savedTheme");
-    const savedChatStyle = localStorage.getItem("savedChatStyle");
-
-    // Apply saved settings
-    if (savedTheme) {
-        themeSelect.value = savedTheme;
-    }
-
-    // Only add custom options if theme is enabled
-    if (settings.enabled) {
-        addCustomStyleOptions();
-    }
-
-    if (savedChatStyle) {
-        chatDisplaySelect.value = savedChatStyle;
-    }
 
     applyChatDisplayStyle();
 }
+
 
 /**
 * Initialize avatar injector
@@ -5070,6 +5108,24 @@ function applyThemeSetting(varId, value) {
         detail: { varId, value }
     }));
 }
+// Inject raw CSS (unfiltered) into the page via a dedicated <style> tag
+function applyRawCustomCss(cssText) {
+    let rawStyle = document.getElementById('moonlit-raw-css');
+    if (!rawStyle) {
+        rawStyle = document.createElement('style');
+        rawStyle.id = 'moonlit-raw-css';
+        // DO NOT sanitize or filter; user explicitly wants full control
+        document.head.appendChild(rawStyle);
+    }
+    rawStyle.textContent = cssText || '';
+}
+// Re-apply when the setting changes (optional safety net)
+document.addEventListener('themeSettingChanged', (ev) => {
+    const { varId, value } = ev.detail || {};
+    if (varId === 'rawCustomCss') {
+        applyRawCustomCss(value);
+    }
+});
 
 /**
  * Convert RGBA to HEX - enhanced version
