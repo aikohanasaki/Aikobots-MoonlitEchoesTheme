@@ -206,5 +206,6 @@
     "[Ripple] Hide User Avatar": "[Ripple] 隐藏使用者头像",
     "Hide user avatars in the message for the Ripple style": "在 Ripple 风格中隐藏信息中的使用者头像",
     "Expand Lorebook Entry Input Width": "增加世界书条目数值输入栏宽度",
-    "Increase the width of numeric input fields in Worlds/Lorebooks for better visibility. May cause slight misalignment": "增加世界书条目数值输入栏位的宽度，以提升可视性。可能会导致轻微的不对齐"
+    "Increase the width of numeric input fields in Worlds/Lorebooks for better visibility. May cause slight misalignment": "增加世界书条目数值输入栏位的宽度，以提升可视性。可能会导致轻微的不对齐",
+    "Line height for message body text (e.g. 1.55em, 1.6em)": "设定信息本文的行高（例如 1.55em、1.6em）"
 }

@@ -206,5 +206,6 @@
     "[Ripple] Hide User Avatar": "[Ripple] ซ่อนอวตารผู้ใช้",
     "Hide user avatars in the message for the Ripple style": "ซ่อนอวตารผู้ใช้ในข้อความสำหรับรูปแบบ Ripple",
     "Expand Lorebook Entry Input Width": "ขยายความกว้างช่องป้อนข้อมูล Lorebook",
-    "Increase the width of numeric input fields in Worlds/Lorebooks for better visibility. May cause slight misalignment": "เพิ่มความกว้างของช่องป้อนข้อมูลตัวเลขใน Worlds/Lorebooks เพื่อการมองเห็นที่ดีขึ้น อาจทำให้การจัดตำแหน่งคลาดเคลื่อนเล็กน้อย"
+    "Increase the width of numeric input fields in Worlds/Lorebooks for better visibility. May cause slight misalignment": "เพิ่มความกว้างของช่องป้อนข้อมูลตัวเลขใน Worlds/Lorebooks เพื่อการมองเห็นที่ดีขึ้น อาจทำให้การจัดตำแหน่งคลาดเคลื่อนเล็กน้อย",
+    "Line height for message body text (e.g. 1.55em, 1.6em)": "ความสูงบรรทัดสำหรับข้อความเนื้อหา (เช่น 1.55em, 1.6em)"
 }

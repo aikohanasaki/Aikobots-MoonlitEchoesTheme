@@ -3834,6 +3834,7 @@ body.hushstyle {
 
 #chat .mes_text p {
     letter-spacing: var(--messageTextLetterSpacing, 0em) !important;
+    line-height: var(--messageLineHeight, 1.55em) !important;
     font-size: var(--messageTextFontSize, var(--mainFontSize)) !important;
     margin-top: var(--mesParagraphSpacingTop, 0.5em) !important;
     margin-bottom: var(--mesParagraphSpacingBottom, 0.5em) !important;

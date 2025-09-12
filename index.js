@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.9.2";
+const THEME_VERSION = "2.9.3";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -179,6 +179,14 @@ const themeCustomSettings = [
         "default": "15px",
         "category": "chat-style",
         "description": t`Font size for message body text (e.g. 0.95rem, 1rem, 1.05rem)`
+    },
+    {
+        "type": "text",
+        "varId": "messageLineHeight",
+        "displayText": "Message Text Line Height",
+        "default": "calc(var(--mainFontSize) + .5rem)",
+        "category": "chat-style",
+        "description": t`Line height for message body text (e.g. 1.55em, 1.6em)`
     },
     {
         "type": "text",
@@ -504,6 +512,26 @@ const themeCustomSettings = [
                 opacity: 1 !important;
                 transition: all var(--messageDetailsAnimationDuration) cubic-bezier(0.4, 0, 0.2, 1),
                             visibility var(--messageDetailsAnimationDuration) ease !important;
+            }
+
+            .mes .mes_reasoning_details {
+                opacity: 0;
+                max-height: 1px;
+                transform: translateY(-10px);
+                pointer-events: none;
+                transition:
+                    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                    max-height 0.3s cubic-bezier(0, 0, 0.2, 1);
+                will-change: opacity, transform;
+            }
+            .mes:hover .mes_reasoning_details,
+            .mes.active-message .mes_reasoning_details {
+                opacity: 1;
+                visibility: visible !important;
+                transform: translateY(0);
+                max-height: 100%;
+                pointer-events: auto;
             }
 
             body.flatchat,
@@ -1441,7 +1469,8 @@ function initMessageDetailsSystem() {
             const isClickInsideDetails = event.target.closest('.ch_name') ||
                 event.target.closest('.mesIDDisplay') ||
                 event.target.closest('.mes_timer') ||
-                event.target.closest('.tokenCounterDisplay');
+                event.target.closest('.tokenCounterDisplay') ||
+                event.target.closest('.mes_reasoning_details');
 
             // Toggle display state if not clicking on detail elements themselves
             if (!isClickInsideDetails) {
