@@ -56,6 +56,12 @@ body {
     }
 }
 
+@media screen and (max-width: 1000px) {
+    .bg_example.flex-container {
+        width: calc(50% - 20px);
+    }
+}
+
 /* Alert Red 紅色警告 */
 .redOverlayGlow {
     color: var(--fullred);
@@ -3838,4 +3844,8 @@ body.hushstyle {
     font-size: var(--messageTextFontSize, var(--mainFontSize)) !important;
     margin-top: var(--mesParagraphSpacingTop, 0.5em) !important;
     margin-bottom: var(--mesParagraphSpacingBottom, 0.5em) !important;
+}
+
+#ReverseProxyWarningMessage {
+    color: red !important;
 }
