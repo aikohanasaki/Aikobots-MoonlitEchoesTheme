@@ -198,6 +198,22 @@ const themeCustomSettings = [
     },
     {
         "type": "text",
+        "varId": "googleFontName",
+        "displayText": t`Google Font Family`,
+        "default": "",
+        "category": "chat-style",
+        "description": t`Google Font name (e.g. Roboto, Open Sans, Poppins). Leave empty to use default font.`
+    },
+    {
+        "type": "text",
+        "varId": "googleFontWeights",
+        "displayText": t`Font Weights`,
+        "default": "300,400,500,700",
+        "category": "chat-style",
+        "description": t`Comma-separated font weights to load (e.g. 300,400,500,700)`
+    },
+    {
+        "type": "text",
         "varId": "customlastInContext",
         "displayText": t`Maximum Context Marker Style`,
         "default": "1px solid var(--customThemeColor)",
@@ -3027,6 +3043,7 @@ function addTabStyles() {
             color: var(--SmartThemeBodyColor);
             opacity: 0.7;
             transition: all 0.5s ease;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
         }
 
         .moonlit-tab-button:hover {
@@ -5137,11 +5154,50 @@ function applyThemeSetting(varId, value) {
     // Directly set CSS variable
     document.documentElement.style.setProperty(`--${varId}`, value, 'important');
 
+    // Handle Google Font settings
+    if (varId === 'googleFontName' || varId === 'googleFontWeights') {
+        applyGoogleFont();
+    }
+
     // Trigger custom event
     document.dispatchEvent(new CustomEvent('themeSettingChanged', {
         detail: { varId, value }
     }));
 }
+
+// Apply Google Font settings
+function applyGoogleFont() {
+    const fontName = document.documentElement.style.getPropertyValue('--googleFontName').trim();
+    const fontWeights = document.documentElement.style.getPropertyValue('--googleFontWeights').trim() || '300,400,500,700';
+
+    // Remove existing Google Font styles
+    let googleFontStyle = document.getElementById('moonlit-google-font');
+    if (googleFontStyle) {
+        googleFontStyle.remove();
+    }
+
+    // If font name is provided, create and apply Google Font
+    if (fontName) {
+        googleFontStyle = document.createElement('style');
+        googleFontStyle.id = 'moonlit-google-font';
+
+        // Create Google Fonts import URL
+        const fontUrl = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s+/g, '+')}:wght@${fontWeights}&display=swap`;
+
+        // Generate CSS with import and font-family rules
+        const googleFontCSS = `
+            @import url('${fontUrl}');
+            :root { --custom-font-family: '${fontName}', sans-serif; }
+            body, .mes_text, .ch_name, .name_text, .mes p {
+                font-family: var(--custom-font-family) !important;
+            }
+        `;
+
+        googleFontStyle.textContent = googleFontCSS;
+        document.head.appendChild(googleFontStyle);
+    }
+}
+
 // Inject raw CSS (unfiltered) into the page via a dedicated <style> tag
 function applyRawCustomCss(cssText) {
     let rawStyle = document.getElementById('moonlit-raw-css');
