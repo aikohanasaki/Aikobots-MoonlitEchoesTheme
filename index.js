@@ -2519,9 +2519,13 @@ return baseUrl;
  */
 function renderExtensionSettings() {
     const context = SillyTavern.getContext();
-    const settingsContainer = document.getElementById(`${settingsKey}-container`) ?? document.getElementById('extensions_settings2');
+    let settingsContainer = document.getElementById(`${settingsKey}-container`) ?? document.getElementById('extensions_settings2');
     if (!settingsContainer) {
-        return;
+        // Create our own container
+        settingsContainer = document.createElement('div');
+        settingsContainer.id = `${settingsKey}-container`;
+        settingsContainer.style.display = 'none'; // Hidden since it's just for the popup
+        document.body.appendChild(settingsContainer);
     }
 
     // Find existing settings drawer to avoid duplication
