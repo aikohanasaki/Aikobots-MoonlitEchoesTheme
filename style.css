@@ -279,7 +279,7 @@ select,
 #floatingPrompt textarea,
 #cfgConfig textarea,
 #completion_prompt_manager_popup textarea {
-    padding: 10px;
+    padding: 6px;
 }
 
 /* Text Cursor 文字輸入框光標 */
