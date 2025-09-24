@@ -207,5 +207,10 @@
     "Hide user avatars in the message for the Ripple style": "在 Ripple 风格中隐藏信息中的使用者头像",
     "Expand Lorebook Entry Input Width": "增加世界书条目数值输入栏宽度",
     "Increase the width of numeric input fields in Worlds/Lorebooks for better visibility. May cause slight misalignment": "增加世界书条目数值输入栏位的宽度，以提升可视性。可能会导致轻微的不对齐",
-    "Line height for message body text (e.g. 1.55em, 1.6em)": "设定信息本文的行高（例如 1.55em、1.6em）"
+    "Line height for message body text (e.g. 1.55em, 1.6em)": "设定信息本文的行高（例如 1.55em、1.6em）",
+    "Expand Entry Input Width": "增加条目输入栏位的宽度",
+    "Hide the browser’s up/down arrows in number input fields to give more space for typing": "隐藏浏览器在数值输入栏位中的上下箭头，以提供更多输入空间",
+    "Compact Worlds/Lorebooks Top Bar": "精简 Worlds／Lorebooks 顶部栏",
+    "Make the top fields in Worlds/Lorebooks more compact by reducing header padding and entry spacing": "透过减少标头内距与条目间距，让 Worlds／Lorebooks 的顶部栏位更为紧凑",
+    "Message Text Line Height": "信息文字行高"
 }

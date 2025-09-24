@@ -207,5 +207,10 @@
     "Hide user avatars in the message for the Ripple style": "ซ่อนอวตารผู้ใช้ในข้อความสำหรับรูปแบบ Ripple",
     "Expand Lorebook Entry Input Width": "ขยายความกว้างช่องป้อนข้อมูล Lorebook",
     "Increase the width of numeric input fields in Worlds/Lorebooks for better visibility. May cause slight misalignment": "เพิ่มความกว้างของช่องป้อนข้อมูลตัวเลขใน Worlds/Lorebooks เพื่อการมองเห็นที่ดีขึ้น อาจทำให้การจัดตำแหน่งคลาดเคลื่อนเล็กน้อย",
-    "Line height for message body text (e.g. 1.55em, 1.6em)": "ความสูงบรรทัดสำหรับข้อความเนื้อหา (เช่น 1.55em, 1.6em)"
+    "Line height for message body text (e.g. 1.55em, 1.6em)": "ความสูงบรรทัดสำหรับข้อความเนื้อหา (เช่น 1.55em, 1.6em)",
+    "Expand Entry Input Width": "ขยายความกว้างช่องป้อนข้อมูลของรายการ",
+    "Hide the browser’s up/down arrows in number input fields to give more space for typing": "ซ่อนปุ่มลูกศรขึ้น/ลงของเบราว์เซอร์ในช่องป้อนค่าตัวเลขเพื่อเพิ่มพื้นที่สำหรับพิมพ์",
+    "Compact Worlds/Lorebooks Top Bar": "ทำให้แถบด้านบนของ Worlds/Lorebooks กะทัดรัด",
+    "Make the top fields in Worlds/Lorebooks more compact by reducing header padding and entry spacing": "ลดระยะห่างภายในส่วนหัวและระยะห่างระหว่างรายการ เพื่อให้ช่องข้อมูลด้านบนใน Worlds/Lorebooks กระชับยิ่งขึ้น",
+    "Message Text Line Height": "ความสูงบรรทัดของข้อความ"
 }

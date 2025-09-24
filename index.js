@@ -8,7 +8,7 @@ const EXTENSION_NAME = 'Moonlit Echoes Theme';
 const settingsKey = 'SillyTavernMoonlitEchoesTheme';
 const extensionName = "SillyTavern-MoonlitEchoesTheme";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const THEME_VERSION = "2.9.3";
+const THEME_VERSION = "2.9.4";
 
 // Import required functions for drag functionality
 import { dragElement } from '../../../RossAscends-mods.js';
@@ -159,7 +159,7 @@ const themeCustomSettings = [
     {
         "type": "text",
         "varId": "charNameFontSize",
-        "displayText": "Character Name Font Size",
+        "displayText": t`Character Name Font Size`,
         "default": "inherit",
         "category": "chat-style",
         "description": t`Font size for character (non-user) name text (e.g. 0.9rem, 1rem)`
@@ -167,7 +167,7 @@ const themeCustomSettings = [
     {
         "type": "text",
         "varId": "userNameFontSize",
-        "displayText": "User Name Font Size",
+        "displayText": t`User Name Font Size`,
         "default": "inherit",
         "category": "chat-style",
         "description": t`Font size for user name text (e.g. 0.9rem, 1rem)`
@@ -175,7 +175,7 @@ const themeCustomSettings = [
     {
         "type": "text",
         "varId": "messageTextFontSize",
-        "displayText": "Message Text Font Size",
+        "displayText": t`Message Text Font Size`,
         "default": "15px",
         "category": "chat-style",
         "description": t`Font size for message body text (e.g. 0.95rem, 1rem, 1.05rem)`
@@ -183,7 +183,7 @@ const themeCustomSettings = [
     {
         "type": "text",
         "varId": "messageLineHeight",
-        "displayText": "Message Text Line Height",
+        "displayText": t`Message Text Line Height`,
         "default": "calc(var(--mainFontSize) + .5rem)",
         "category": "chat-style",
         "description": t`Line height for message body text (e.g. 1.55em, 1.6em)`
@@ -191,7 +191,7 @@ const themeCustomSettings = [
     {
         "type": "text",
         "varId": "messageTextLetterSpacing",
-        "displayText": "Message Text Letter Spacing",
+        "displayText": t`Message Text Letter Spacing`,
         "default": "inherit",
         "category": "chat-style",
         "description": t`Letter spacing for message body text (e.g. 0em, 0.02em)`
@@ -407,15 +407,37 @@ const themeCustomSettings = [
     },
     {
         "type": "checkbox",
-        "varId": "expandWorldEntryInputWidth",
-        "displayText": t`Expand Lorebook Entry Input Width`,
+        "varId": "expandEntryInputWidth",
+        "displayText": t`Expand Entry Input Width`,
         "default": true,
         "category": "theme-extras",
-        "description": t`Increase the width of numeric input fields in Worlds/Lorebooks for better visibility. May cause slight misalignment`,
+        "description": t`Hide the browser’s up/down arrows in number input fields to give more space for typing`,
         "cssBlock": `
-                .world_entry input.text_pole.wideMax100px.margin0.sttt--enabled {
-                    min-width: calc(3em + 24px);
-                }
+            input[type=number]::-webkit-outer-spin-button,
+            input[type=number]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            input[type=number] {
+                -moz-appearance:textfield;
+            }
+        `
+    },
+    {
+        "type": "checkbox",
+        "varId": "compactWorldsLorebooksTopBar",
+        "displayText": t`Compact Worlds/Lorebooks Top Bar`,
+        "default": true,
+        "category": "theme-extras",
+        "description": t`Make the top fields in Worlds/Lorebooks more compact by reducing header padding and entry spacing`,
+        "cssBlock": `
+            .world_entry .inline-drawer-header {
+                padding: 2px 10px;
+            }
+            .wi-card-entry {
+                padding: 2px;
+                margin: 2px;
+            }
         `
     },
 

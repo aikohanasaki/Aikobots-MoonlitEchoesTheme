@@ -207,5 +207,10 @@
     "Hide user avatars in the message for the Ripple style": "Ẩn ảnh đại diện của người dùng trong tin nhắn theo phong cách Ripple",
     "Expand Lorebook Entry Input Width": "Mở rộng chiều rộng ô nhập giá trị trong Sách Thế Giới",
     "Increase the width of numeric input fields in Worlds/Lorebooks for better visibility. May cause slight misalignment": "Tăng chiều rộng của các trường nhập số trong Sách Thế Giới để dễ nhìn hơn. Có thể gây ra lệch hàng nhẹ",
-    "Line height for message body text (e.g. 1.55em, 1.6em)": "Chiều cao dòng cho văn bản tin nhắn (ví dụ: 1.55em, 1.6em)"
+    "Line height for message body text (e.g. 1.55em, 1.6em)": "Chiều cao dòng cho văn bản tin nhắn (ví dụ: 1.55em, 1.6em)",
+    "Expand Entry Input Width": "Mở rộng chiều rộng trường nhập mục",
+    "Hide the browser’s up/down arrows in number input fields to give more space for typing": "Ẩn các mũi tên lên/xuống của trình duyệt trong trường nhập số để có thêm không gian gõ",
+    "Compact Worlds/Lorebooks Top Bar": "Thu gọn thanh trên cùng của Worlds/Lorebooks",
+    "Make the top fields in Worlds/Lorebooks more compact by reducing header padding and entry spacing": "Giảm padding của phần tiêu đề và khoảng cách giữa các mục để các trường trên cùng trong Worlds/Lorebooks gọn hơn",
+    "Message Text Line Height": "Chiều cao dòng của văn bản tin nhắn"
 }
