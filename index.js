@@ -1075,9 +1075,6 @@ const themeCustomSettings = [
                 #nonQRFormItems {
                     order: 2 !important;
                 }
-                #qr--bar {
-                    order: 3 !important;
-                }
 
                 #leftSendForm {
                     padding-left: 6px;

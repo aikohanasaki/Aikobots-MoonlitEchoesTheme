@@ -5,6 +5,7 @@
 
     Presented by Rivelle,
     dedicated to all the lovely souls.
+    Aikobots fork modified by Aiko
 
    - - - - - - - - - - - - - - - - - */
 
@@ -249,10 +250,6 @@ code {
     font-size: 85%;
     padding: 0.2em 0.4em;
     margin: 0 3px;
-}
-.popup:has(#qr--modalEditor) .popup-content > #qr--modalEditor code {
-    letter-spacing: normal;
-    font-size: 100%;
 }
 
 /* --- Input Fields 輸入框樣式 --- */

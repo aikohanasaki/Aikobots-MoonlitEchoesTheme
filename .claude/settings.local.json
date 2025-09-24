@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/ai/Aikobots Code/Aikobots-MoonlitEchoesTheme/**)",
+      "Read(//c/Users/ai/Aikobots Code/Aikobots/public/**)",
+      "Bash(find:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
