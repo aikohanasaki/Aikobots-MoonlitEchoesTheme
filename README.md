@@ -1,1 +1,1 @@
-This is a custom form of Moonlit Echoes by RivelleDays. Please install Rivelle's version! https://github.com/RivelleDays/SillyTavern-MoonlitEchoesTheme
+This is a custom fork of Moonlit Echoes by RivelleDays. Please install Rivelle's version! https://github.com/RivelleDays/SillyTavern-MoonlitEchoesTheme
